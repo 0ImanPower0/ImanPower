@@ -248,40 +248,59 @@
     </div>
 
     <div class="menu-grid">
-      <div class="menu-card">
+      <div class="menu-card" onclick="openPage('aboutPage')">
         <h2>Hakkımızda</h2>
         <p>Takımımız ve vizyonumuz hakkında bilgiler.</p>
       </div>
 
-      <div class="menu-card">
+      <div class="menu-card" onclick="openPage('academyPage')">
         <h2>Altyapı</h2>
         <p>Genç yetenekler ve gelişim sistemi.</p>
       </div>
 
-      <div class="menu-card">
+      <div class="menu-card" onclick="openPage('scoutPage')">
         <h2>Yakın Takipte Olanlar</h2>
         <p>Scout ekibimizin radarındaki oyuncular.</p>
       </div>
 
-      <div class="menu-card">
+      <div class="menu-card" onclick="openPage('gamePage')">
         <h2>Oyun</h2>
-        <p>Futbol mini oyunları ve etkinlikler.</p>
+        <p>Futbol mini oyunları ve skor sistemi.</p>
       </div>
 
-      <div class="menu-card">
+      <div class="menu-card" onclick="openPage('squadPage')">
         <h2>Kadromuz</h2>
-        <p>Takım oyuncuları ve teknik ekip.</p>
+        <p>8 kişilik özel takım kadrosu.</p>
       </div>
 
-      <div class="menu-card" onclick="openAdmin()">
+      <div class="menu-card" id="adminMenu" style="display:none;" onclick="openAdmin()">
         <h2>Admin</h2>
         <p>Yönetim paneline erişim.</p>
       </div>
 
-      <div class="menu-card">
+      <div class="menu-card" onclick="openPage('chatPage')">
         <h2>Sohbet</h2>
         <p>Topluluk sohbet alanı.</p>
       </div>
+    </div>
+
+    <div id="aboutPage" class="hidden page-section"><h1>Hakkımızda</h1><div id="aboutArea" class="menu-grid"></div></div>
+    <div id="academyPage" class="hidden page-section"><h1>Altyapı</h1><div id="academyArea" class="menu-grid"></div></div>
+    <div id="scoutPage" class="hidden page-section"><h1>Yakın Takipte Olanlar</h1><div id="scoutArea" class="menu-grid"></div></div>
+    <div id="squadPage" class="hidden page-section"><h1>Kadromuz</h1><div id="squadArea" class="menu-grid"></div></div>
+
+    <div id="gamePage" class="hidden page-section">
+      <h1>İmanPower Futbol Oyunu</h1>
+      <p>Topu yakala ve skor kazan!</p>
+      <h2>Skor: <span id="score">0</span></h2>
+      <canvas id="gameCanvas" width="700" height="350" style="background:#0f172a;border-radius:20px;width:100%;max-width:700px;"></canvas>
+    </div>
+
+    <div id="chatPage" class="hidden page-section">
+      <h1>Sohbet</h1>
+      <div id="chatMessages" style="height:250px;overflow:auto;background:#111827;padding:15px;border-radius:15px;margin-bottom:15px;"></div>
+      <input id="chatInput" placeholder="Mesaj yaz...">
+      <button onclick="sendMessage()">Gönder</button>
     </div>
 
     <div class="admin-panel" id="adminPanel">
@@ -325,7 +344,14 @@
       if(user === savedUser && pass === savedPass) {
         document.getElementById('authContainer').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
+
+        if(user.toLowerCase().includes('admin')) {
+          document.getElementById('adminMenu').style.display = 'block';
+        }
       } else {
+        alert('Kullanıcı adı veya şifre yanlış!');
+      }
+    } else {
         alert('Kullanıcı adı veya şifre yanlış!');
       }
     }
@@ -336,6 +362,12 @@
 
     function openAdmin() {
       document.getElementById('adminPanel').classList.toggle('active');
+    }
+
+    function openPage(pageId){
+      document.querySelectorAll('.page-section').forEach(p=>p.classList.add('hidden'));
+      document.getElementById(pageId).classList.remove('hidden');
+      window.scrollTo({top:500,behavior:'smooth'});
     }
 
     function checkAdmin() {
@@ -537,33 +569,62 @@
     const canvas = document.getElementById('gameCanvas');
     if(canvas){
       const ctx = canvas.getContext('2d');
-      let x = 50;
-      let y = 120;
-      let ballX = 250;
 
-      document.addEventListener('keydown', e => {
-        if(e.key === 'ArrowRight') x += 10;
-        if(e.key === 'ArrowLeft') x -= 10;
+      let player = {x:50,y:250,w:40,h:40};
+      let ball = {x:500,y:120,r:18};
+      let score = 0;
+
+      document.addEventListener('keydown',e=>{
+        if(e.key==='ArrowRight') player.x += 20;
+        if(e.key==='ArrowLeft') player.x -= 20;
+        if(e.key==='ArrowUp') player.y -= 20;
+        if(e.key==='ArrowDown') player.y += 20;
       });
 
-      function draw(){
-        ctx.clearRect(0,0,500,250);
+      function resetBall(){
+        ball.x = Math.random()*600+30;
+        ball.y = Math.random()*250+30;
+      }
 
-        ctx.fillStyle = 'lime';
-        ctx.fillRect(0,200,500,50);
+      function gameLoop(){
+        ctx.clearRect(0,0,700,350);
 
-        ctx.fillStyle = 'white';
-        ctx.fillRect(x,y,30,30);
+        ctx.fillStyle = '#16a34a';
+        ctx.fillRect(0,0,700,350);
+
+        ctx.fillStyle='white';
+        ctx.fillRect(player.x,player.y,player.w,player.h);
 
         ctx.beginPath();
-        ctx.arc(ballX,180,15,0,Math.PI*2);
+        ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);
         ctx.fillStyle='orange';
         ctx.fill();
 
-        requestAnimationFrame(draw);
+        const dx = player.x - ball.x;
+        const dy = player.y - ball.y;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+
+        if(distance < 40){
+          score++;
+          document.getElementById('score').innerText = score;
+          resetBall();
+        }
+
+        requestAnimationFrame(gameLoop);
       }
 
-      draw();
+      gameLoop();
+    }
+
+    function sendMessage(){
+      const input = document.getElementById('chatInput');
+      const area = document.getElementById('chatMessages');
+
+      if(input.value.trim() !== ''){
+        area.innerHTML += `<div style="margin-bottom:10px;background:#1e293b;padding:10px;border-radius:10px;">${input.value}</div>`;
+        input.value='';
+        area.scrollTop = area.scrollHeight;
+      }
     }
   </script>
 </body>
