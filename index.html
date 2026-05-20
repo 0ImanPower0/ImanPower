@@ -362,12 +362,211 @@
     import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyDy47Uv_w7sntWSTDhc0lvg0DTByWuSdrk",
+      apiKey: "AIzaSyDy47Uv_w7sntWSTDhcqlvgoDTBvWuSdrk",
       authDomain: "imanpowerveri.firebaseapp.com",
       databaseURL: "https://imanpowerveri-default-rtdb.firebaseio.com",
       projectId: "imanpowerveri",
       storageBucket: "imanpowerveri.firebasestorage.app",
-      messagingSenderId: "
+      messagingSenderId: "891464029314",
+      appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b",
+      measurementId: "G-4T6XSDBDL5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.addPlayer = function() {
+      const name = document.getElementById('playerName').value;
+      const number = document.getElementById('playerNumber').value;
+      const position = document.getElementById('playerPosition').value;
+
+      push(ref(db, 'squad'), {
+        name,
+        number,
+        position
+      });
+    }
+
+    window.addYouth = function() {
+      const name = document.getElementById('youthName').value;
+      const status = document.getElementById('youthStatus').value;
+
+      push(ref(db, 'academy'), {
+        name,
+        status
+      });
+    }
+
+    window.addScout = function() {
+      const name = document.getElementById('scoutName').value;
+      const status = document.getElementById('scoutStatus').value;
+
+      push(ref(db, 'scout'), {
+        name,
+        status
+      });
+    }
+
+    window.addAbout = function() {
+      const title = document.getElementById('aboutTitle').value;
+      const text = document.getElementById('aboutText').value;
+
+      push(ref(db, 'about'), {
+        title,
+        text
+      });
+    }
+
+    onValue(ref(db, 'squad'), snapshot => {
+      const data = snapshot.val();
+      const area = document.getElementById('squadArea');
+      if(!area) return;
+      area.innerHTML = '';
+
+      for(let id in data) {
+        const p = data[id];
+        area.innerHTML += `
+          <div class="menu-card">
+            <h2>#${p.number} ${p.name}</h2>
+            <p>${p.position}</p>
+          </div>
+        `;
+      }
+    });
+
+    onValue(ref(db, 'academy'), snapshot => {
+      const data = snapshot.val();
+      const area = document.getElementById('academyArea');
+      if(!area) return;
+      area.innerHTML = '';
+
+      for(let id in data) {
+        const p = data[id];
+        area.innerHTML += `
+          <div class="menu-card">
+            <h2>${p.name}</h2>
+            <p>${p.status}</p>
+          </div>
+        `;
+      }
+    });
+
+    onValue(ref(db, 'scout'), snapshot => {
+      const data = snapshot.val();
+      const area = document.getElementById('scoutArea');
+      if(!area) return;
+      area.innerHTML = '';
+
+      for(let id in data) {
+        const p = data[id];
+        area.innerHTML += `
+          <div class="menu-card">
+            <h2>${p.name}</h2>
+            <p>${p.status}</p>
+          </div>
+        `;
+      }
+    });
+
+    onValue(ref(db, 'about'), snapshot => {
+      const data = snapshot.val();
+      const area = document.getElementById('aboutArea');
+      if(!area) return;
+      area.innerHTML = '';
+
+      for(let id in data) {
+        const p = data[id];
+        area.innerHTML += `
+          <div class="menu-card">
+            <h2>${p.title}</h2>
+            <p>${p.text}</p>
+          </div>
+        `;
+      }
+    });
+  </script>
+
+  <div style="padding:40px;">
+    <h1>Kadromuz</h1>
+    <div id="squadArea" class="menu-grid"></div>
+
+    <h1 style="margin-top:40px;">Altyapı</h1>
+    <div id="academyArea" class="menu-grid"></div>
+
+    <h1 style="margin-top:40px;">Yakın Takipte Olanlar</h1>
+    <div id="scoutArea" class="menu-grid"></div>
+
+    <h1 style="margin-top:40px;">Hakkımızda</h1>
+    <div id="aboutArea" class="menu-grid"></div>
+
+    <div class="admin-panel active" style="margin-top:50px;">
+      <h2>Admin Yönetim Paneli</h2>
+
+      <input id="playerName" placeholder="Oyuncu İsmi">
+      <input id="playerNumber" placeholder="Forma Numarası">
+      <select id="playerPosition" style="width:100%;padding:14px;border-radius:12px;margin-top:10px;background:#111827;color:white;">
+        <option>Kaleci</option>
+        <option>Stoper</option>
+        <option>Bek</option>
+        <option>Orta Saha</option>
+        <option>Kanat</option>
+        <option>Forvet</option>
+      </select>
+      <button onclick="addPlayer()">Oyuncu Ekle</button>
+
+      <input id="youthName" placeholder="Altyapı Oyuncusu">
+      <input id="youthStatus" placeholder="Durumu">
+      <button onclick="addYouth()">Altyapıya Ekle</button>
+
+      <input id="scoutName" placeholder="Yakın Takip Oyuncusu">
+      <input id="scoutStatus" placeholder="Durumu">
+      <button onclick="addScout()">Takibe Ekle</button>
+
+      <input id="aboutTitle" placeholder="Hakkımızda Başlık">
+      <input id="aboutText" placeholder="Açıklama">
+      <button onclick="addAbout()">Hakkımızda Ekle</button>
+    </div>
+
+    <div class="menu-card" style="margin-top:50px;">
+      <h2>Mini Futbol Oyunu</h2>
+      <canvas id="gameCanvas" width="500" height="250" style="background:#0f172a;border-radius:20px;width:100%;max-width:500px;"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    if(canvas){
+      const ctx = canvas.getContext('2d');
+      let x = 50;
+      let y = 120;
+      let ballX = 250;
+
+      document.addEventListener('keydown', e => {
+        if(e.key === 'ArrowRight') x += 10;
+        if(e.key === 'ArrowLeft') x -= 10;
+      });
+
+      function draw(){
+        ctx.clearRect(0,0,500,250);
+
+        ctx.fillStyle = 'lime';
+        ctx.fillRect(0,200,500,50);
+
+        ctx.fillStyle = 'white';
+        ctx.fillRect(x,y,30,30);
+
+        ctx.beginPath();
+        ctx.arc(ballX,180,15,0,Math.PI*2);
+        ctx.fillStyle='orange';
+        ctx.fill();
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+  </script>
+</body>
 </html>
 ```
 
