@@ -1,6 +1,3 @@
-# ULTRA MODERN İMANPOWER index.html
-
-```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -8,31 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>İmanPower</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background:radial-gradient(circle at top,#2563eb55,transparent 40%),radial-gradient(circle at bottom,#dc262655,transparent 40%);
-z-index:-1;
-}
-
-@media(max-width:700px){
-.menu{
-grid-template-columns:1fr;
-}
-
-.box{
-width:100%;
-}
-
-.logo{
-width:120px;
-height:120px;
-}
-}
 *{
 margin:0;
 padding:0;
@@ -44,6 +19,16 @@ body{
 background:#020617;
 color:white;
 overflow-x:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#2563eb44,transparent 40%),
+radial-gradient(circle at bottom,#dc262644,transparent 40%);
+z-index:-1;
 }
 
 .hidden{
@@ -58,45 +43,39 @@ justify-content:center;
 padding:20px;
 }
 
-.box{
-width:420px;
+.authbox{
+width:430px;
 background:#0f172a;
 padding:35px;
-border-radius:25px;
+border-radius:30px;
 text-align:center;
-box-shadow:0 0 40px rgba(0,0,0,.5);
-border:1px solid rgba(255,255,255,.08);
 }
 
 .logo{
 width:150px;
 height:150px;
-object-fit:cover;
 border-radius:50%;
+object-fit:cover;
 margin-bottom:20px;
-}
-
-h1{
-font-size:38px;
-margin-bottom:10px;
+border:4px solid #2563eb;
 }
 
 input,select{
 width:100%;
-padding:14px;
+padding:15px;
 margin-top:12px;
 background:#111827;
 border:none;
-border-radius:12px;
+border-radius:15px;
 color:white;
 }
 
 button{
 width:100%;
-padding:14px;
+padding:15px;
 margin-top:15px;
 border:none;
-border-radius:12px;
+border-radius:15px;
 background:linear-gradient(90deg,#2563eb,#dc2626);
 color:white;
 font-weight:700;
@@ -109,85 +88,152 @@ padding:25px;
 }
 
 .topbar{
+background:#0f172a;
+padding:20px;
+border-radius:25px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#0f172a;
-padding:20px;
-border-radius:20px;
 margin-bottom:30px;
 }
 
 .menu{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:20px;
 }
 
 .card{
-background:#111827;
-padding:30px;
-border-radius:20px;
+background:#0f172a;
+padding:35px;
+border-radius:25px;
+font-size:22px;
+font-weight:700;
 cursor:pointer;
 transition:.3s;
 }
 
 .card:hover{
 transform:translateY(-5px);
+background:#172554;
 }
 
 .page{
 display:none;
 margin-top:30px;
 background:#0f172a;
-padding:25px;
-border-radius:20px;
+padding:30px;
+border-radius:30px;
+}
+
+#adminFloating{
+position:fixed;
+right:25px;
+bottom:25px;
+width:75px;
+height:75px;
+border-radius:50%;
+background:linear-gradient(135deg,#facc15,#eab308);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:35px;
+cursor:pointer;
+box-shadow:0 0 30px rgba(250,204,21,.6);
+z-index:999;
 }
 
 .player{
 background:#111827;
 padding:15px;
 border-radius:15px;
-margin-top:10px;
+text-align:center;
+min-width:150px;
+position:relative;
+}
+
+.deleteBtn{
+position:absolute;
+top:5px;
+right:5px;
+background:red;
+width:auto;
+padding:4px 10px;
+}
+
+#footballField{
+background:linear-gradient(#15803d,#166534);
+padding:30px;
+border-radius:30px;
+margin-top:20px;
+min-height:700px;
+}
+
+.positionRow{
+display:flex;
+justify-content:center;
+gap:20px;
+margin:45px 0;
+flex-wrap:wrap;
 }
 
 canvas{
-background:#14532d;
+background:#15803d;
 border-radius:20px;
 margin-top:20px;
 width:100%;
-max-width:700px;
+max-width:900px;
+border:5px solid white;
 }
 
-.chat{
-height:220px;
-overflow:auto;
-background:#111827;
-padding:15px;
-border-radius:15px;
-margin-bottom:15px;
+.mobileControls{
+display:flex;
+gap:10px;
+justify-content:center;
+margin-top:20px;
+flex-wrap:wrap;
+}
+
+.mobileControls button{
+width:70px;
+height:70px;
+font-size:28px;
+}
+
+@media(max-width:700px){
+.menu{
+grid-template-columns:1fr;
+}
+
+.logo{
+width:120px;
+height:120px;
+}
 }
 </style>
 </head>
+
 <body>
 
 <div class="auth" id="authPage">
-<div class="box">
+<div class="authbox">
+
 <img src="logo.png" class="logo">
+
 <h1>İmanPower</h1>
 
 <div id="loginBox">
-<input type="text" id="loginUser" placeholder="Kullanıcı Adı">
+<input id="loginUser" placeholder="Kullanıcı Adı">
 <input type="password" id="loginPass" placeholder="Şifre">
 <button onclick="login()">Giriş Yap</button>
 <button onclick="showRegister()">Kayıt Ol</button>
 </div>
 
 <div id="registerBox" class="hidden">
-<input type="text" id="registerUser" placeholder="Kullanıcı Adı">
-<input type="password" id="registerPass" placeholder="Şifre">
-<button onclick="register()">Hesap Oluştur</button>
-<button onclick="showLogin()">Geri Dön</button>
+<input id="registerUser" placeholder="Yeni Kullanıcı Adı">
+<input type="password" id="registerPass" placeholder="Yeni Şifre">
+<button onclick="register()">Kayıt Ol</button>
+<button onclick="showLogin()">Geri</button>
 </div>
 
 </div>
@@ -196,147 +242,95 @@ margin-bottom:15px;
 <div class="dashboard" id="dashboard">
 
 <div class="topbar">
-<div id="adminIcon" onclick="openPage('admin')" style="position:absolute;top:20px;right:120px;width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,#facc15,#eab308);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:22px;">👑</div>
+
 <div style="display:flex;align-items:center;gap:15px;">
-<img src="logo.png" class="logo" style="width:70px;height:70px;margin:0;">
+<img src="logo.png" style="width:70px;height:70px;border-radius:50%;">
 <div>
 <h2>İmanPower</h2>
-<p id="welcomeUser"></p>
+<p id="welcomeText"></p>
 </div>
 </div>
 
 <button onclick="logout()" style="width:auto;padding:12px 20px;">Çıkış</button>
+
 </div>
 
 <div class="menu">
-<div class="card" onclick="openPage('about')">Hakkımızda</div>
+<div class="card" onclick="openPage('about')">📖 Hakkımızda</div>
 <div class="card" onclick="openPage('academy')">🔥 Altyapı</div>
-<div class="card" onclick="openPage('scout')">Yakın Takipte Olanlar</div>
-<div class="card" onclick="openPage('game')">⚽ Oyun Arenası</div>
 <div class="card" onclick="openPage('squad')">🛡️ Kadromuz</div>
-<div class="card" onclick="openPage('chat')">Sohbet</div>
-<div class="card hidden" id="adminButton" onclick="openPage('admin')">Admin</div>
-<div class="card" onclick="openPage('live')">Canlı Sunucu</div>
+<div class="card" onclick="openPage('game')">⚽ Oyun</div>
+<div class="card" onclick="openPage('chat')">💬 Sohbet</div>
 </div>
 
 <div class="page" id="about">
 <h1>Hakkımızda</h1>
-<div id="aboutList"></div>
 </div>
 
 <div class="page" id="academy">
 <h1>Altyapı</h1>
-<div id="academyList"></div>
-</div>
-
-<div class="page" id="scout">
-<h1>Yakın Takipte Olanlar</h1>
-<div id="scoutList"></div>
-</div>
-
-<div class="page" id="squad">
-<h1>Kadromuz</h1>
-
-<h2 style="color:#22c55e;margin-top:20px;">Kaleci</h2>
-<div id="goalkeeperList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
-
-<h2 style="color:#22c55e;margin-top:20px;">Stoper</h2>
-<div id="defenderList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
-
-<h2 style="color:#22c55e;margin-top:20px;">Bek</h2>
-<div id="backList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
-
-<h2 style="color:#22c55e;margin-top:20px;">Orta Saha</h2>
-<div id="midList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
-
-<h2 style="color:#22c55e;margin-top:20px;">Kanat</h2>
-<div id="wingList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
-
-<h2 style="color:#22c55e;margin-top:20px;">Forvet</h2>
-<div id="forwardList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
 </div>
 
 <div class="page" id="chat">
 <h1>Sohbet</h1>
-<div class="chat" id="chatArea"></div>
-<input id="chatInput" placeholder="Mesaj yaz">
-<button onclick="sendMessage()">Gönder</button>
 </div>
 
-<div class="page" id="live">
-<h1>Canlı Sunucu</h1>
-<p>Sunucudaki aktif oyuncular aynı anda sistemi kullanabilir.</p>
-<div class="player">Gerçek zamanlı Firebase sistemi aktif.</div>
+<div class="page" id="squad">
+
+<h1>Kadro Dizilişi</h1>
+
+<div id="footballField">
+
+<div class="positionRow" id="forvetler"></div>
+<div class="positionRow" id="ortasaha"></div>
+<div class="positionRow" id="stoperler"></div>
+<div class="positionRow" id="kaleciler"></div>
+
+</div>
+
 </div>
 
 <div class="page" id="game">
-<h1>Mini Futbol Oyunu</h1>
+
+<h1>⚽ Futbol Arenası</h1>
+
 <h2>Skor: <span id="score">0</span></h2>
-<div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
-<button onclick="selectTeam('Mavi')">🔵 Mavi Takım</button>
-<button onclick="selectTeam('Kırmızı')">🔴 Kırmızı Takım</button>
-</div>
 
-<h3 id="teamText">Takım seçilmedi</h3>
+<canvas id="gameCanvas" width="900" height="500"></canvas>
 
-<canvas id="gameCanvas" width="700" height="350"></canvas>
-
-<div id="mobileControls" style="margin-top:15px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+<div class="mobileControls">
 <button onclick="movePlayer('up')">⬆️</button>
 <button onclick="movePlayer('left')">⬅️</button>
 <button onclick="movePlayer('down')">⬇️</button>
 <button onclick="movePlayer('right')">➡️</button>
 </div>
+
 </div>
 
 <div class="page" id="admin">
-<h1>Admin Paneli</h1>
 
-<input id="adminCode" placeholder="Admin Kodu">
-<button onclick="checkAdmin()">Yetki Ver</button>
+<h1>👑 Admin Paneli</h1>
+
+<input id="adminCode" placeholder="Admin Şifresi">
+
+<button onclick="checkAdmin()">Giriş</button>
 
 <div id="adminArea" class="hidden">
 
-<h2>Kayıtlı Kullanıcılar</h2>
+<h2>Kullanıcılar</h2>
 <div id="usersList"></div>
 
-<h2 style="margin-top:20px;">Oyuncu Ekle</h2>
-<input id="playerName" placeholder="İsim">
-<input id="playerNumber" placeholder="Numara">
-<select id="playerPosition">
-<option>Kaleci</option>
-<option>Stoper</option>
-<option>Bek</option>
-<option>Orta Saha</option>
-<option>Kanat</option>
-<option>Forvet</option>
-</select>
-<button onclick="addPlayer()">Kadroya Ekle</button>
-
-<h2 style="margin-top:20px;">Altyapı</h2>
-<input id="academyName" placeholder="Oyuncu İsmi">
-<input id="academyStatus" placeholder="Durumu">
-<button onclick="addAcademy()">Ekle</button>
-
-<h2 style="margin-top:20px;">Yakın Takip</h2>
-<input id="scoutName" placeholder="Oyuncu İsmi">
-<input id="scoutStatus" placeholder="Durumu">
-<button onclick="addScout()">Ekle</button>
-
-<h2 style="margin-top:20px;">Hakkımızda</h2>
-<input id="aboutTitle" placeholder="İsim">
-<input id="aboutText" placeholder="Açıklama">
-<button onclick="addAbout()">Ekle</button>
+</div>
 
 </div>
+
+<div id="adminFloating" onclick="openPage('admin')">
+👑
 </div>
 
 </div>
 
 <script>
-let currentUser = "";
-let isAdmin = false;
-
 function showRegister(){
 document.getElementById('loginBox').classList.add('hidden');
 document.getElementById('registerBox').classList.remove('hidden');
@@ -351,12 +345,8 @@ function register(){
 const u=document.getElementById('registerUser').value;
 const p=document.getElementById('registerPass').value;
 
-if(u===''||p===''){
-alert('Boş bırakma');
-return;
-}
-
 localStorage.setItem('user_'+u,p);
+
 alert('Kayıt başarılı');
 showLogin();
 }
@@ -365,14 +355,13 @@ function login(){
 const u=document.getElementById('loginUser').value;
 const p=document.getElementById('loginPass').value;
 
-const saved=localStorage.getItem('user_'+u);
-
-if(saved===p){
-currentUser=u;
+if(localStorage.getItem('user_'+u)===p){
 
 document.getElementById('authPage').style.display='none';
 document.getElementById('dashboard').style.display='block';
-document.getElementById('welcomeUser').innerText='Hoş geldin '+u;
+
+document.getElementById('welcomeText').innerText='Hoş geldin '+u;
+
 }else{
 alert('Hatalı giriş');
 }
@@ -383,148 +372,82 @@ location.reload();
 }
 
 function openPage(id){
-document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+
+document.querySelectorAll('.page').forEach(p=>{
+p.style.display='none';
+});
+
 document.getElementById(id).style.display='block';
 }
 
 function checkAdmin(){
-const code=document.getElementById('adminCode').value;
 
-if(code==='imanpoweradmini31'){
-isAdmin=true;
+if(document.getElementById('adminCode').value==='imanpoweradmini31'){
+
 document.getElementById('adminArea').classList.remove('hidden');
-document.getElementById('adminButton').classList.remove('hidden');
-document.getElementById('adminIcon').style.display='flex';
 
 const users=document.getElementById('usersList');
+
 users.innerHTML='';
 
 for(let i=0;i<localStorage.length;i++){
+
 const key=localStorage.key(i);
+
 if(key.startsWith('user_')){
+
 const div=document.createElement('div');
+
 div.className='player';
-div.innerHTML='<b>'+key.replace('user_','')+'</b>';
+
+div.innerHTML=key.replace('user_','');
+
 users.appendChild(div);
+
 }
 }
 
-alert('Admin yetkisi verildi');
 }else{
-alert('Yanlış kod');
-}
-}
-
-function addPlayer(){
-const name=document.getElementById('playerName').value;
-const no=document.getElementById('playerNumber').value;
-const pos=document.getElementById('playerPosition').value;
-
-const div=document.createElement('div');
-div.className='player';
-div.style.minWidth='170px';
-div.style.position='relative';
-div.innerHTML='<button onclick="this.parentElement.remove()" style="position:absolute;top:5px;right:5px;width:auto;padding:5px 10px;background:red;">X</button><h3>#'+no+' '+name+'</h3><p>'+pos+'</p>';
-
-if(pos==='Kaleci') document.getElementById('goalkeeperList').appendChild(div);
-if(pos==='Stoper') document.getElementById('defenderList').appendChild(div);
-if(pos==='Bek') document.getElementById('backList').appendChild(div);
-if(pos==='Orta Saha') document.getElementById('midList').appendChild(div);
-if(pos==='Kanat') document.getElementById('wingList').appendChild(div);
-if(pos==='Forvet') document.getElementById('forwardList').appendChild(div);
-}
-
-function addAcademy(){
-const name=document.getElementById('academyName').value;
-const status=document.getElementById('academyStatus').value;
-
-const div=document.createElement('div');
-div.className='player';
-div.innerHTML='<h3>'+name+'</h3><p>'+status+'</p>';
-
-document.getElementById('academyList').appendChild(div);
-}
-
-function addScout(){
-const name=document.getElementById('scoutName').value;
-const status=document.getElementById('scoutStatus').value;
-
-const div=document.createElement('div');
-div.className='player';
-div.innerHTML='<h3>'+name+'</h3><p>'+status+'</p>';
-
-document.getElementById('scoutList').appendChild(div);
-}
-
-function addAbout(){
-const title=document.getElementById('aboutTitle').value;
-const text=document.getElementById('aboutText').value;
-
-const div=document.createElement('div');
-div.className='player';
-div.innerHTML='<h3>'+title+'</h3><p>'+text+'</p>';
-
-document.getElementById('aboutList').appendChild(div);
-}
-
-function sendMessage(){
-const input=document.getElementById('chatInput');
-const area=document.getElementById('chatArea');
-
-if(input.value!==''){
-const div=document.createElement('div');
-div.className='player';
-div.innerHTML='<b>'+currentUser+':</b> '+input.value;
-area.appendChild(div);
-input.value='';
+alert('Yanlış şifre');
 }
 }
 
 const canvas=document.getElementById('gameCanvas');
 const ctx=canvas.getContext('2d');
 
-let player={x:50,y:150,w:40,h:40};
-let ball={x:400,y:150,r:20};
+let player={x:100,y:250,w:40,h:40};
+let ball={x:450,y:250,r:20,vx:0,vy:0};
 let score=0;
 
-function randomBall(){
-ball.x=Math.random()*650;
-ball.y=Math.random()*300;
-}
-
-function selectTeam(team){
-selectedTeam=team;
-document.getElementById('teamText').innerText='Seçilen Takım: '+team;
-}
-
 function movePlayer(dir){
-if(dir==='right') player.x+=20;
-if(dir==='left') player.x-=20;
 if(dir==='up') player.y-=20;
 if(dir==='down') player.y+=20;
+if(dir==='left') player.x-=20;
+if(dir==='right') player.x+=20;
 }
 
 document.addEventListener('keydown',e=>{
-if(e.key==='ArrowRight'||e.key==='d') player.x+=20;
-if(e.key==='ArrowLeft'||e.key==='a') player.x-=20;
-if(e.key==='ArrowUp'||e.key==='w') player.y-=20;
-if(e.key==='ArrowDown'||e.key==='s') player.y+=20;
+
+if(e.key==='w') player.y-=15;
+if(e.key==='s') player.y+=15;
+if(e.key==='a') player.x-=15;
+if(e.key==='d') player.x+=15;
+
 });
 
-let onlinePlayers=Math.floor(Math.random()*5)+1;
-let selectedTeam='';
+function gameLoop(){
 
-function game(){
-ctx.clearRect(0,0,700,350);
+ctx.clearRect(0,0,900,500);
 
 ctx.fillStyle='#15803d';
-ctx.fillRect(0,0,700,350);
+ctx.fillRect(0,0,900,500);
+
+ctx.strokeStyle='white';
+ctx.lineWidth=4;
+ctx.strokeRect(0,0,900,500);
 
 ctx.fillStyle='white';
 ctx.fillRect(player.x,player.y,player.w,player.h);
-
-if(player.x<0||player.x>660) player.x*=-0.95;
-if(player.y<0||player.y>310) player.y*=-0.95;
 
 ctx.beginPath();
 ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);
@@ -535,38 +458,25 @@ let dx=player.x-ball.x;
 let dy=player.y-ball.y;
 let dist=Math.sqrt(dx*dx+dy*dy);
 
-if(dist<40){
-ball.x += 40;
-
-if(ball.x>680){
-score++;
-randomBall();
+if(dist<50){
+ball.vx=8;
 }
+
+ball.x+=ball.vx;
+ball.vx*=0.98;
+
+if(ball.x>860){
 score++;
 document.getElementById('score').innerText=score;
-randomBall();
+ball.x=450;
+ball.y=250;
 }
 
-ctx.fillStyle='white';
-ctx.font='20px Poppins';
-ctx.fillText('Online Oyuncu: '+onlinePlayers,20,30);
-ctx.fillText('Takım: '+selectedTeam,20,60);
-ctx.fillText('Amaç: Topu sağ kaleye sok!',20,90);
-
-requestAnimationFrame(game);
+requestAnimationFrame(gameLoop);
 }
 
-game();
+gameLoop();
 </script>
 
 </body>
 </html>
-```
-
-
-```txt
-index.html
-logo.png
-```
-
-`logo.png` gerçek resim olacak. İçine kod yazılmayacak.
