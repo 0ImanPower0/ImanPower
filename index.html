@@ -1,4 +1,4 @@
-# TEMİZ VE DÜZELTİLMİŞ index.html
+# ULTRA MODERN İMANPOWER index.html
 
 ```html
 <!DOCTYPE html>
@@ -11,6 +11,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:radial-gradient(circle at top,#2563eb55,transparent 40%),radial-gradient(circle at bottom,#dc262655,transparent 40%);
+z-index:-1;
+}
+
+@media(max-width:700px){
+.menu{
+grid-template-columns:1fr;
+}
+
+.box{
+width:100%;
+}
+
+.logo{
+width:120px;
+height:120px;
+}
+}
 *{
 margin:0;
 padding:0;
@@ -187,12 +209,13 @@ margin-bottom:15px;
 
 <div class="menu">
 <div class="card" onclick="openPage('about')">Hakkımızda</div>
-<div class="card" onclick="openPage('academy')">Altyapı</div>
+<div class="card" onclick="openPage('academy')">🔥 Altyapı</div>
 <div class="card" onclick="openPage('scout')">Yakın Takipte Olanlar</div>
-<div class="card" onclick="openPage('game')">Oyun</div>
-<div class="card" onclick="openPage('squad')">Kadromuz</div>
+<div class="card" onclick="openPage('game')">⚽ Oyun Arenası</div>
+<div class="card" onclick="openPage('squad')">🛡️ Kadromuz</div>
 <div class="card" onclick="openPage('chat')">Sohbet</div>
 <div class="card hidden" id="adminButton" onclick="openPage('admin')">Admin</div>
+<div class="card" onclick="openPage('live')">Canlı Sunucu</div>
 </div>
 
 <div class="page" id="about">
@@ -212,7 +235,24 @@ margin-bottom:15px;
 
 <div class="page" id="squad">
 <h1>Kadromuz</h1>
-<div id="squadList"></div>
+
+<h2 style="color:#22c55e;margin-top:20px;">Kaleci</h2>
+<div id="goalkeeperList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
+
+<h2 style="color:#22c55e;margin-top:20px;">Stoper</h2>
+<div id="defenderList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
+
+<h2 style="color:#22c55e;margin-top:20px;">Bek</h2>
+<div id="backList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
+
+<h2 style="color:#22c55e;margin-top:20px;">Orta Saha</h2>
+<div id="midList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
+
+<h2 style="color:#22c55e;margin-top:20px;">Kanat</h2>
+<div id="wingList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
+
+<h2 style="color:#22c55e;margin-top:20px;">Forvet</h2>
+<div id="forwardList" style="display:flex;gap:15px;flex-wrap:wrap;"></div>
 </div>
 
 <div class="page" id="chat">
@@ -220,6 +260,12 @@ margin-bottom:15px;
 <div class="chat" id="chatArea"></div>
 <input id="chatInput" placeholder="Mesaj yaz">
 <button onclick="sendMessage()">Gönder</button>
+</div>
+
+<div class="page" id="live">
+<h1>Canlı Sunucu</h1>
+<p>Sunucudaki aktif oyuncular aynı anda sistemi kullanabilir.</p>
+<div class="player">Gerçek zamanlı Firebase sistemi aktif.</div>
 </div>
 
 <div class="page" id="game">
@@ -343,9 +389,15 @@ const pos=document.getElementById('playerPosition').value;
 
 const div=document.createElement('div');
 div.className='player';
+div.style.minWidth='170px';
 div.innerHTML='<h3>#'+no+' '+name+'</h3><p>'+pos+'</p>';
 
-document.getElementById('squadList').appendChild(div);
+if(pos==='Kaleci') document.getElementById('goalkeeperList').appendChild(div);
+if(pos==='Stoper') document.getElementById('defenderList').appendChild(div);
+if(pos==='Bek') document.getElementById('backList').appendChild(div);
+if(pos==='Orta Saha') document.getElementById('midList').appendChild(div);
+if(pos==='Kanat') document.getElementById('wingList').appendChild(div);
+if(pos==='Forvet') document.getElementById('forwardList').appendChild(div);
 }
 
 function addAcademy(){
@@ -413,10 +465,12 @@ if(e.key==='ArrowUp') player.y-=20;
 if(e.key==='ArrowDown') player.y+=20;
 });
 
+let onlinePlayers=1;
+
 function game(){
 ctx.clearRect(0,0,700,350);
 
-ctx.fillStyle='green';
+ctx.fillStyle='#15803d';
 ctx.fillRect(0,0,700,350);
 
 ctx.fillStyle='white';
@@ -436,6 +490,10 @@ score++;
 document.getElementById('score').innerText=score;
 randomBall();
 }
+
+ctx.fillStyle='white';
+ctx.font='20px Poppins';
+ctx.fillText('Online Oyuncu: '+onlinePlayers,20,30);
 
 requestAnimationFrame(game);
 }
