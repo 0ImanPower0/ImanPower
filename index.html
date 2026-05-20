@@ -196,6 +196,7 @@ margin-bottom:15px;
 <div class="dashboard" id="dashboard">
 
 <div class="topbar">
+<div id="adminIcon" onclick="openPage('admin')" style="position:absolute;top:20px;right:120px;width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,#facc15,#eab308);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:22px;">👑</div>
 <div style="display:flex;align-items:center;gap:15px;">
 <img src="logo.png" class="logo" style="width:70px;height:70px;margin:0;">
 <div>
@@ -271,7 +272,21 @@ margin-bottom:15px;
 <div class="page" id="game">
 <h1>Mini Futbol Oyunu</h1>
 <h2>Skor: <span id="score">0</span></h2>
+<div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
+<button onclick="selectTeam('Mavi')">🔵 Mavi Takım</button>
+<button onclick="selectTeam('Kırmızı')">🔴 Kırmızı Takım</button>
+</div>
+
+<h3 id="teamText">Takım seçilmedi</h3>
+
 <canvas id="gameCanvas" width="700" height="350"></canvas>
+
+<div id="mobileControls" style="margin-top:15px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+<button onclick="movePlayer('up')">⬆️</button>
+<button onclick="movePlayer('left')">⬅️</button>
+<button onclick="movePlayer('down')">⬇️</button>
+<button onclick="movePlayer('right')">➡️</button>
+</div>
 </div>
 
 <div class="page" id="admin">
@@ -281,6 +296,9 @@ margin-bottom:15px;
 <button onclick="checkAdmin()">Yetki Ver</button>
 
 <div id="adminArea" class="hidden">
+
+<h2>Kayıtlı Kullanıcılar</h2>
+<div id="usersList"></div>
 
 <h2 style="margin-top:20px;">Oyuncu Ekle</h2>
 <input id="playerName" placeholder="İsim">
@@ -376,6 +394,21 @@ if(code==='imanpoweradmini31'){
 isAdmin=true;
 document.getElementById('adminArea').classList.remove('hidden');
 document.getElementById('adminButton').classList.remove('hidden');
+document.getElementById('adminIcon').style.display='flex';
+
+const users=document.getElementById('usersList');
+users.innerHTML='';
+
+for(let i=0;i<localStorage.length;i++){
+const key=localStorage.key(i);
+if(key.startsWith('user_')){
+const div=document.createElement('div');
+div.className='player';
+div.innerHTML='<b>'+key.replace('user_','')+'</b>';
+users.appendChild(div);
+}
+}
+
 alert('Admin yetkisi verildi');
 }else{
 alert('Yanlış kod');
@@ -390,7 +423,8 @@ const pos=document.getElementById('playerPosition').value;
 const div=document.createElement('div');
 div.className='player';
 div.style.minWidth='170px';
-div.innerHTML='<h3>#'+no+' '+name+'</h3><p>'+pos+'</p>';
+div.style.position='relative';
+div.innerHTML='<button onclick="this.parentElement.remove()" style="position:absolute;top:5px;right:5px;width:auto;padding:5px 10px;background:red;">X</button><h3>#'+no+' '+name+'</h3><p>'+pos+'</p>';
 
 if(pos==='Kaleci') document.getElementById('goalkeeperList').appendChild(div);
 if(pos==='Stoper') document.getElementById('defenderList').appendChild(div);
@@ -458,14 +492,27 @@ ball.x=Math.random()*650;
 ball.y=Math.random()*300;
 }
 
+function selectTeam(team){
+selectedTeam=team;
+document.getElementById('teamText').innerText='Seçilen Takım: '+team;
+}
+
+function movePlayer(dir){
+if(dir==='right') player.x+=20;
+if(dir==='left') player.x-=20;
+if(dir==='up') player.y-=20;
+if(dir==='down') player.y+=20;
+}
+
 document.addEventListener('keydown',e=>{
-if(e.key==='ArrowRight') player.x+=20;
-if(e.key==='ArrowLeft') player.x-=20;
-if(e.key==='ArrowUp') player.y-=20;
-if(e.key==='ArrowDown') player.y+=20;
+if(e.key==='ArrowRight'||e.key==='d') player.x+=20;
+if(e.key==='ArrowLeft'||e.key==='a') player.x-=20;
+if(e.key==='ArrowUp'||e.key==='w') player.y-=20;
+if(e.key==='ArrowDown'||e.key==='s') player.y+=20;
 });
 
-let onlinePlayers=1;
+let onlinePlayers=Math.floor(Math.random()*5)+1;
+let selectedTeam='';
 
 function game(){
 ctx.clearRect(0,0,700,350);
@@ -475,6 +522,9 @@ ctx.fillRect(0,0,700,350);
 
 ctx.fillStyle='white';
 ctx.fillRect(player.x,player.y,player.w,player.h);
+
+if(player.x<0||player.x>660) player.x*=-0.95;
+if(player.y<0||player.y>310) player.y*=-0.95;
 
 ctx.beginPath();
 ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);
@@ -486,6 +536,12 @@ let dy=player.y-ball.y;
 let dist=Math.sqrt(dx*dx+dy*dy);
 
 if(dist<40){
+ball.x += 40;
+
+if(ball.x>680){
+score++;
+randomBall();
+}
 score++;
 document.getElementById('score').innerText=score;
 randomBall();
@@ -494,6 +550,8 @@ randomBall();
 ctx.fillStyle='white';
 ctx.font='20px Poppins';
 ctx.fillText('Online Oyuncu: '+onlinePlayers,20,30);
+ctx.fillText('Takım: '+selectedTeam,20,60);
+ctx.fillText('Amaç: Topu sağ kaleye sok!',20,90);
 
 requestAnimationFrame(game);
 }
