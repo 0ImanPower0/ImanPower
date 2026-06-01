@@ -3,100 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Next-Gen Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+    <title>İman Power FC | Ultra Modern Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg: #020617;
             --glass: rgba(15, 23, 42, 0.7);
             --accent: #10b981;
-            --accent-glow: rgba(16, 185, 129, 0.5);
+            --accent-glow: rgba(16, 185, 129, 0.4);
             --text: #f1f5f9;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* --- MODERN AUTH --- */
-        #auth-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #111827 0%, #020617 100%);
-            z-index: 10000; display: flex; justify-content: center; align-items: center;
-        }
-        .auth-card {
-            background: var(--glass); padding: 40px; border-radius: 30px; width: 90%; max-width: 400px;
-            border: 1px solid var(--accent); backdrop-filter: blur(20px); text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        }
-
-        /* --- HEADER --- */
-        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(16, 185, 129, 0.1); }
-        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+        /* --- MODERN NAVIGATION --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 2rem; }
+        .logo-box { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron'; font-weight: 900; color: var(--accent); cursor: pointer; }
+        .logo-box img { width: 40px; border-radius: 50%; border: 2px solid var(--accent); }
         nav ul { display: flex; list-style: none; gap: 10px; }
-        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.75rem; padding: 10px 15px; border-radius: 12px; transition: 0.4s; border: 1px solid transparent; }
-        nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); background: rgba(16, 185, 129, 0.05); }
+        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.75rem; padding: 10px 18px; border-radius: 12px; transition: 0.3s; }
+        nav a:hover, nav a.active { background: rgba(16, 185, 129, 0.15); color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
 
         /* --- SECTIONS --- */
         section { padding: 140px 2rem 80px; max-width: 1400px; margin: 0 auto; display: none; min-height: 100vh; }
-        section.active { display: block; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        section.active { display: block; animation: zoomFade 0.5s ease; }
+        @keyframes zoomFade { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .title { font-family: 'Orbitron'; font-size: 2.8rem; text-align: center; margin-bottom: 4rem; letter-spacing: 5px; text-transform: uppercase; }
+        .title span { color: var(--accent); text-shadow: 0 0 25px var(--accent-glow); }
 
-        .title { font-family: 'Orbitron'; font-size: 2.5rem; text-align: center; margin-bottom: 4rem; letter-spacing: 4px; }
-        .title span { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
-
-        /* --- ULTRA MODERN HOME --- */
+        /* --- HERO (ANA SAYFA) --- */
         .hero { height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .hero img { width: 220px; height: 220px; border-radius: 50%; border: 5px solid var(--accent); box-shadow: 0 0 60px var(--accent-glow); margin-bottom: 30px; animation: pulse 3s infinite; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.2rem; color: #94a3b8; font-style: italic; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .hero img { width: 250px; height: 250px; border-radius: 50%; border: 6px solid var(--accent); box-shadow: 0 0 50px var(--accent-glow); margin-bottom: 30px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 4rem; font-weight: 900; margin-bottom: 10px; }
+        .hero p { font-size: 1.4rem; color: #94a3b8; font-style: italic; opacity: 0.8; }
 
-        /* --- PITCH & KADRO --- */
+        /* --- KADRO VE SAHA --- */
         .pitch {
             width: 100%; max-width: 500px; height: 700px; background: #064e3b; margin: 0 auto;
-            border: 5px solid rgba(255,255,255,0.2); border-radius: 15px; position: relative;
+            border: 4px solid rgba(255,255,255,0.3); border-radius: 15px; position: relative;
             background-image: repeating-linear-gradient(0deg, #064e3b, #064e3b 70px, #065f46 70px, #065f46 140px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
-        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; }
-        .shirt { width: 55px; height: 55px; background: var(--accent); border: 3px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.3rem; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .p-info { background: #000; color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-top: 10px; border: 1.5px solid var(--accent); font-weight: 700; white-space: nowrap; }
+        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; transition: 0.3s; }
+        .shirt { width: 60px; height: 60px; background: var(--accent); border: 3px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.4rem; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+        .p-info { background: #000; color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; margin-top: 10px; border: 1.5px solid var(--accent); font-weight: 700; white-space: nowrap; }
 
-        /* --- TRANSFER & NEWS CARDS --- */
-        .grid-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .modern-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; }
-        .status-badge { position: absolute; top: 15px; right: 15px; padding: 5px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
-        .status-done { background: #059669; } .status-wait { background: #d97706; } .status-cancel { background: #dc2626; }
+        /* --- CARDS (TRANSFER, DUYURU, EKİP) --- */
+        .grid-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .modern-card { background: var(--glass); padding: 30px; border-radius: 25px; border: 1px solid var(--border); position: relative; backdrop-filter: blur(10px); }
+        .modern-card:hover { border-color: var(--accent); transform: translateY(-5px); transition: 0.3s; }
+        .status-badge { position: absolute; top: 20px; right: 20px; padding: 6px 14px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; }
+        .status-done { background: #10b981; } .status-wait { background: #f59e0b; } .status-cancel { background: #ef4444; }
 
-        /* --- ADMIN --- */
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #1e293b; background: #020617; color: white; outline: none; }
-        input:focus { border-color: var(--accent); }
-        .btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        .btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+        /* --- ADMIN PANEL --- */
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #1e293b; background: #020617; color: white; outline: none; }
+        .btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn:hover { background: #059669; filter: brightness(1.2); }
+        .btn-red { background: #ef4444; padding: 6px 12px; border-radius: 8px; border: none; color: white; cursor: pointer; font-size: 0.7rem; }
+
+        /* --- AUTH --- */
+        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 10000; display: flex; justify-content: center; align-items: center; }
+        .auth-card { background: var(--glass); padding: 50px; border-radius: 30px; width: 90%; max-width: 450px; border: 1px solid var(--accent); text-align: center; }
     </style>
 </head>
 <body>
 
+    <!-- GİRİŞ -->
     <div id="auth-overlay">
         <div class="auth-card">
-            <img src="logo.png" style="width:80px; margin-bottom:20px;">
-            <h2 style="font-family:'Orbitron'; margin-bottom:20px; color:var(--accent);">GİRİŞ YAP</h2>
+            <img src="logo.png" style="width:100px; margin-bottom:20px;">
+            <h2 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:20px;">ARENA GİRİŞİ</h2>
             <input type="text" id="user-name" placeholder="Kullanıcı Adı">
             <input type="password" id="user-pass" placeholder="Şifre">
-            <button class="btn" onclick="processAuth()">SİSTEME BAĞLAN</button>
-            <p style="margin-top:20px; font-size:0.8rem; cursor:pointer;" onclick="toggleAuthMode()">Kayıt Ol</p>
+            <button class="btn" onclick="processAuth()">BAĞLAN</button>
+            <p style="margin-top:20px; font-size:0.8rem; cursor:pointer;" onclick="toggleAuthMode()">Hesabın yok mu? Kayıt Ol</p>
         </div>
     </div>
 
     <header>
         <div class="nav-container">
-            <div class="logo-box" style="display:flex; align-items:center; gap:10px; font-family:'Orbitron'; color:var(--accent); font-weight:900;">
-                <img src="logo.png" style="width:35px; border-radius:50%;"> IMAN POWER
-            </div>
+            <div class="logo-box" onclick="switchPage('home')"><img src="logo.png"><span>IMAN POWER FC</span></div>
             <nav><ul>
                 <li><a href="#" class="nav-link active" onclick="switchPage('home')">ANA SAYFA</a></li>
                 <li><a href="#" class="nav-link" onclick="switchPage('kadro')">KADRO</a></li>
+                <li><a href="#" class="nav-link" onclick="switchPage('hakkimizda')">HAKKIMIZDA</a></li>
                 <li><a href="#" class="nav-link" onclick="switchPage('transfer')">TRANSFER</a></li>
                 <li><a href="#" class="nav-link" onclick="switchPage('duyurular')">DUYURULAR</a></li>
                 <li><a href="#" class="nav-link" onclick="switchPage('admin')">ADMIN</a></li>
@@ -108,56 +103,62 @@
         <div class="hero">
             <img src="logo.png">
             <h1>Berat Cihad YETEN</h1>
-            <p>"Zafere giden yolda inanç, en büyük güçtür."</p>
+            <p>"Sahada ter, kalpte inanç, hedef şampiyonluk."</p>
         </div>
     </section>
 
     <section id="kadro">
-        <h2 class="title">ELİT <span>KADRO</span></h2>
+        <h2 class="title">SAHA <span>DİZİLİMİ</span></h2>
         <div class="pitch" id="main-pitch"></div>
     </section>
 
+    <section id="hakkimizda">
+        <h2 class="title">EKİP <span>ÜYELERİ</span></h2>
+        <div id="team-list" class="grid-box"></div>
+    </section>
+
     <section id="transfer">
-        <h2 class="title">TRANSFER <span>MERKEZİ</span></h2>
+        <h2 class="title">TRANSFER <span>DOSYALARI</span></h2>
         <div id="transfer-list" class="grid-box"></div>
     </section>
 
     <section id="duyurular">
-        <h2 class="title">SON <span>HABERLER</span></h2>
+        <h2 class="title">KULÜP <span>BÜLTENİ</span></h2>
         <div id="news-list" class="grid-box"></div>
     </section>
 
     <section id="admin">
-        <h2 class="title">KONTROL <span>PANELİ</span></h2>
-        <div id="admin-login" class="auth-card" style="margin:0 auto;">
-            <input type="password" id="admin-password" placeholder="Admin Anahtarı">
-            <button class="btn" onclick="accessAdmin()">YÖNETİCİ GİRİŞİ</button>
+        <h2 class="title">YÖNETİM <span>MERKEZİ</span></h2>
+        <div id="admin-login" class="auth-card" style="margin:0 auto; border-color:#334155;">
+            <input type="password" id="admin-password" placeholder="Yönetici Şifresi">
+            <button class="btn" onclick="accessAdmin()">PANELİ AÇ</button>
         </div>
         <div id="admin-dashboard" style="display:none;">
             <div class="admin-grid">
                 <div class="modern-card">
-                    <h3>TRANSFER EKLE</h3>
-                    <input type="text" id="tr-name" placeholder="Oyuncu Adı">
-                    <select id="tr-status">
-                        <option value="done">BİTTİ (ALINDI)</option>
-                        <option value="wait">GÖRÜŞÜLÜYOR</option>
-                        <option value="cancel">İPTAL EDİLDİ</option>
-                    </select>
-                    <button class="btn" onclick="addTransfer()">EKLE</button>
+                    <h3>OYUNCU/EKİP EKLE</h3>
+                    <input type="text" id="adm-name" placeholder="İsim">
+                    <input type="text" id="adm-desc" placeholder="Görevi/Açıklama (Hakkımızda için)">
+                    <button class="btn" onclick="admAddMember()">HAKKIMIZDAYA EKLE</button>
+                    <hr style="margin:15px 0; opacity:0.1;">
+                    <input type="number" id="adm-num" placeholder="Forma No">
+                    <select id="adm-pos"><option value="GK">Kaleci</option><option value="ST">Santrafor</option><option value="CM">Orta Saha</option><option value="CB">Stoper</option></select>
+                    <button class="btn" style="background:#8b5cf6" onclick="admAddPlayer()">KADROYA EKLE</button>
                 </div>
                 <div class="modern-card">
-                    <h3>DUYURU YAYINLA</h3>
-                    <input type="text" id="nw-title" placeholder="Haber Başlığı">
-                    <textarea id="nw-body" placeholder="Haber İçeriği"></textarea>
-                    <button class="btn" style="background:#3b82f6" onclick="addNews()">YAYINLA</button>
+                    <h3>DİĞER YÖNETİMLER</h3>
+                    <input type="text" id="adm-tr-name" placeholder="Transfer İsmi">
+                    <select id="adm-tr-status"><option value="done">ALINDI</option><option value="wait">BEKLİYOR</option><option value="cancel">İPTAL</option></select>
+                    <button class="btn" style="background:#f59e0b" onclick="admAddTransfer()">TRANSFER EKLE</button>
+                    <hr style="margin:15px 0; opacity:0.1;">
+                    <input type="text" id="adm-nw-title" placeholder="Haber Başlığı">
+                    <textarea id="adm-nw-body" placeholder="Haber Detayı"></textarea>
+                    <button class="btn" style="background:#3b82f6" onclick="admAddNews()">HABER YAYINLA</button>
                 </div>
-                <div class="modern-card">
-                    <h3>KADRO GÜNCELLE</h3>
-                    <input type="text" id="pl-name" placeholder="İsim">
-                    <input type="number" id="pl-num" placeholder="No">
-                    <select id="pl-pos"><option value="GK">Kaleci</option><option value="ST">Santrafor</option><option value="CM">Orta Saha</option><option value="CB">Stoper</option></select>
-                    <button class="btn" style="background:#8b5cf6" onclick="updateSquad()">KADROYA YAZ</button>
-                </div>
+            </div>
+            <div class="modern-card" style="margin-top:25px;">
+                <h3>SİSTEMDEKİ KULLANICILAR VE VERİLER</h3>
+                <div id="admin-data-list" style="margin-top:15px; font-size:0.8rem;"></div>
             </div>
         </div>
     </section>
@@ -178,75 +179,70 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        let activeUser = "";
+        let activeUser = ""; let isReg = false;
 
-        // AUTH & NAV
+        window.toggleAuthMode = () => { isReg = !isReg; document.querySelector('#auth-overlay h2').innerText = isReg ? "KAYIT OL" : "GİRİŞ YAP"; };
+
         window.processAuth = () => {
             const name = document.getElementById('user-name').value;
-            if(name) { activeUser = name; document.getElementById('auth-overlay').style.display='none'; }
+            const pass = document.getElementById('user-pass').value;
+            if(!name || !pass) return;
+            if(isReg) { set(ref(db, 'users/' + name), { pass }).then(() => location.reload()); }
+            else { onValue(ref(db, 'users/' + name), s => { if(s.val()?.pass === pass) { activeUser = name; document.getElementById('auth-overlay').style.display='none'; } else alert("Hatalı!"); }, {onlyOnce:true}); }
         };
 
         window.switchPage = (id) => {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            event.target.classList.add('active');
+            if(event.target.classList.contains('nav-link')) event.target.classList.add('active');
         };
 
-        window.accessAdmin = () => {
-            if(document.getElementById('admin-password').value === "imanpower2026") {
-                document.getElementById('admin-login').style.display='none';
-                document.getElementById('admin-dashboard').style.display='block';
-            }
-        };
+        window.accessAdmin = () => { if(document.getElementById('admin-password').value === "imanpower2026") { document.getElementById('admin-login').style.display='none'; document.getElementById('admin-dashboard').style.display='block'; }};
 
-        // DATABASE ACTIONS
-        window.addTransfer = () => {
-            push(ref(db, 'transfers'), { name: document.getElementById('tr-name').value, status: document.getElementById('tr-status').value });
-        };
-        window.addNews = () => {
-            push(ref(db, 'news'), { title: document.getElementById('nw-title').value, body: document.getElementById('nw-body').value, date: new Date().toLocaleDateString() });
-        };
-        window.updateSquad = () => {
-            const p = { name: document.getElementById('pl-name').value, num: document.getElementById('pl-num').value, pos: document.getElementById('pl-pos').value };
-            set(ref(db, 'kadro/' + p.pos), p);
-        };
+        window.admAddMember = () => push(ref(db, 'team'), { name: document.getElementById('adm-name').value, desc: document.getElementById('adm-desc').value });
+        window.admAddPlayer = () => set(ref(db, 'kadro/' + document.getElementById('adm-pos').value), { name: document.getElementById('adm-name').value, num: document.getElementById('adm-num').value, pos: document.getElementById('adm-pos').value });
+        window.admAddTransfer = () => push(ref(db, 'transfers'), { name: document.getElementById('adm-tr-name').value, status: document.getElementById('adm-tr-status').value });
+        window.admAddNews = () => push(ref(db, 'news'), { title: document.getElementById('adm-nw-title').value, body: document.getElementById('adm-nw-body').value, date: new Date().toLocaleDateString() });
+        window.del = (p) => { if(confirm("Silinsin mi?")) remove(ref(db, p)); };
 
-        // REALTIME SYNC
         const posMap = { "GK": {t:"88%", l:"50%"}, "CB": {t:"70%", l:"50%"}, "CM": {t:"45%", l:"50%"}, "ST": {t:"18%", l:"50%"} };
 
         onValue(ref(db, '/'), (snap) => {
             const d = snap.val() || {};
             
-            // Render Squad
-            const pitch = document.getElementById('main-pitch'); pitch.innerHTML = "";
+            // Kadro
+            const pBox = document.getElementById('main-pitch'); pBox.innerHTML = "";
             if(d.kadro) Object.values(d.kadro).forEach(p => {
                 const el = document.createElement('div'); el.className = "player";
                 el.style.top = posMap[p.pos].t; el.style.left = posMap[p.pos].l;
                 el.innerHTML = `<div class="shirt">${p.num}</div><div class="p-info">${p.name}</div>`;
-                pitch.appendChild(el);
+                pBox.appendChild(el);
             });
 
-            // Render Transfers
+            // Ekip (Hakkımızda)
+            const tBox = document.getElementById('team-list'); tBox.innerHTML = "";
+            if(d.team) Object.entries(d.team).forEach(([id, m]) => {
+                tBox.innerHTML += `<div class="modern-card"><h3>${m.name}</h3><p style="color:#94a3b8; margin-top:10px;">${m.desc}</p></div>`;
+            });
+
+            // Transferler
             const trBox = document.getElementById('transfer-list'); trBox.innerHTML = "";
             if(d.transfers) Object.entries(d.transfers).forEach(([id, t]) => {
-                const statusTxt = t.status === 'done' ? 'ALINDI' : (t.status === 'wait' ? 'BEKLEMEDE' : 'İPTAL');
-                trBox.innerHTML += `<div class="modern-card">
-                    <span class="status-badge status-${t.status}">${statusTxt}</span>
-                    <h3 style="margin-top:10px;">${t.name}</h3>
-                    <p style="font-size:0.8rem; color:#64748b;">Transfer Durumu Güncel</p>
-                </div>`;
+                const sMap = {done:'ALINDI', wait:'GÖRÜŞÜLÜYOR', cancel:'İPTAL'};
+                trBox.innerHTML += `<div class="modern-card"><span class="status-badge status-${t.status}">${sMap[t.status]}</span><h3 style="margin-top:15px;">${t.name}</h3></div>`;
             });
 
-            // Render News
+            // Duyurular
             const nwBox = document.getElementById('news-list'); nwBox.innerHTML = "";
             if(d.news) Object.values(d.news).forEach(n => {
-                nwBox.innerHTML += `<div class="modern-card">
-                    <small style="color:var(--accent)">${n.date}</small>
-                    <h3 style="margin:10px 0;">${n.title}</h3>
-                    <p style="font-size:0.9rem; color:#94a3b8;">${n.body}</p>
-                </div>`;
+                nwBox.innerHTML += `<div class="modern-card"><small style="color:var(--accent)">${n.date}</small><h3 style="margin:10px 0;">${n.title}</h3><p style="font-size:0.9rem; color:#94a3b8;">${n.body}</p></div>`;
             });
+
+            // Admin Veri Listesi (Kullanıcılar dahil)
+            const dataBox = document.getElementById('admin-data-list'); dataBox.innerHTML = "";
+            if(d.users) Object.keys(d.users).forEach(u => dataBox.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #1e293b;"><span>Kullanıcı: ${u}</span><button class="btn-red" onclick="del('users/${u}')">SİL</button></div>`);
+            if(d.team) Object.entries(d.team).forEach(([id, m]) => dataBox.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #1e293b;"><span>Ekip: ${m.name}</span><button class="btn-red" onclick="del('team/${id}')">SİL</button></div>`);
         });
     </script>
 </body>
