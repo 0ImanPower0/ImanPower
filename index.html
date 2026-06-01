@@ -32,7 +32,7 @@
             border: 1px solid rgba(16, 185, 129, 0.3); backdrop-filter: blur(20px); text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        .auth-card img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 25px; box-shadow: 0 0 20px var(--accent-glow); }
+        .auth-card img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 25px; box-shadow: 0 0 20px var(--accent-glow); object-fit: cover; }
         .auth-card h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-bottom: 30px; }
 
         /* --- HEADER & NAVIGATION --- */
@@ -65,7 +65,6 @@
             background-image: repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
             box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
-        /* Kaleler */
         .goal-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-bottom: none; border-radius: 5px 5px 0 0; }
         .goal-bottom { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-top: none; border-radius: 0 0 5px 5px; }
 
@@ -80,7 +79,7 @@
 
         /* --- SOHBET --- */
         .chat-ui { background: var(--card); border-radius: 30px; height: 650px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(16,185,129,0.2); }
-        #chatMsgs { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); }
+        #chatMsgs { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
         .msg { max-width: 80%; padding: 15px 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .msg.me { align-self: flex-end; background: linear-gradient(to right, var(--accent-dark), var(--accent)); color: white; border-bottom-right-radius: 4px; }
         .msg.not-me { align-self: flex-start; background: #1e293b; border-bottom-left-radius: 4px; }
@@ -97,16 +96,14 @@
         input:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
         .btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 15px; color: white; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
         .btn:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
-        .btn-red { background: var(--danger); margin-top: 5px; padding: 8px 15px; width: auto; font-size: 0.7rem; }
-
+        .btn-red { background: var(--danger); margin-top: 5px; padding: 8px 15px; width: auto; font-size: 0.7rem; border: none; border-radius: 8px; color: white; cursor: pointer;}
     </style>
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="auth-overlay">
         <div class="auth-card">
-            <img src="image_405fe7.jpg">
+            <img src="logo.png" alt="Iman Power FC">
             <h2 id="auth-title">GİRİŞ PANELİ</h2>
             <div id="auth-form">
                 <input type="text" id="user-name" placeholder="Adınız">
@@ -120,7 +117,7 @@
     <header>
         <div class="nav-container">
             <div class="logo-box" onclick="switchPage('home')">
-                <img src="image_405fe7.jpg">
+                <img src="logo.png" alt="Iman Power FC">
                 <span>IMAN POWER FC</span>
             </div>
             <nav>
@@ -178,14 +175,13 @@
         <h2 class="title">YÖNETİM <span>MERKEZİ</span></h2>
         
         <div id="admin-login" class="auth-card" style="margin: 0 auto;">
-            <i class="fa-solid fa-shield-halved" style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;"></i>
+            <img src="logo.png" alt="Iman Power FC" style="width: 100px; height: 100px; margin-bottom: 15px;">
             <input type="password" id="admin-password" placeholder="Admin Anahtarı">
             <button class="btn" onclick="accessAdmin()">YÖNETİME GEÇ</button>
         </div>
 
         <div id="admin-dashboard" style="display: none;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                <!-- Oyuncu -->
                 <div class="admin-card" style="background:var(--card); padding:30px; border-radius:25px;">
                     <h3 class="admin-section-title"><i class="fa-solid fa-user-plus"></i> OYUNCU EKLE</h3>
                     <input type="text" id="adm-p-name" placeholder="İsim">
@@ -201,7 +197,6 @@
                     </select>
                     <button class="btn" onclick="admAddPlayer()">SAHAYA SÜR</button>
                 </div>
-                <!-- Duyuru -->
                 <div class="admin-card" style="background:var(--card); padding:30px; border-radius:25px;">
                     <h3 class="admin-section-title"><i class="fa-solid fa-bullhorn"></i> DUYURU YAYINLA</h3>
                     <input type="text" id="adm-n-title" placeholder="Başlık">
@@ -210,7 +205,6 @@
                 </div>
             </div>
 
-            <!-- Kayıtlı Üyeler ve Veri Yönetimi -->
             <div style="margin-top: 40px; background:var(--card); padding:30px; border-radius:25px;">
                 <h3 class="admin-section-title"><i class="fa-solid fa-users-gear"></i> ÜYE VE VERİ YÖNETİMİ</h3>
                 <div style="overflow-x: auto;">
@@ -229,6 +223,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+        // Firebase Yapılandırması (Görselinizdeki bilgiler)
         const firebaseConfig = {
             apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
             authDomain: "imanpowerveri.firebaseapp.com",
@@ -236,7 +231,8 @@
             projectId: "imanpowerveri",
             storageBucket: "imanpowerveri.firebasestorage.app",
             messagingSenderId: "891464029314",
-            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b"
+            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b",
+            measurementId: "G-4T6XSDBDL5"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -253,7 +249,7 @@
         };
 
         window.processAuth = () => {
-            const name = document.getElementById('user-name').value;
+            const name = document.getElementById('user-name').value.trim();
             const pass = document.getElementById('user-pass').value;
             if(!name || !pass) return alert("Eksik bilgi!");
 
@@ -279,7 +275,7 @@
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(event) event.target.classList.add('active');
+            if(event && event.target.classList.contains('nav-link')) event.target.classList.add('active');
         };
 
         // --- ADMIN ---
@@ -353,13 +349,13 @@
             // Admin Veri Tablosu (Kullanıcılar dahil)
             const aTable = document.getElementById('admin-data-body'); aTable.innerHTML = "";
             if(data.users) Object.entries(data.users).forEach(([id, u]) => {
-                aTable.innerHTML += `<tr><td>Üye</td><td>${id}</td><td><button class="btn btn-red" onclick="deleteData('users/${id}')">SİL</button></td></tr>`;
+                aTable.innerHTML += `<tr><td>Üye</td><td>${id}</td><td><button class="btn-red" onclick="deleteData('users/${id}')">SİL</button></td></tr>`;
             });
             if(data.kadro) Object.entries(data.kadro).forEach(([id, p]) => {
-                aTable.innerHTML += `<tr><td>Oyuncu</td><td>${p.name} (${p.pos})</td><td><button class="btn btn-red" onclick="deleteData('kadro/${id}')">SİL</button></td></tr>`;
+                aTable.innerHTML += `<tr><td>Oyuncu</td><td>${p.name} (${p.pos})</td><td><button class="btn-red" onclick="deleteData('kadro/${id}')">SİL</button></td></tr>`;
             });
             if(data.duyurular) Object.entries(data.duyurular).forEach(([id, n]) => {
-                aTable.innerHTML += `<tr><td>Duyuru</td><td>${n.title}</td><td><button class="btn btn-red" onclick="deleteData('duyurular/${id}')">SİL</button></td></tr>`;
+                aTable.innerHTML += `<tr><td>Duyuru</td><td>${n.title}</td><td><button class="btn-red" onclick="deleteData('duyurular/${id}')">SİL</button></td></tr>`;
             });
         });
     </script>
