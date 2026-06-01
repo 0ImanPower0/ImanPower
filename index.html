@@ -3,722 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>İman Power FC | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Modern CSS Reset & Değişkenler */
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
-            --accent-color: #10b981; /* İman Power Yeşil */
-            --text-color: #f3f4f6;
-            --text-muted: #9ca3af;
-            --pitch-green: #14532d;
+            --bg-color: #05070a;
+            --card-bg: #0f172a;
+            --accent-color: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.4);
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --pitch-green: #064e3b;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+        /* Giriş Splash Ekranı */
+        #intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 0.8s ease-in-out;
         }
-
-        /* Navigasyon */
+        .intro-logo { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--accent-color); text-shadow: 0 0 20px var(--accent-glow); margin-bottom: 20px; }
+        
+        /* Header */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
         }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 800; color: var(--accent-color); display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent-color); }
+        
+        nav ul { display: flex; list-style: none; gap: 15px; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.3s; padding: 8px 12px; border-radius: 6px; }
+        nav a:hover, nav a.active { background: rgba(16, 185, 129, 0.1); color: var(--accent-color); }
+        .auth-btn { background: var(--accent-color) !important; color: white !important; }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
+        /* Sayfa Yapısı */
+        section { padding: 120px 2rem 60px; max-width: 1200px; margin: 0 auto; min-height: 100vh; display: none; }
+        section.active-section { display: block; animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 3rem; font-family: 'Orbitron', sans-serif; }
+        h2 span { color: var(--accent-color); }
 
-        /* Dinamik Logo Alanı */
-        .logo-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #222; /* Fotoğraf gelene kadar geçici */
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-            font-size: 0.9rem;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--accent-color);
-        }
-
-        .auth-btn {
-            background: var(--accent-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        /* Genel Sayfa Düzeni */
-        section {
-            padding: 100px 2rem 60px 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            min-height: 100vh;
-            display: none; /* Sayfa değiştirme mekanizması için */
-        }
-
-        section.active-section {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            font-weight: 800;
-        }
-
-        h2 span {
-            color: var(--accent-color);
-        }
-
-        /* Hakkımızda */
-        .about-box {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-            line-height: 1.8;
-        }
-
-        /* GERÇEKÇİ FUTBOL SAHASI VE KADRO */
-        .pitch-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
+        /* Futbol Sahası */
+        .pitch-container { display: flex; justify-content: center; perspective: 1000px; }
         .football-pitch {
-            width: 100%;
-            max-width: 500px;
-            height: 650px;
-            background: var(--pitch-green);
-            border: 4px solid white;
-            border-radius: 12px;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            background-image: linear-gradient(to bottom, rgba(255,255,255,0.05) 50%, transparent 50%);
-            background-size: 100% 10%;
+            width: 100%; max-width: 450px; height: 600px;
+            background: var(--pitch-green); border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 15px; position: relative;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
         }
+        .pitch-center-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; }
+        .pitch-line { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255,255,255,0.3); }
 
-        /* Saha Çizgileri */
-        .pitch-center-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border: 3px solid white;
-            border-radius: 50%;
-        }
-        .pitch-center-line {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            height: 3px;
-            background: white;
-        }
-
-        /* Oyuncu Pozisyonları (4-3-3 Dizilişi) */
-        .player-node {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .player-node:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
+        .player-node { position: absolute; transform: translate(-50%, -50%); text-align: center; }
         .player-shirt {
-            width: 45px;
-            height: 45px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            width: 42px; height: 42px; background: var(--accent-color); color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; border: 3px solid #fff; box-shadow: 0 0 15px var(--accent-glow);
         }
-
-        .player-name {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin-top: 5px;
-            white-space: nowrap;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Kart Listeleri (Transferler & Yakından İlgilenilenler) */
-        .grid-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .player-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .player-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: var(--accent-color);
-        }
-
-        .player-card-info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .player-card-info p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .status-badge {
-            margin-top: 8px;
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--accent-color);
-        }
-
-        .status-badge.hunting {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
+        .player-name { font-size: 0.7rem; background: #000; padding: 2px 6px; border-radius: 4px; margin-top: 4px; white-space: nowrap; }
 
         /* Sohbet Odası */
-        .chat-container {
-            background: var(--card-bg);
-            border-radius: 16px;
-            height: 550px;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.05);
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .chat-wrapper { background: var(--card-bg); border-radius: 20px; height: 600px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(16,185,129,0.2); }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
+        .msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; position: relative; font-size: 0.9rem; }
+        .msg.in { align-self: flex-start; background: #1e293b; border-bottom-left-radius: 2px; }
+        .msg.out { align-self: flex-end; background: var(--accent-color); color: white; border-bottom-right-radius: 2px; }
+        .msg .u { font-size: 0.7rem; font-weight: 800; display: block; margin-bottom: 3px; opacity: 0.8; }
+        
+        .chat-input { padding: 20px; display: flex; gap: 10px; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); }
+        .chat-input input { flex: 1; background: #1e293b; border: none; padding: 12px; border-radius: 10px; color: white; outline: none; }
+        .chat-input button { background: var(--accent-color); border: none; padding: 0 20px; border-radius: 10px; color: white; cursor: pointer; }
 
-        .chat-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        /* Grid Listeler */
+        .grid-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .player-card { background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .del-btn { color: #ef4444; cursor: pointer; padding: 8px; transition: 0.3s; }
+        .del-btn:hover { transform: scale(1.2); }
 
-        .message {
-            max-width: 70%;
-            padding: 0.8rem 1rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
+        /* Admin */
+        .login-box { max-width: 400px; margin: 50px auto; background: var(--card-bg); padding: 40px; border-radius: 20px; text-align: center; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #1e293b; background: #05070a; color: white; }
+        .btn { width: 100%; padding: 12px; background: var(--accent-color); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
 
-        .message.incoming {
-            background: rgba(255,255,255,0.05);
-            align-self: flex-start;
-        }
-
-        .message.outgoing {
-            background: var(--accent-color);
-            color: white;
-            align-self: flex-end;
-        }
-
-        .message .username {
-            font-weight: bold;
-            font-size: 0.75rem;
-            margin-bottom: 4px;
-            display: block;
-            color: #10b981;
-        }
-        .message.outgoing .username { color: #fff; }
-
-        .chat-input-area {
-            padding: 1rem;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .chat-input-area input {
-            flex: 1;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.8rem;
-            border-radius: 8px;
-            color: white;
-            outline: none;
-        }
-
-        .chat-input-area button {
-            background: var(--accent-color);
-            border: none;
-            color: white;
-            padding: 0 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Admin & Giriş Paneli */
-        .login-box {
-            max-width: 400px;
-            margin: 40px auto;
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.8rem;
-            border-radius: 8px;
-            color: white;
-            outline: none;
-        }
-
-        .btn-block {
-            width: 100%;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Yönetim Paneli İçeriği */
-        .admin-dashboard {
-            display: none;
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 2rem;
-            border: 1px solid rgba(255,255,255,0.05);
+        @media (max-width: 768px) {
+            nav ul { display: none; } /* Mobil menü basitleştirmesi */
+            .intro-logo { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Karşılama Ekranı -->
+    <div id="intro-overlay">
+        <div class="intro-logo">İMAN POWER FC</div>
+        <button class="btn" style="width: auto; padding: 15px 40px;" onclick="enterSite()">SAHAYA GİRİŞ YAP</button>
+    </div>
+
     <header>
         <div class="nav-container">
-            <div class="logo">
-                <img src="https://via.placeholder.com/40" alt="İman Power Logo" class="logo-img" id="siteLogo">
-                İman Power
+            <div class="logo" onclick="switchPage('home')">
+                <img src="https://via.placeholder.com/40" id="siteLogo">
+                <span>İMAN POWER</span>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" class="nav-link active" onclick="switchPage('home')">Hakkımızda</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('kadro')">Kadro</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('transferler')">Transferler</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('ilgi')">Yakından İlgilenilenler</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('sohbet')">Sohbet</a></li>
-                    <li><a href="#" class="nav-link auth-btn" onclick="switchPage('admin')"><i class="fa-solid fa-lock"></i> Admin</a></li>
+                    <li><a href="#" class="nav-link active" onclick="switchPage('home')">ANA SAYFA</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchPage('kadro')">KADRO</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchPage('transferler')">TRANSFERLER</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchPage('sohbet')">SOHBET</a></li>
+                    <li><a href="#" class="nav-link auth-btn" onclick="switchPage('admin')"><i class="fa-solid fa-lock"></i></a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <!-- Sayfalar -->
     <section id="home" class="active-section">
-        <h2>Hakkımızda</h2>
-        <div class="about-box">
-            <p style="font-size: 1.2rem; font-weight: 600; color: var(--accent-color); margin-bottom: 1rem;">İMAN POWER FC'YE HOŞ GELDİNİZ!</p>
-            <p>Modern futbol dünyasında inanç, güç ve hırsın birleştiği tek nokta: İman Power. Biz sadece bir takım değil, sahada birbirine bağlı tek bir vücut gibi hareket eden dinamik bir topluluğuz. Bu platformda güncel kadromuzu görebilir, transfer bombalarımızı takip edebilir ve canlı odamızda taraftarlarımızla anlık olarak sohbet edebilirsiniz.</p>
+        <h2>HOŞ GELDİN <span>BAŞKAN</span></h2>
+        <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; line-height: 2; text-align: center; border: 1px solid rgba(16,185,129,0.1);">
+            <p style="font-size: 1.2rem; color: var(--accent-color); font-weight: bold;">İNANÇ, GÜÇ, ZAFER!</p>
+            <p>İman Power FC'nin dijital merkezine hoş geldiniz. Burada takımımızın kalbi atıyor. Kadroyu yönetin, transferleri takip edin ve taraftarlarla canlı sohbete katılın.</p>
         </div>
     </section>
 
     <section id="kadro">
-        <h2>Takım <span>Kadromuz</span></h2>
+        <h2>TAKIM <span>DİZİLİŞİ</span></h2>
         <div class="pitch-container">
             <div class="football-pitch" id="pitch">
-                <div class="pitch-center-line"></div>
+                <div class="pitch-line"></div>
                 <div class="pitch-center-circle"></div>
-                </div>
+                <!-- Oyuncular JS ile gelecek -->
+            </div>
         </div>
     </section>
 
     <section id="transferler">
-        <h2>Yeni <span>Transferler</span></h2>
-        <div class="grid-list" id="transfersList">
-            </div>
-    </section>
-
-    <section id="ilgi">
-        <h2>Yakından <span>İlgilenilenler</span></h2>
-        <div class="grid-list" id="scoutList">
-            </div>
+        <h2>TRANSFER <span>MERKEZİ</span></h2>
+        <div class="grid-list" id="transfersList"></div>
     </section>
 
     <section id="sohbet">
-        <h2>Canlı <span>Sohbet</span></h2>
-        <div class="chat-container">
-            <div class="chat-messages" id="chatBox">
-                <div class="message incoming">
-                    <span class="username">Sistem</span>
-                    İman Power Canlı Sohbet Odasına Hoş Geldiniz! Küfür ve hakaret yasaktır.
-                </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chatUser" placeholder="Takma Adın" style="width: 20%; flex: none;">
-                <input type="text" id="chatMsg" placeholder="Mesajınızı yazın...">
-                <button onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        <h2>CANLI <span>TRİBÜN</span></h2>
+        <div class="chat-wrapper">
+            <div class="chat-messages" id="chatBox"></div>
+            <div class="chat-input">
+                <input type="text" id="chatUser" placeholder="İsim" style="width: 80px; flex: none;">
+                <input type="text" id="chatMsg" placeholder="Mesajınızı gönderin...">
+                <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
     </section>
 
     <section id="admin">
-        <h2>Admin <span>Paneli</span></h2>
-        
-        <div class="login-box" id="loginBox">
-            <div class="form-group">
-                <label>Admin Şifresi</label>
-                <input type="password" id="adminPass" placeholder="••••••••">
-            </div>
-            <button class="btn-block" onclick="checkAdminLogin()">Giriş Yap</button>
+        <h2>YÖNETİM <span>PANELİ</span></h2>
+        <div id="loginBox" class="login-box">
+            <input type="password" id="adminPass" placeholder="Admin Şifresi">
+            <button class="btn" onclick="login()">GİRİŞ</button>
         </div>
 
-        <div class="admin-dashboard" id="adminDashboard">
-            <h3 style="margin-bottom: 1.5rem; color: var(--accent-color);"><i class="fa-solid fa-sliders"></i> İçerik Yönetimi</h3>
-            <p style="margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-muted)">Buradan oyuncu ekleyip silebilir ve her şeyi yönetebilirsiniz.</p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 8px;">
-                    <h4>Oyuncu / Transfer Ekle</h4>
-                    <br>
-                    <div class="form-group">
-                        <label>Oyuncu Adı Soyadı</label>
-                        <input type="text" id="pName" placeholder="Örn: Cristiano Ronaldo">
-                    </div>
-                    <div class="form-group">
-                        <label>Forma Numarası</label>
-                        <input type="number" id="pNum" placeholder="Örn: 7">
-                    </div>
-                    <div class="form-group">
-                        <label>Kategori</label>
-                        <select id="pCat">
-                            <option value="kadro">Ana Kadro (Sahaya Ekler)</option>
-                            <option value="transfer">Yeni Transfer</option>
-                            <option value="ilgi">Yakından İlgilenilen</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Pozisyon (Sadece Kadro Seçildiyse Önemli)</label>
-                        <select id="pPos">
-                            <option value="GK">Kaleci (GK)</option>
-                            <option value="LB">Sol Bek (LB)</option>
-                            <option value="CB1">Stoper 1 (CB)</option>
-                            <option value="CB2">Stoper 2 (CB)</option>
-                            <option value="RB">Sağ Bek (RB)</option>
-                            <option value="CM1">Merkez Orta Saha 1 (CM)</option>
-                            <option value="CM2">Merkez Orta Saha 2 (CM)</option>
-                            <option value="AM">Ofansif Orta Saha (AM)</option>
-                            <option value="LW">Sol Kanat (LW)</option>
-                            <option value="RW">Sağ Kanat (RW)</option>
-                            <option value="ST">Santrafor (ST)</option>
-                        </select>
-                    </div>
-                    <button class="btn-block" onclick="addPlayer()">Sisteme Ekle</button>
+        <div id="adminPanel" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div class="login-box" style="margin: 0; width: 100%;">
+                    <h3>OYUNCU EKLE</h3><br>
+                    <input type="text" id="pName" placeholder="Oyuncu Adı">
+                    <input type="number" id="pNum" placeholder="Numara">
+                    <select id="pCat">
+                        <option value="kadro">Ana Kadro (Sahaya)</option>
+                        <option value="transfer">Yeni Transfer</option>
+                    </select>
+                    <select id="pPos">
+                        <option value="GK">Kaleci</option>
+                        <option value="CB1">Stoper 1</option>
+                        <option value="CB2">Stoper 2</option>
+                        <option value="LB">Sol Bek</option>
+                        <option value="RB">Sağ Bek</option>
+                        <option value="CM1">Orta Saha 1</option>
+                        <option value="CM2">Orta Saha 2</option>
+                        <option value="AM">Oyun Kurucu</option>
+                        <option value="LW">Sol Kanat</option>
+                        <option value="RW">Sağ Kanat</option>
+                        <option value="ST">Santrafor</option>
+                    </select>
+                    <button class="btn" onclick="addPlayer()">SİSTEME EKLE</button>
                 </div>
-
-                <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <h4>Sistem Ayarları</h4>
-                        <br>
-                        <div class="form-group">
-                            <label>Logo URL Adresi (Logonuzu Değiştirin)</label>
-                            <input type="text" id="logoUrl" placeholder="https://resimlinki.com/logo.jpg">
-                        </div>
-                        <button class="btn-block" style="background:#3b82f6;" onclick="updateLogo()">Logoyu Güncelle</button>
-                    </div>
-                    
-                    <button class="btn-block" style="background: #ef4444; margin-top: 20px;" onclick="adminLogout()">Güvenli Çıkış</button>
+                <div class="login-box" style="margin: 0; width: 100%;">
+                    <h3>SİSTEM AYARI</h3><br>
+                    <input type="text" id="logoUrl" placeholder="Logo Linki">
+                    <button class="btn" style="background: #3b82f6;" onclick="updateLogo()">LOGOYU GÜNCELLE</button>
+                    <br><br>
+                    <button class="btn" style="background: #ef4444;" onclick="logout()">ÇIKIŞ YAP</button>
                 </div>
             </div>
+            
+            <h3 style="margin-top: 40px;">KADRO / TRANSFER YÖNETİMİ</h3><br>
+            <div id="adminList" class="grid-list"></div>
         </div>
     </section>
 
-    <script>
-        // Örnek Başlangıç Verileri (Localstorage'da saklanacak)
-        let db = JSON.parse(localStorage.getItem('imanPowerDB')) || {
-            kadro: {
-                "GK": {name: "Muslera", num: 1},
-                "LB": {name: "Ferdi", num: 3},
-                "CB1": {name: "Nelsson", num: 4},
-                "CB2": {name: "Abdülkerim", num: 42},
-                "RB": {name: "Boey", num: 93},
-                "CM1": {name: "Torreira", num: 34},
-                "CM2": {name: "Fred", num: 35},
-                "AM": {name: "Szymanski", num: 10},
-                "LW": {name: "Kerem", num: 7},
-                "RW": {name: "Icardi", num: 99},
-                "ST": {name: "Dzeko", num: 9}
-            },
-            transferler: [
-                {name: "Kylian Mbappé", num: 10},
-                {name: "İlkay Gündoğan", num: 22}
-            ],
-            ilgilenilenler: [
-                {name: "Erling Haaland", num: 9},
-                {name: "Kevin De Bruyne", num: 17}
-            ],
-            logo: "https://via.placeholder.com/40"
+    <!-- FIREBASE & MANTIK -->
+    <script type="module">
+        // image_40ba1c.png içindeki verilerle Firebase kurulumu
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
+            authDomain: "imanpowerveri.firebaseapp.com",
+            databaseURL: "https://imanpowerveri-default-rtdb.firebaseio.com",
+            projectId: "imanpowerveri",
+            storageBucket: "imanpowerveri.firebasestorage.app",
+            messagingSenderId: "891464029314",
+            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b",
+            measurementId: "G-4T6XSDBDL5"
         };
 
-        function saveDB() {
-            localStorage.setItem('imanPowerDB', JSON.stringify(db));
-            renderAll();
-        }
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-        // Sayfa Değiştirici (SPA)
-        function switchPage(pageId) {
-            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active-section'));
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-            
+        // --- GLOBAL FONKSİYONLAR ---
+        window.enterSite = () => {
+            document.getElementById('intro-overlay').style.opacity = '0';
+            setTimeout(() => document.getElementById('intro-overlay').style.display = 'none', 800);
+        };
+
+        window.switchPage = (pageId) => {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active-section'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(pageId).classList.add('active-section');
-            // Menü aktifliğini ayarla
-            event.target.classList.add('active');
-        }
+            if(event) event.target.classList.add('active');
+        };
 
-        // Admin Giriş Kontrolü
-        function checkAdminLogin() {
-            const pass = document.getElementById('adminPass').value;
-            if(pass === "imanpoweradmini31") {
-                document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('adminDashboard').style.display = 'block';
-                alert("Başarıyla giriş yapıldı, Hoş geldin Başkan!");
-            } else {
-                alert("Hatalı Şifre!");
-            }
-        }
+        // --- CANLI SOHBET ---
+        window.sendMessage = () => {
+            const user = document.getElementById('chatUser').value || "Anonim";
+            const text = document.getElementById('chatMsg').value;
+            if(!text) return;
+            push(ref(db, 'messages'), { user, text, time: Date.now() });
+            document.getElementById('chatMsg').value = "";
+        };
 
-        function adminLogout() {
-            document.getElementById('adminPass').value = "";
-            document.getElementById('loginBox').style.display = 'block';
-            document.getElementById('adminDashboard').style.display = 'none';
-            switchPage('home');
-        }
+        onValue(ref(db, 'messages'), (snap) => {
+            const box = document.getElementById('chatBox');
+            box.innerHTML = "";
+            snap.forEach(child => {
+                const m = child.val();
+                const type = m.user === document.getElementById('chatUser').value ? 'out' : 'in';
+                box.innerHTML += `<div class="msg ${type}"><span class="u">${m.user}</span>${m.text}</div>`;
+            });
+            box.scrollTop = box.scrollHeight;
+        });
 
-        // Oyuncu Ekleme
-        function addPlayer() {
+        // --- TAKIM YÖNETİMİ ---
+        const coords = {
+            "GK": {t:"90%", l:"50%"}, "LB": {t:"72%", l:"15%"}, "CB1": {t:"75%", l:"38%"}, "CB2": {t:"75%", l:"62%"}, "RB": {t:"72%", l:"85%"},
+            "CM1": {t:"50%", l:"30%"}, "CM2": {t:"50%", l:"70%"}, "AM": {t:"35%", l:"50%"}, "LW": {t:"18%", l:"15%"}, "RW": {t:"18%", l:"85%"}, "ST": {t:"10%", l:"50%"}
+        };
+
+        window.addPlayer = () => {
             const name = document.getElementById('pName').value;
             const num = document.getElementById('pNum').value;
             const cat = document.getElementById('pCat').value;
             const pos = document.getElementById('pPos').value;
+            if(!name) return alert("İsim yazın!");
 
-            if(!name || !num) return alert("Lütfen isim ve numara girin.");
-
-            if(cat === "kadro") {
-                db.kadro[pos] = {name: name, num: num};
-            } else if(cat === "transfer") {
-                db.transferler.push({name: name, num: num});
-            } else if(cat === "ilgi") {
-                db.ilgilenilenler.push({name: name, num: num});
+            if(cat === 'kadro') {
+                set(ref(db, 'kadro/' + pos), { name, num, pos });
+            } else {
+                push(ref(db, 'transferler'), { name, num });
             }
-
-            saveDB();
-            alert("Başarıyla Eklendi!");
-            // Temizle
-            document.getElementById('pName').value = "";
-            document.getElementById('pNum').value = "";
-        }
-
-        function updateLogo() {
-            const url = document.getElementById('logoUrl').value;
-            if(url) {
-                db.logo = url;
-                saveDB();
-                alert("Logo Güncellendi!");
-            }
-        }
-
-        // Sahayı ve Kartları Ekrana Çizme (Dinamik render)
-        const coords = {
-            "GK":  {top: "90%", left: "50%"},
-            "LB":  {top: "70%", left: "15%"},
-            "CB1": {top: "73%", left: "38%"},
-            "CB2": {top: "73%", left: "62%"},
-            "RB":  {top: "70%", left: "85%"},
-            "CM1": {top: "48%", left: "30%"},
-            "CM2": {top: "48%", left: "70%"},
-            "AM":  {top: "32%", left: "50%"},
-            "LW":  {top: "15%", left: "15%"},
-            "RW":  {top: "15%", left: "85%"},
-            "ST":  {top: "10%", left: "50%"}
+            alert("Başarıyla eklendi!");
         };
 
-        function renderAll() {
-            // Logoyu Güncelle
-            document.getElementById('siteLogo').src = db.logo;
+        window.deletePlayer = (path) => {
+            if(confirm("Silinsin mi?")) remove(ref(db, path));
+        };
 
+        // Verileri Dinleme ve Render
+        onValue(ref(db, '/'), (snap) => {
+            const data = snap.val() || {};
+            
             // Sahayı Render Et
             const pitch = document.getElementById('pitch');
-            // Önce çizgiler dışındaki eski oyuncuları temizle
-            document.querySelectorAll('.player-node').forEach(el => el.remove());
-
-            for (let pos in coords) {
-                const playerData = db.kadro[pos] || {name: "Boş", num: "X"};
-                const node = document.createElement('div');
-                node.className = "player-node";
-                node.style.top = coords[pos].top;
-                node.style.left = coords[pos].left;
-                
-                node.innerHTML = `
-                    <div class="player-shirt">${playerData.num}</div>
-                    <div class="player-name">${playerData.name}</div>
-                `;
-                pitch.appendChild(node);
+            pitch.querySelectorAll('.player-node').forEach(n => n.remove());
+            if(data.kadro) {
+                Object.values(data.kadro).forEach(p => {
+                    const node = document.createElement('div');
+                    node.className = "player-node";
+                    node.style.top = coords[p.pos].t; node.style.left = coords[p.pos].l;
+                    node.innerHTML = `<div class="player-shirt">${p.num}</div><div class="player-name">${p.name}</div>`;
+                    pitch.appendChild(node);
+                });
             }
 
             // Transferleri Render Et
-            const transList = document.getElementById('transfersList');
-            transList.innerHTML = "";
-            db.transferler.forEach(p => {
-                transList.innerHTML += `
-                    <div class="player-card">
-                        <div class="player-card-info">
-                            <h3>${p.name}</h3>
-                            <p>Forma No: ${p.num}</p>
-                            <span class="status-badge"><i class="fa-solid fa-check-double"></i> İmzalar Atıldı</span>
-                        </div>
-                    </div>
-                `;
-            });
+            const tList = document.getElementById('transfersList');
+            tList.innerHTML = "";
+            if(data.transferler) {
+                Object.entries(data.transferler).forEach(([id, p]) => {
+                    tList.innerHTML += `<div class="player-card"><div><b>${p.name}</b><br><small>No: ${p.num}</small></div><i class="fa-solid fa-check-circle" style="color:var(--accent-color)"></i></div>`;
+                });
+            }
 
-            // Yakından İlgilenilenleri Render Et
-            const scoutList = document.getElementById('scoutList');
-            scoutList.innerHTML = "";
-            db.ilgilenilenler.forEach(p => {
-                scoutList.innerHTML += `
-                    <div class="player-card">
-                        <div class="player-card-info">
-                            <h3>${p.name}</h3>
-                            <p>Düşünülen No: ${p.num}</p>
-                            <span class="status-badge hunting"><i class="fa-solid fa-eye"></i> Görüşmeler Sürüyor</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+            // Admin Listesini Render Et
+            const aList = document.getElementById('adminList');
+            aList.innerHTML = "";
+            if(data.kadro) {
+                Object.entries(data.kadro).forEach(([id, p]) => {
+                    aList.innerHTML += `<div class="player-card"><span>${p.name} (Kadro)</span><i class="fa-solid fa-trash del-btn" onclick="deletePlayer('kadro/${id}')"></i></div>`;
+                });
+            }
+            if(data.transferler) {
+                Object.entries(data.transferler).forEach(([id, p]) => {
+                    aList.innerHTML += `<div class="player-card"><span>${p.name} (Transfer)</span><i class="fa-solid fa-trash del-btn" onclick="deletePlayer('transferler/${id}')"></i></div>`;
+                });
+            }
 
-        // Canlı Sohbet Sistemi (Simüle Edilmiş Localstorage tabanlı)
-        function sendChatMessage() {
-            const user = document.getElementById('chatUser').value || "Anonim";
-            const msg = document.getElementById('chatMsg').value;
-            if(!msg) return;
+            // Logo
+            if(data.logo) document.getElementById('siteLogo').src = data.logo;
+        });
 
-            const chatBox = document.getElementById('chatBox');
-            chatBox.innerHTML += `
-                <div class="message outgoing">
-                    <span class="username">${user}</span>
-                    ${msg}
-                </div>
-            `;
-            document.getElementById('chatMsg').value = "";
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+        window.updateLogo = () => {
+            const url = document.getElementById('logoUrl').value;
+            if(url) set(ref(db, 'logo'), url);
+        };
 
-        // İlk Açılışta Her Şeyi Yükle
-        window.onload = renderAll;
+        // --- AUTH ---
+        window.login = () => {
+            if(document.getElementById('adminPass').value === "imanpower31") {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else {
+                alert("Şifre Yanlış!");
+            }
+        };
+        window.logout = () => {
+            document.getElementById('loginBox').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+        };
     </script>
 </body>
 </html>
