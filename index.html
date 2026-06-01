@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Pro Arena v3</title>
+    <title>İman Power FC | Berat Cihad YETEN</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,129 +18,150 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* --- AUTH SCREEN --- */
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .auth-card { background: var(--glass); padding: 40px; border-radius: 30px; border: 2px solid var(--accent); text-align: center; width: 90%; max-width: 400px; box-shadow: 0 0 50px var(--accent-glow); }
-        .auth-card img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 20px; }
-        
-        /* --- HEADER --- */
+        /* --- GİRİŞ EKRANI (İSTEDİĞİN GİBİ) --- */
+        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        .auth-card { background: var(--glass); padding: 50px; border-radius: 40px; border: 2px solid var(--accent); width: 90%; max-width: 500px; box-shadow: 0 0 60px var(--accent-glow); }
+        .auth-card img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 15px; }
+        .auth-card h1 { font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 5px; color: #fff; }
+        .auth-card .sub-text { font-size: 1rem; color: var(--accent); margin-bottom: 25px; letter-spacing: 2px; }
+
+        /* --- HEADER & NAV --- */
         header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
         .logo-box { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron'; font-weight: 900; color: var(--accent); cursor: pointer; }
-        .logo-box img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
-        nav ul { display: flex; list-style: none; gap: 5px; }
-        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.7rem; padding: 10px 15px; border-radius: 10px; transition: 0.3s; text-transform: uppercase; }
+        .logo-box img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent); }
+        nav ul { display: flex; list-style: none; gap: 5px; flex-wrap: wrap; }
+        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.65rem; padding: 10px 12px; border-radius: 10px; transition: 0.3s; text-transform: uppercase; }
         nav a:hover, nav a.active { background: rgba(16, 185, 129, 0.2); color: var(--accent); }
 
         /* --- SECTIONS --- */
-        section { padding: 120px 2rem 60px; max-width: 1300px; margin: 0 auto; display: none; min-height: 100vh; }
-        section.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        section { padding: 140px 2rem 60px; max-width: 1300px; margin: 0 auto; display: none; min-height: 100vh; }
+        section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .title { font-family: 'Orbitron'; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
 
-        /* --- CHAT SYSTEM --- */
-        .chat-container { height: 500px; background: var(--glass); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
-        #chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .msg { background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 15px; max-width: 80%; }
-        .msg b { color: var(--accent); font-size: 0.8rem; }
-        .chat-input-area { display: flex; padding: 15px; background: rgba(0,0,0,0.3); gap: 10px; }
-        
-        /* --- CARDS & GRID --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); transition: 0.3s; }
-        .card:hover { border-color: var(--accent); transform: scale(1.02); }
+        /* --- PITCH (SAHA) --- */
+        .pitch { width: 100%; max-width: 500px; height: 700px; background: #064e3b; margin: 0 auto; border: 5px solid #fff; border-radius: 20px; position: relative; background-image: repeating-linear-gradient(0deg, #064e3b, #064e3b 70px, #065f46 70px, #065f46 140px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; z-index: 10; transition: 0.3s; }
+        .shirt { width: 60px; height: 60px; background: var(--accent); border: 3px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.4rem; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .p-name { background: #000; color: #fff; font-size: 0.8rem; padding: 5px 12px; border-radius: 15px; margin-top: 8px; border: 2px solid var(--accent); font-weight: 800; white-space: nowrap; }
 
-        /* --- PITCH --- */
-        .pitch { width: 100%; max-width: 450px; height: 650px; background: #064e3b; margin: 0 auto; border: 4px solid #fff; border-radius: 15px; position: relative; background-image: repeating-linear-gradient(0deg, #064e3b, #064e3b 60px, #065f46 60px, #065f46 120px); }
-        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; }
-        .shirt { width: 50px; height: 50px; background: var(--accent); border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .p-name { background: #000; font-size: 0.7rem; padding: 3px 10px; border-radius: 10px; margin-top: 5px; border: 1px solid var(--accent); }
+        /* --- SOHBET --- */
+        .chat-box { height: 550px; background: var(--glass); border-radius: 25px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+        #chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .msg { background: rgba(255,255,255,0.05); padding: 12px 18px; border-radius: 18px; max-width: 85%; border-left: 4px solid var(--accent); }
+        .msg b { color: var(--accent); font-size: 0.85rem; display: block; margin-bottom: 4px; }
+        .chat-input { display: flex; padding: 20px; background: rgba(0,0,0,0.4); gap: 10px; }
 
-        /* --- ADMIN & INPUTS --- */
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #1e293b; background: #0f172a; color: white; }
-        .btn { padding: 12px; border: none; border-radius: 10px; color: white; font-weight: 800; cursor: pointer; background: var(--accent); width: 100%; text-transform: uppercase; }
-        .btn:hover { filter: brightness(1.2); }
-        .data-item { display: flex; justify-content: space-between; padding: 8px; background: rgba(255,255,255,0.05); margin-bottom: 5px; border-radius: 5px; font-size: 0.8rem; }
+        /* --- GRIDS (EKİP, DUYURU, TR) --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: var(--glass); padding: 30px; border-radius: 25px; border: 1px solid var(--border); transition: 0.3s; position: relative; }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .badge { position: absolute; top: 20px; right: 20px; padding: 6px 14px; border-radius: 10px; font-size: 0.7rem; font-weight: 900; }
+
+        /* --- ADMIN PANEL --- */
+        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #1e293b; background: #0f172a; color: white; outline: none; }
+        .btn { padding: 16px; border: none; border-radius: 12px; color: white; font-weight: 800; cursor: pointer; background: var(--accent); width: 100%; text-transform: uppercase; transition: 0.3s; }
+        .btn:hover { transform: scale(1.02); filter: brightness(1.2); }
+        .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255,255,255,0.03); margin-bottom: 8px; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
+    <!-- GİRİŞ SİSTEMİ -->
     <div id="auth-screen">
         <div class="auth-card">
-            <img src="logo.png" alt="İman Power Logo">
-            <h2 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:20px;">İMAN POWER FC</h2>
-            <input type="text" id="login-user" placeholder="Kullanıcı Adı">
-            <input type="password" id="login-pass" placeholder="Şifre">
-            <button class="btn" onclick="handleAuth(false)">GİRİŞ YAP</button>
-            <p style="margin-top:15px; font-size:0.8rem; cursor:pointer; color:#64748b;" onclick="handleAuth(true)">Kayıt Ol</p>
+            <img src="logo.png">
+            <h1>Berat Cihad YETEN</h1>
+            <p class="sub-text">İMAN POWER FC KURUCUSU</p>
+            <p style="font-style: italic; margin-bottom: 30px; color: #94a3b8;">"Sahada İman, Kalpte Güç, Hedef Şampiyonluk!"</p>
+            <input type="text" id="log-u" placeholder="Kullanıcı Adı">
+            <input type="password" id="log-p" placeholder="Şifre">
+            <button class="btn" onclick="auth(false)">SİSTEME GİRİŞ</button>
+            <p style="margin-top:20px; font-size:0.85rem; cursor:pointer; color:var(--accent);" onclick="auth(true)">Yeni Kayıt Oluştur</p>
         </div>
     </div>
 
     <header>
         <div class="nav-container">
-            <div class="logo-box" onclick="show('home')"><img src="logo.png"><span>İMAN POWER</span></div>
+            <div class="logo-box" onclick="nav('home')"><img src="logo.png"><span>İMAN POWER</span></div>
             <nav><ul>
-                <li><a href="#" class="nav-link active" onclick="show('home')">ANA SAYFA</a></li>
-                <li><a href="#" class="nav-link" onclick="show('kadro')">KADRO</a></li>
-                <li><a href="#" class="nav-link" onclick="show('sohbet')">SOHBET</a></li>
-                <li><a href="#" class="nav-link" onclick="show('ekip')">EKİP</a></li>
-                <li><a href="#" class="nav-link" onclick="show('admin')">ADMİN</a></li>
+                <li><a href="#" class="nav-link active" onclick="nav('home')">ANA SAYFA</a></li>
+                <li><a href="#" class="nav-link" onclick="nav('kadro')">KADRO</a></li>
+                <li><a href="#" class="nav-link" onclick="nav('sohbet')">SOHBET</a></li>
+                <li><a href="#" class="nav-link" onclick="nav('ekip')">HAKKIMIZDA</a></li>
+                <li><a href="#" class="nav-link" onclick="nav('tr')">TRANSFER</a></li>
+                <li><a href="#" class="nav-link" onclick="nav('haber')">DUYURULAR</a></li>
+                <li><a href="#" class="nav-link" onclick="nav('admin')">ADMİN</a></li>
             </ul></nav>
         </div>
     </header>
 
     <section id="home" class="active">
-        <div style="text-align: center; margin-top: 50px;">
-            <h1 id="welcome-text" style="font-family:'Orbitron'; font-size: 3rem; margin-bottom: 20px;">SİSTEME BAĞLANILIYOR...</h1>
-            <p style="font-size: 1.5rem; color: var(--accent); font-style: italic; font-weight: 800;">"Sahada İman, Kalpte Güç, Hedef Şampiyonluk!"</p>
-        </div>
-    </section>
-
-    <section id="sohbet">
-        <h2 class="title">CANLI <span>SOHBET</span></h2>
-        <div class="chat-container">
-            <div id="chat-messages"></div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Mesajınızı yazın..." onkeypress="if(event.key==='Enter') sendChat()">
-                <button class="btn" style="width:100px;" onclick="sendChat()">GÖNDER</button>
-            </div>
+        <div style="text-align: center; padding-top: 100px;">
+            <h1 style="font-family:'Orbitron'; font-size: 4rem; color: var(--accent);">ARENA'YA HOŞ GELDİN</h1>
+            <p style="font-size: 1.5rem; letter-spacing: 5px; margin-top: 20px;">İMAN GÜCÜ SAHADA!</p>
         </div>
     </section>
 
     <section id="kadro">
-        <h2 class="title">SAHA <span>DİZİLİMİ</span></h2>
-        <div class="pitch" id="pitch-view"></div>
+        <h2 class="title">RESMİ <span>KADRO</span></h2>
+        <div class="pitch" id="pitch"></div>
+    </section>
+
+    <section id="sohbet">
+        <h2 class="title">CANLI <span>TRİBÜN</span></h2>
+        <div class="chat-box">
+            <div id="chat-msgs"></div>
+            <div class="chat-input">
+                <input type="text" id="msg-in" placeholder="Mesajını haykır..." onkeypress="if(event.key==='Enter') send()">
+                <button class="btn" style="width:120px" onclick="send()">GÖNDER</button>
+            </div>
+        </div>
     </section>
 
     <section id="ekip">
-        <h2 class="title">BİZİM <span>EKİP</span></h2>
+        <h2 class="title">YÖNETİM <span>EKİBİ</span></h2>
         <div id="ekip-grid" class="grid"></div>
     </section>
 
+    <section id="tr">
+        <h2 class="title">TRANSFER <span>DOSYALARI</span></h2>
+        <div id="tr-grid" class="grid"></div>
+    </section>
+
+    <section id="haber">
+        <h2 class="title">KULÜP <span>HABERLERİ</span></h2>
+        <div id="haber-grid" class="grid"></div>
+    </section>
+
     <section id="admin">
-        <h2 class="title">ADMİN <span>PANELİ</span></h2>
-        <div id="admin-gate" class="auth-card" style="margin: 0 auto;">
-            <input type="password" id="admin-pass-key" placeholder="Admin Şifresi">
-            <button class="btn" onclick="checkAdmin()">PANELİ AÇ</button>
+        <h2 class="title">YÖNETİM <span>PANELİ</span></h2>
+        <div id="adm-gate" class="auth-card" style="margin: 0 auto; border-color: #1e293b;">
+            <input type="password" id="adm-key" placeholder="Yönetici Anahtarı">
+            <button class="btn" onclick="unlockAdm()">PANELİ AÇ</button>
         </div>
-        <div id="admin-content" style="display:none;">
+        <div id="adm-panel" style="display:none;">
             <div class="grid">
                 <div class="card">
-                    <h3>KADRO & EKİP EKLE</h3>
-                    <input type="text" id="adm-name" placeholder="İsim">
-                    <input type="text" id="adm-desc" placeholder="Görev/Açıklama">
-                    <button class="btn" style="margin-bottom:10px;" onclick="dbAdd('ekip')">EKİBE EKLE</button>
-                    <hr style="opacity:0.1; margin:10px 0;">
-                    <input type="number" id="adm-num" placeholder="Forma No">
-                    <select id="adm-pos"><option value="GK">Kaleci</option><option value="CB">Stoper</option><option value="CM">Orta Saha</option><option value="ST">Forvet</option></select>
-                    <button class="btn" style="background:#8b5cf6" onclick="dbAdd('kadro')">KADROYA EKLE</button>
+                    <h3>VERİ EKLEME</h3>
+                    <input type="text" id="a-name" placeholder="İsim Soyisim">
+                    <input type="text" id="a-info" placeholder="Ekip Görevi / Haber Detayı">
+                    <button class="btn" onclick="add('ekip')">EKİBE EKLE</button>
+                    <hr style="margin:15px 0; opacity:0.1;">
+                    <input type="number" id="a-num" placeholder="Forma No">
+                    <select id="a-pos"><option value="GK">Kaleci</option><option value="CB">Stoper</option><option value="CM">Orta Saha</option><option value="ST">Forvet</option></select>
+                    <button class="btn" style="background:#8b5cf6" onclick="add('kadro')">KADROYA YAZ</button>
                 </div>
                 <div class="card">
-                    <h3>VERİ LİSTESİ</h3>
-                    <div id="admin-list" style="max-height: 300px; overflow-y: auto;"></div>
+                    <h3>HABER & TR</h3>
+                    <input type="text" id="a-title" placeholder="Haber Başlığı / Oyuncu Adı">
+                    <select id="a-tr-st"><option value="done">ALINDI</option><option value="wait">GÖRÜŞME</option><option value="cancel">İPTAL</option></select>
+                    <button class="btn" style="background:#f59e0b" onclick="add('tr')">TR EKLE</button>
+                    <button class="btn" style="background:#3b82f6; margin-top:10px;" onclick="add('haber')">HABER YAYINLA</button>
                 </div>
             </div>
+            <div class="card" style="margin-top:20px; max-height: 400px; overflow-y: auto;" id="adm-list"></div>
         </div>
     </section>
 
@@ -148,7 +169,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // image_e42f88.png verileri
+        // image_e42f88.png konfigürasyonu
         const firebaseConfig = {
             apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
             authDomain: "imanpowerveri.firebaseapp.com",
@@ -162,108 +183,89 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        let currentUser = "";
+        let user = "";
 
-        // AUTH & NAVIGATION
-        window.handleAuth = (isReg) => {
-            const user = document.getElementById('login-user').value.trim();
-            const pass = document.getElementById('login-pass').value;
-            if(!user || !pass) return alert("Eksik bilgi!");
-            
-            if(isReg) {
-                set(ref(db, 'users/' + user), { pass }).then(() => alert("Kayıt Başarılı!"));
-            } else {
-                onValue(ref(db, 'users/' + user), snap => {
-                    if(snap.exists() && snap.val().pass === pass) {
-                        currentUser = user;
-                        document.getElementById('auth-screen').style.display = 'none';
-                        document.getElementById('welcome-text').innerText = "HOŞ GELDİN, " + user.toUpperCase();
-                    } else alert("Hatalı giriş!");
-                }, {onlyOnce: true});
-            }
+        // AUTH
+        window.auth = (reg) => {
+            const u = document.getElementById('log-u').value.trim();
+            const p = document.getElementById('log-p').value;
+            if(!u || !p) return;
+            if(reg) set(ref(db, 'users/'+u), {p}).then(() => alert("Kayıt OK"));
+            else onValue(ref(db, 'users/'+u), s => { if(s.val()?.p === p) { user = u; document.getElementById('auth-screen').style.display='none'; } else alert("Hata!"); }, {onlyOnce:true});
         };
 
-        window.show = (id) => {
+        window.nav = (id) => {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(event.target.classList.contains('nav-link')) event.target.classList.add('active');
         };
 
-        window.checkAdmin = () => {
-            if(document.getElementById('admin-pass-key').value === "imanpower2026") {
-                document.getElementById('admin-gate').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-            }
+        window.unlockAdm = () => { if(document.getElementById('adm-key').value === "imanpower2026") { document.getElementById('adm-gate').style.display='none'; document.getElementById('adm-panel').style.display='block'; } };
+
+        // CRUD
+        window.add = (type) => {
+            const n = document.getElementById('a-name').value;
+            const i = document.getElementById('a-info').value;
+            const t = document.getElementById('a-title').value;
+            if(type === 'ekip') push(ref(db, 'ekip'), {n, i});
+            if(type === 'kadro') set(ref(db, 'kadro/'+document.getElementById('a-pos').value), {n, num: document.getElementById('a-num').value, pos: document.getElementById('a-pos').value});
+            if(type === 'tr') push(ref(db, 'tr'), {n: t, st: document.getElementById('a-tr-st').value});
+            if(type === 'haber') push(ref(db, 'haber'), {t, i, d: new Date().toLocaleDateString()});
+            alert("İşlem Başarılı!");
         };
 
-        // DATABASE ACTIONS
-        window.dbAdd = (type) => {
-            const name = document.getElementById('adm-name').value;
-            const desc = document.getElementById('adm-desc').value;
-            const num = document.getElementById('adm-num').value;
-            const pos = document.getElementById('adm-pos').value;
+        window.del = (p) => { if(confirm("Sil?")) remove(ref(db, p)); };
 
-            if(type === 'ekip') {
-                push(ref(db, 'ekip'), { name, desc });
-            } else if(type === 'kadro') {
-                set(ref(db, 'kadro/' + pos), { name, num, pos });
-            }
-            alert("Eklendi!");
+        window.send = () => {
+            const m = document.getElementById('msg-in').value;
+            if(!m) return;
+            push(ref(db, 'chat'), {u: user, m, ts: serverTimestamp()});
+            document.getElementById('msg-in').value = "";
         };
 
-        window.dbRemove = (path) => { if(confirm("Silinsin mi?")) remove(ref(db, path)); };
+        // REALTIME RENDER
+        const posMap = { GK:{t:'88%',l:'50%'}, CB:{t:'70%',l:'50%'}, CM:{t:'45%',l:'50%'}, ST:{t:'18%',l:'50%'} };
 
-        // CHAT SYSTEM
-        window.sendChat = () => {
-            const msg = document.getElementById('chat-input').value;
-            if(!msg) return;
-            push(ref(db, 'chats'), { user: currentUser, text: msg, time: serverTimestamp() });
-            document.getElementById('chat-input').value = "";
-        };
-
-        // REAL-TIME LISTENERS
         onValue(ref(db, '/'), (snap) => {
-            const data = snap.val() || {};
+            const d = snap.val() || {};
             
-            // Sohbet Güncelleme
-            const chatBox = document.getElementById('chat-messages');
-            chatBox.innerHTML = "";
-            if(data.chats) {
-                Object.values(data.chats).forEach(m => {
-                    chatBox.innerHTML += `<div class="msg"><b>${m.user}:</b><br>${m.text}</div>`;
-                });
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-
-            // Kadro Güncelleme
-            const pitchPos = { GK:{t:'88%',l:'50%'}, CB:{t:'70%',l:'50%'}, CM:{t:'45%',l:'50%'}, ST:{t:'18%',l:'50%'} };
-            const pitch = document.getElementById('pitch-view');
-            pitch.innerHTML = "";
-            if(data.kadro) {
-                Object.values(data.kadro).forEach(p => {
-                    pitch.innerHTML += `<div class="player" style="top:${pitchPos[p.pos].t}; left:${pitchPos[p.pos].l}"><div class="shirt">${p.num}</div><div class="p-name">${p.name}</div></div>`;
-                });
-            }
-
-            // Ekip Güncelleme
-            const ekipGrid = document.getElementById('ekip-grid');
-            ekipGrid.innerHTML = "";
-            if(data.ekip) {
-                Object.entries(data.ekip).forEach(([id, m]) => {
-                    ekipGrid.innerHTML += `<div class="card"><h3>${m.name}</h3><p>${m.desc}</p></div>`;
-                });
-            }
-
-            // Admin Listesi Güncelleme
-            const admList = document.getElementById('admin-list');
-            admList.innerHTML = "<h4>Mevcut Veriler</h4>";
-            if(data.ekip) Object.entries(data.ekip).forEach(([id, m]) => {
-                admList.innerHTML += `<div class="data-item"><span>Ekip: ${m.name}</span><button onclick="dbRemove('ekip/${id}')">SİL</button></div>`;
+            // Kadro
+            const pBox = document.getElementById('pitch'); pBox.innerHTML = "";
+            if(d.kadro) Object.values(d.kadro).forEach(p => {
+                pBox.innerHTML += `<div class="player" style="top:${posMap[p.pos].t}; left:${posMap[p.pos].l}"><div class="shirt">${p.num}</div><div class="p-name">${p.n}</div></div>`;
             });
-            if(data.kadro) Object.entries(data.kadro).forEach(([pos, p]) => {
-                admList.innerHTML += `<div class="data-item"><span>Kadro: ${p.name}</span><button onclick="dbRemove('kadro/${pos}')">SİL</button></div>`;
+
+            // Chat
+            const cBox = document.getElementById('chat-msgs'); cBox.innerHTML = "";
+            if(d.chat) Object.values(d.chat).forEach(m => {
+                cBox.innerHTML += `<div class="msg"><b>${m.u}</b>${m.m}</div>`;
             });
+            cBox.scrollTop = cBox.scrollHeight;
+
+            // Ekip (Hakkımızda)
+            const eGrid = document.getElementById('ekip-grid'); eGrid.innerHTML = "";
+            if(d.ekip) Object.entries(d.ekip).forEach(([id, m]) => {
+                eGrid.innerHTML += `<div class="card"><h3>${m.n}</h3><p>${m.i}</p></div>`;
+            });
+
+            // Transfer
+            const tGrid = document.getElementById('tr-grid'); tGrid.innerHTML = "";
+            if(d.tr) Object.entries(d.tr).forEach(([id, t]) => {
+                const s = {done:'ALINDI', wait:'GÖRÜŞME', cancel:'İPTAL'}[t.st];
+                tGrid.innerHTML += `<div class="card"><span class="badge" style="background:var(--accent)">${s}</span><h3>${t.n}</h3></div>`;
+            });
+
+            // Haber
+            const hGrid = document.getElementById('haber-grid'); hGrid.innerHTML = "";
+            if(d.haber) Object.values(d.haber).forEach(h => {
+                hGrid.innerHTML += `<div class="card"><small>${h.d}</small><h3>${h.t}</h3><p>${h.i}</p></div>`;
+            });
+
+            // Admin List
+            const aList = document.getElementById('adm-list'); aList.innerHTML = "<h4>Sistem Verileri</h4>";
+            if(d.ekip) Object.entries(d.ekip).forEach(([id, m]) => aList.innerHTML += `<div class="admin-list-item"><span>Ekip: ${m.n}</span><button onclick="del('ekip/${id}')">SİL</button></div>`);
+            if(d.kadro) Object.entries(d.kadro).forEach(([id, p]) => aList.innerHTML += `<div class="admin-list-item"><span>Kadro: ${p.n}</span><button onclick="del('kadro/${id}')">SİL</button></div>`);
         });
     </script>
 </body>
