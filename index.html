@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Ultra Pro Management</title>
+    <title>İman Power FC | Resmi Yönetim Portalı</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -28,12 +28,13 @@
             z-index: 10000; display: flex; justify-content: center; align-items: center;
         }
         .auth-card {
-            background: rgba(15, 23, 42, 0.8); padding: 50px; border-radius: 30px; width: 100%; max-width: 450px;
+            background: rgba(15, 23, 42, 0.8); padding: 50px; border-radius: 30px; width: 100%; max-width: 500px;
             border: 1px solid rgba(16, 185, 129, 0.3); backdrop-filter: blur(20px); text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        .auth-card img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 25px; box-shadow: 0 0 20px var(--accent-glow); object-fit: cover; }
-        .auth-card h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-bottom: 30px; }
+        .auth-card img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 25px; box-shadow: 0 0 20px var(--accent-glow); object-fit: cover; }
+        .auth-card h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
+        .auth-intro-text { font-size: 0.9rem; line-height: 1.6; color: #94a3b8; margin-bottom: 30px; font-style: italic; }
 
         /* --- HEADER & NAVIGATION --- */
         header {
@@ -42,74 +43,67 @@
             border-bottom: 1px solid rgba(16, 185, 129, 0.2);
         }
         .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 2rem; }
-        .logo-box { display: flex; align-items: center; gap: 15px; font-family: 'Orbitron'; font-weight: 900; color: var(--accent); cursor: pointer; text-shadow: 0 0 10px var(--accent-glow); }
-        .logo-box img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+        .logo-box { display: flex; align-items: center; gap: 15px; font-family: 'Orbitron'; font-weight: 900; color: var(--accent); cursor: pointer; }
+        .logo-box img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
 
-        nav ul { display: flex; list-style: none; gap: 10px; }
-        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: 0.3s; padding: 10px 18px; border-radius: 12px; }
-        nav a:hover, nav a.active { background: rgba(16, 185, 129, 0.1); color: var(--accent); box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.1); }
+        nav ul { display: flex; list-style: none; gap: 5px; }
+        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.75rem; transition: 0.3s; padding: 10px 15px; border-radius: 12px; }
+        nav a:hover, nav a.active { background: rgba(16, 185, 129, 0.1); color: var(--accent); }
 
         /* --- SECTIONS --- */
         section { padding: 140px 2rem 80px; max-width: 1300px; margin: 0 auto; min-height: 100vh; display: none; }
         section.active { display: block; animation: zoomIn 0.5s ease-out; }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        .title { font-family: 'Orbitron'; font-size: 3.5rem; text-align: center; margin-bottom: 4rem; text-transform: uppercase; font-weight: 900; }
-        .title span { color: var(--accent); position: relative; }
+        .title { font-family: 'Orbitron'; font-size: 3rem; text-align: center; margin-bottom: 4rem; text-transform: uppercase; font-weight: 900; }
+        .title span { color: var(--accent); }
 
-        /* --- SAHA VE KALELER --- */
-        .pitch-box { display: flex; justify-content: center; margin-top: 2rem; perspective: 1000px; }
+        /* --- SAHA --- */
+        .pitch-box { display: flex; justify-content: center; perspective: 1000px; }
         .pitch {
-            width: 100%; max-width: 500px; height: 700px; background: #065f46;
+            width: 100%; max-width: 500px; height: 650px; background: #065f46;
             border: 5px solid rgba(255,255,255,0.4); border-radius: 10px; position: relative;
             background-image: repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
-        .goal-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-bottom: none; border-radius: 5px 5px 0 0; }
-        .goal-bottom { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-top: none; border-radius: 0 0 5px 5px; }
+        .goal-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-bottom: none; }
+        .goal-bottom { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-top: none; }
 
-        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; z-index: 5; transition: 0.5s; }
-        .shirt { 
-            width: 50px; height: 50px; background: var(--accent); border: 3px solid #fff; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5), 0 0 10px var(--accent-glow);
-        }
-        .p-name { font-size: 0.8rem; background: var(--bg); padding: 3px 10px; border-radius: 20px; margin-top: 8px; font-weight: 700; border: 1px solid var(--accent); }
-        .p-pos-tag { font-size: 0.6rem; color: var(--accent); font-weight: 900; text-transform: uppercase; display: block; margin-bottom: -5px; }
+        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; z-index: 5; }
+        .shirt { width: 45px; height: 45px; background: var(--accent); border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .p-name { font-size: 0.7rem; background: var(--bg); padding: 2px 8px; border-radius: 10px; margin-top: 5px; border: 1px solid var(--accent); }
 
-        /* --- SOHBET --- */
-        .chat-ui { background: var(--card); border-radius: 30px; height: 650px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(16,185,129,0.2); }
-        #chatMsgs { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
-        .msg { max-width: 80%; padding: 15px 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .msg.me { align-self: flex-end; background: linear-gradient(to right, var(--accent-dark), var(--accent)); color: white; border-bottom-right-radius: 4px; }
-        .msg.not-me { align-self: flex-start; background: #1e293b; border-bottom-left-radius: 4px; }
-        .msg b { font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; display: block; letter-spacing: 1px; }
+        /* --- HAKKIMIZDA KARTI --- */
+        .about-card { background: var(--card); border-radius: 30px; padding: 40px; border: 1px solid rgba(16,185,129,0.2); line-height: 1.8; font-size: 1.1rem; text-align: center; }
 
-        /* --- ADMIN PANELİ --- */
-        .admin-section-title { border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 20px; font-family: 'Orbitron'; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .admin-table th { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; }
+        /* --- ADMIN PANEL --- */
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .admin-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85rem; }
+        .admin-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        /* --- INPUTS & BUTTONS --- */
-        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 15px; border: 1px solid #1e293b; background: #020617; color: white; outline: none; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
-        .btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 15px; color: white; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .btn:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
-        .btn-red { background: var(--danger); margin-top: 5px; padding: 8px 15px; width: auto; font-size: 0.7rem; border: none; border-radius: 8px; color: white; cursor: pointer;}
+        /* --- INPUTS --- */
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #1e293b; background: #020617; color: white; }
+        .btn { width: 100%; padding: 14px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .btn-red { background: var(--danger); padding: 6px 12px; font-size: 0.7rem; border-radius: 6px; cursor: pointer; border:none; color:white;}
     </style>
 </head>
 <body>
 
+    <!-- GİRİŞ EKRANI -->
     <div id="auth-overlay">
         <div class="auth-card">
-            <img src="logo.png" alt="Iman Power FC">
-            <h2 id="auth-title">GİRİŞ PANELİ</h2>
+            <img src="logo.png" alt="Logo">
+            <h2>İMAN POWER FC</h2>
+            <p class="auth-intro-text">
+                "Sahadaki inancın, dijitaldeki gücüyle birleştiği tek nokta. <br>
+                Zekiler Grubunun stratejisi, Beşiktaş ruhunun tutkusuyla harmanlandı. <br>
+                Şampiyonların yönetim merkezine hoş geldin Başkan."
+            </p>
             <div id="auth-form">
                 <input type="text" id="user-name" placeholder="Adınız">
                 <input type="password" id="user-pass" placeholder="Şifreniz">
-                <button class="btn" onclick="processAuth()">SİSTEME BAĞLAN</button>
-                <p id="auth-toggle-text" style="margin-top:20px; font-size:0.85rem; cursor:pointer; color:var(--accent)" onclick="toggleAuthMode()">Hesabınız yok mu? <b>Kayıt Olun</b></p>
+                <button class="btn" onclick="processAuth()">SİSTEME GİRİŞ YAP</button>
+                <p style="margin-top:15px; font-size:0.8rem; cursor:pointer; color:var(--accent)" onclick="toggleAuthMode()">Hesabın yok mu? Kayıt Ol</p>
             </div>
         </div>
     </div>
@@ -117,16 +111,17 @@
     <header>
         <div class="nav-container">
             <div class="logo-box" onclick="switchPage('home')">
-                <img src="logo.png" alt="Iman Power FC">
+                <img src="logo.png">
                 <span>IMAN POWER FC</span>
             </div>
             <nav>
                 <ul>
                     <li><a href="#" class="nav-link active" onclick="switchPage('home')">ANA SAYFA</a></li>
                     <li><a href="#" class="nav-link" onclick="switchPage('kadro')">KADRO</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchPage('hakkimizda')">HAKKIMIZDA</a></li>
                     <li><a href="#" class="nav-link" onclick="switchPage('duyurular')">DUYURULAR</a></li>
                     <li><a href="#" class="nav-link" onclick="switchPage('sohbet')">SOHBET</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('admin')"><i class="fa-solid fa-crown"></i> ADMIN</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchPage('admin')">ADMIN</a></li>
                 </ul>
             </nav>
         </div>
@@ -134,87 +129,79 @@
 
     <section id="home" class="active">
         <h2 class="title">HOŞ GELDİN <span>BAŞKAN <span id="user-display"></span></span></h2>
-        <div style="background: var(--card); padding: 50px; border-radius: 30px; text-align: center; border: 1px solid rgba(16,185,129,0.1);">
-            <p style="font-size: 1.4rem; font-weight: 300; line-height: 1.8;">
-                İman Power FC'nin dijital yönetim merkezindesin. <br>
-                Buradan takımı kurabilir, transferleri yönetebilir ve <br>
-                taraftarlarımızla etkileşime geçebilirsin.
-            </p>
+        <div class="about-card">
+            İman Power FC Yönetim Paneli üzerinden kulübün geleceğini şekillendirebilirsin.
         </div>
     </section>
 
     <section id="kadro">
-        <h2 class="title">SAVAŞ <span>ALANI</span></h2>
+        <h2 class="title">SAHA <span>DİZİLİMİ</span></h2>
         <div class="pitch-box">
             <div class="pitch" id="main-pitch">
-                <div class="goal-top"></div>
-                <div class="goal-bottom"></div>
-                <div style="position:absolute; top:50%; width:100%; height:2px; background:rgba(255,255,255,0.2)"></div>
-                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:120px; height:120px; border:2px solid rgba(255,255,255,0.2); border-radius:50%"></div>
+                <div class="goal-top"></div><div class="goal-bottom"></div>
             </div>
         </div>
     </section>
 
+    <section id="hakkimizda">
+        <h2 class="title">BİZ <span>KİMİZ?</span></h2>
+        <div id="about-content" class="about-card">Henüz bir bilgi girilmemiş.</div>
+    </section>
+
     <section id="duyurular">
-        <h2 class="title">KULÜP <span>BÜLTENİ</span></h2>
-        <div id="news-container" style="display: grid; gap: 25px;"></div>
+        <h2 class="title">KULÜP <span>HABERLERİ</span></h2>
+        <div id="news-container" style="display:grid; gap:20px;"></div>
     </section>
 
     <section id="sohbet">
-        <h2 class="title">CANLI <span>TRİBÜN</span></h2>
-        <div class="chat-ui">
-            <div id="chatMsgs"></div>
-            <div style="padding: 25px; background: #0f172a; display: flex; gap: 15px;">
-                <input type="text" id="chatMsg" placeholder="Mesajınızı haykırın..." style="margin-bottom:0">
-                <button class="btn" style="width: 100px;" onclick="postChat()"><i class="fa-solid fa-paper-plane"></i></button>
+        <h2 class="title">CANLI <span>MESAJLAR</span></h2>
+        <div style="background:var(--card); height:500px; display:flex; flex-direction:column; border-radius:20px;">
+            <div id="chatMsgs" style="flex:1; padding:20px; overflow-y:auto;"></div>
+            <div style="padding:20px; display:flex; gap:10px;">
+                <input type="text" id="chatMsg" placeholder="Bir mesaj yaz..." style="margin:0">
+                <button class="btn" style="width:80px" onclick="postChat()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
     </section>
 
     <section id="admin">
-        <h2 class="title">YÖNETİM <span>MERKEZİ</span></h2>
-        
-        <div id="admin-login" class="auth-card" style="margin: 0 auto;">
-            <img src="logo.png" alt="Iman Power FC" style="width: 100px; height: 100px; margin-bottom: 15px;">
-            <input type="password" id="admin-password" placeholder="Admin Anahtarı">
-            <button class="btn" onclick="accessAdmin()">YÖNETİME GEÇ</button>
+        <h2 class="title">SİSTEM <span>KONTROL</span></h2>
+        <div id="admin-login" class="auth-card" style="margin:0 auto;">
+            <input type="password" id="admin-password" placeholder="Admin Şifresi">
+            <button class="btn" onclick="accessAdmin()">YÖNETİCİ GİRİŞİ</button>
         </div>
 
-        <div id="admin-dashboard" style="display: none;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                <div class="admin-card" style="background:var(--card); padding:30px; border-radius:25px;">
-                    <h3 class="admin-section-title"><i class="fa-solid fa-user-plus"></i> OYUNCU EKLE</h3>
+        <div id="admin-dashboard" style="display:none;">
+            <div class="admin-grid">
+                <!-- Oyuncu Ekle -->
+                <div class="admin-card">
+                    <h4>OYUNCU EKLE</h4>
                     <input type="text" id="adm-p-name" placeholder="İsim">
-                    <input type="number" id="adm-p-num" placeholder="Numara">
+                    <input type="number" id="adm-p-num" placeholder="No">
                     <select id="adm-p-pos">
-                        <option value="GK">Kaleci (GK)</option>
-                        <option value="LB">Sol Bek (LB)</option><option value="CB1">Stoper 1 (CB)</option>
-                        <option value="CB2">Stoper 2 (CB)</option><option value="RB">Sağ Bek (RB)</option>
-                        <option value="CM1">Orta Saha 1 (CM)</option><option value="CM2">Orta Saha 2 (CM)</option>
-                        <option value="AM">Oyun Kurucu (AM)</option>
-                        <option value="LW">Sol Kanat (LW)</option><option value="RW">Sağ Kanat (RW)</option>
-                        <option value="ST">Santrafor (ST)</option>
+                        <option value="GK">Kaleci</option><option value="ST">Santrafor</option>
+                        <option value="CM1">Orta Saha</option><option value="CB1">Stoper</option>
                     </select>
-                    <button class="btn" onclick="admAddPlayer()">SAHAYA SÜR</button>
+                    <button class="btn" onclick="admAddPlayer()">KADROYA EKLE</button>
                 </div>
-                <div class="admin-card" style="background:var(--card); padding:30px; border-radius:25px;">
-                    <h3 class="admin-section-title"><i class="fa-solid fa-bullhorn"></i> DUYURU YAYINLA</h3>
+                <!-- Hakkımızda Düzenle -->
+                <div class="admin-card">
+                    <h4>HAKKIMIZDA METNİ</h4>
+                    <textarea id="adm-about-text" rows="5" placeholder="Kulüp tarihçesini yazın..."></textarea>
+                    <button class="btn" style="background:#3b82f6" onclick="admUpdateAbout()">GÜNCELLE</button>
+                </div>
+                <!-- Duyuru Ekle -->
+                <div class="admin-card">
+                    <h4>DUYURU YAYINLA</h4>
                     <input type="text" id="adm-n-title" placeholder="Başlık">
-                    <textarea id="adm-n-body" placeholder="Duyuru Metni" rows="4"></textarea>
-                    <button class="btn" style="background:#3b82f6" onclick="admAddNews()">DUYUR</button>
+                    <textarea id="adm-n-body" placeholder="İçerik"></textarea>
+                    <button class="btn" style="background:#f59e0b" onclick="admAddNews()">YAYINLA</button>
                 </div>
             </div>
 
-            <div style="margin-top: 40px; background:var(--card); padding:30px; border-radius:25px;">
-                <h3 class="admin-section-title"><i class="fa-solid fa-users-gear"></i> ÜYE VE VERİ YÖNETİMİ</h3>
-                <div style="overflow-x: auto;">
-                    <table class="admin-table" id="admin-data-table">
-                        <thead>
-                            <tr><th>Tür</th><th>İçerik / İsim</th><th>İşlem</th></tr>
-                        </thead>
-                        <tbody id="admin-data-body"></tbody>
-                    </table>
-                </div>
+            <div class="admin-card" style="margin-top:30px;">
+                <h4>VERİ YÖNETİMİ</h4>
+                <table class="admin-table"><tbody id="admin-data-body"></tbody></table>
             </div>
         </div>
     </section>
@@ -223,7 +210,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Firebase Yapılandırması (Görselinizdeki bilgiler)
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
             authDomain: "imanpowerveri.firebaseapp.com",
@@ -231,132 +218,99 @@
             projectId: "imanpowerveri",
             storageBucket: "imanpowerveri.firebasestorage.app",
             messagingSenderId: "891464029314",
-            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b",
-            measurementId: "G-4T6XSDBDL5"
+            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-
         let activeUser = null;
         let isRegMode = false;
 
-        // --- AUTH ---
+        // AUTH
         window.toggleAuthMode = () => {
             isRegMode = !isRegMode;
-            document.getElementById('auth-title').innerText = isRegMode ? "KAYIT PANELİ" : "GİRİŞ PANELİ";
-            document.getElementById('auth-toggle-text').innerHTML = isRegMode ? "Zaten üye misiniz? <b>Giriş Yapın</b>" : "Hesabınız yok mu? <b>Kayıt Olun</b>";
+            document.querySelector('#auth-form h2').innerText = isRegMode ? "KAYIT OL" : "GİRİŞ YAP";
         };
 
         window.processAuth = () => {
             const name = document.getElementById('user-name').value.trim();
             const pass = document.getElementById('user-pass').value;
-            if(!name || !pass) return alert("Eksik bilgi!");
+            if(!name || !pass) return alert("Eksik alan!");
 
             if(isRegMode) {
-                set(ref(db, 'users/' + name), { pass }).then(() => {
-                    alert("Başarıyla kayıt oldun!");
-                    toggleAuthMode();
-                });
+                set(ref(db, 'users/' + name), { pass }).then(() => { alert("Kayıt başarılı!"); location.reload(); });
             } else {
-                onValue(ref(db, 'users/' + name), (snap) => {
-                    const data = snap.val();
-                    if(data && data.pass === pass) {
+                onValue(ref(db, 'users/' + name), (s) => {
+                    if(s.val() && s.val().pass === pass) {
                         activeUser = name;
-                        document.getElementById('user-display').innerText = name.toUpperCase();
+                        document.getElementById('user-display').innerText = name;
                         document.getElementById('auth-overlay').style.display = 'none';
-                    } else alert("Hatalı giriş!");
-                }, { onlyOnce: true });
+                    } else alert("Hatalı bilgiler!");
+                }, {onlyOnce: true});
             }
         };
 
-        // --- NAVIGATION ---
+        // NAV
         window.switchPage = (id) => {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(event && event.target.classList.contains('nav-link')) event.target.classList.add('active');
+            event.target.classList.add('active');
         };
 
-        // --- ADMIN ---
+        // ADMIN ACTIONS
         window.accessAdmin = () => {
             if(document.getElementById('admin-password').value === "imanpower2026") {
                 document.getElementById('admin-login').style.display = 'none';
                 document.getElementById('admin-dashboard').style.display = 'block';
-            } else alert("Yanlış anahtar!");
+            }
         };
 
         window.admAddPlayer = () => {
-            const name = document.getElementById('adm-p-name').value;
-            const num = document.getElementById('adm-p-num').value;
-            const pos = document.getElementById('adm-p-pos').value;
-            if(!name) return;
-            set(ref(db, 'kadro/' + pos), { name, num, pos });
-            alert("Oyuncu sahaya çıktı!");
+            const p = { name: document.getElementById('adm-p-name').value, num: document.getElementById('adm-p-num').value, pos: document.getElementById('adm-p-pos').value };
+            set(ref(db, 'kadro/' + p.pos), p);
+        };
+
+        window.admUpdateAbout = () => {
+            const txt = document.getElementById('adm-about-text').value;
+            set(ref(db, 'hakkimizda'), txt).then(() => alert("Hakkımızda güncellendi!"));
         };
 
         window.admAddNews = () => {
-            const title = document.getElementById('adm-n-title').value;
-            const body = document.getElementById('adm-n-body').value;
-            if(!title) return;
-            push(ref(db, 'duyurular'), { title, body, date: new Date().toLocaleDateString('tr-TR') });
+            push(ref(db, 'duyurular'), { title: document.getElementById('adm-n-title').value, body: document.getElementById('adm-n-body').value, date: new Date().toLocaleDateString() });
         };
 
-        window.deleteData = (path) => { if(confirm("Bu veri kalıcı olarak silinsin mi?")) remove(ref(db, path)); };
+        window.deleteData = (p) => { if(confirm("Silinsin mi?")) remove(ref(db, p)); };
 
-        // --- CHAT ---
         window.postChat = () => {
-            const text = document.getElementById('chatMsg').value;
-            if(!text) return;
-            push(ref(db, 'sohbet'), { user: activeUser, text, timestamp: Date.now() });
+            push(ref(db, 'sohbet'), { user: activeUser, text: document.getElementById('chatMsg').value });
             document.getElementById('chatMsg').value = "";
         };
 
-        // --- REALTIME SYNC ---
-        const posMap = {
-            "GK": {t:"85%", l:"50%"}, "LB": {t:"70%", l:"15%"}, "CB1": {t:"72%", l:"38%"}, "CB2": {t:"72%", l:"62%"}, "RB": {t:"70%", l:"85%"},
-            "CM1": {t:"50%", l:"30%"}, "CM2": {t:"50%", l:"70%"}, "AM": {t:"35%", l:"50%"}, "LW": {t:"18%", l:"15%"}, "RW": {t:"18%", l:"85%"}, "ST": {t:"10%", l:"50%"}
-        };
+        // DATA SYNC
+        const posMap = { "GK": {t:"85%", l:"50%"}, "ST": {t:"15%", l:"50%"}, "CM1": {t:"50%", l:"50%"}, "CB1": {t:"70%", l:"50%"} };
 
         onValue(ref(db, '/'), (snap) => {
-            const data = snap.val() || {};
+            const d = snap.val() || {};
             
-            // Saha ve Oyuncular
+            // Hakkımızda Görüntüleme
+            document.getElementById('about-content').innerText = d.hakkimizda || "Bilgi yok.";
+            
+            // Saha
             const pitch = document.getElementById('main-pitch');
             pitch.querySelectorAll('.player').forEach(p => p.remove());
-            if(data.kadro) Object.values(data.kadro).forEach(p => {
-                const node = document.createElement('div');
-                node.className = "player"; node.style.top = posMap[p.pos].t; node.style.left = posMap[p.pos].l;
-                node.innerHTML = `<span class="p-pos-tag">${p.pos}</span><div class="shirt">${p.num}</div><div class="p-name">${p.name}</div>`;
-                pitch.appendChild(node);
+            if(d.kadro) Object.values(d.kadro).forEach(p => {
+                const n = document.createElement('div'); n.className = "player";
+                n.style.top = posMap[p.pos].t; n.style.left = posMap[p.pos].l;
+                n.innerHTML = `<div class="shirt">${p.num}</div><div class="p-name">${p.name}</div>`;
+                pitch.appendChild(n);
             });
 
-            // Duyurular
-            const nBox = document.getElementById('news-container'); nBox.innerHTML = "";
-            if(data.duyurular) Object.entries(data.duyurular).reverse().forEach(([id, n]) => {
-                nBox.innerHTML += `<div style="background:var(--card); padding:30px; border-radius:20px; border-left:5px solid var(--accent)">
-                    <small style="color:var(--accent)">${n.date}</small><h3 style="margin:10px 0">${n.title}</h3><p>${n.body}</p></div>`;
-            });
-
-            // Chat
-            const cBox = document.getElementById('chatMsgs'); cBox.innerHTML = "";
-            if(data.sohbet) Object.values(data.sohbet).forEach(c => {
-                const isMe = c.user === activeUser ? 'me' : 'not-me';
-                cBox.innerHTML += `<div class="msg ${isMe}"><b>${c.user}</b>${c.text}</div>`;
-            });
-            cBox.scrollTop = cBox.scrollHeight;
-
-            // Admin Veri Tablosu (Kullanıcılar dahil)
-            const aTable = document.getElementById('admin-data-body'); aTable.innerHTML = "";
-            if(data.users) Object.entries(data.users).forEach(([id, u]) => {
-                aTable.innerHTML += `<tr><td>Üye</td><td>${id}</td><td><button class="btn-red" onclick="deleteData('users/${id}')">SİL</button></td></tr>`;
-            });
-            if(data.kadro) Object.entries(data.kadro).forEach(([id, p]) => {
-                aTable.innerHTML += `<tr><td>Oyuncu</td><td>${p.name} (${p.pos})</td><td><button class="btn-red" onclick="deleteData('kadro/${id}')">SİL</button></td></tr>`;
-            });
-            if(data.duyurular) Object.entries(data.duyurular).forEach(([id, n]) => {
-                aTable.innerHTML += `<tr><td>Duyuru</td><td>${n.title}</td><td><button class="btn-red" onclick="deleteData('duyurular/${id}')">SİL</button></td></tr>`;
-            });
+            // Admin Tablo
+            const table = document.getElementById('admin-data-body'); table.innerHTML = "";
+            if(d.users) Object.keys(d.users).forEach(u => table.innerHTML += `<tr><td>Üye: ${u}</td><td><button class="btn-red" onclick="deleteData('users/${u}')">SİL</button></td></tr>`);
+            if(d.duyurular) Object.entries(d.duyurular).forEach(([id, n]) => table.innerHTML += `<tr><td>Haber: ${n.title}</td><td><button class="btn-red" onclick="deleteData('duyurular/${id}')">SİL</button></td></tr>`);
+            if(d.hakkimizda) table.innerHTML += `<tr><td>Hakkımızda Metni</td><td><button class="btn-red" onclick="deleteData('hakkimizda')">TEMİZLE</button></td></tr>`;
         });
     </script>
 </body>
