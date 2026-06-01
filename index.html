@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Resmi Yönetim Portalı</title>
+    <title>İman Power FC | Digital Arena</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -13,195 +13,171 @@
             --card: #0f172a;
             --accent: #10b981;
             --accent-dark: #059669;
-            --accent-glow: rgba(16, 185, 129, 0.4);
             --text: #f1f5f9;
             --danger: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: var(--text); overflow-x: hidden; scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* --- MODERN GİRİŞ / KAYIT SİSTEMİ --- */
+        /* --- AUTH --- */
         #auth-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #020617 0%, #1e1b4b 100%);
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
             z-index: 10000; display: flex; justify-content: center; align-items: center;
         }
         .auth-card {
-            background: rgba(15, 23, 42, 0.8); padding: 50px; border-radius: 30px; width: 100%; max-width: 500px;
-            border: 1px solid rgba(16, 185, 129, 0.3); backdrop-filter: blur(20px); text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.9); padding: 40px; border-radius: 25px; width: 90%; max-width: 400px;
+            border: 1px solid var(--accent); text-align: center; backdrop-filter: blur(10px);
         }
-        .auth-card img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 25px; box-shadow: 0 0 20px var(--accent-glow); object-fit: cover; }
-        .auth-card h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
-        .auth-intro-text { font-size: 0.9rem; line-height: 1.6; color: #94a3b8; margin-bottom: 30px; font-style: italic; }
+        .auth-card img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; }
 
-        /* --- HEADER & NAVIGATION --- */
-        header {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(2, 6, 23, 0.7); backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 2rem; }
-        .logo-box { display: flex; align-items: center; gap: 15px; font-family: 'Orbitron'; font-weight: 900; color: var(--accent); cursor: pointer; }
-        .logo-box img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
-
+        /* --- NAVIGATION --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(16, 185, 129, 0.2); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 1.5rem; }
+        .logo-box { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron'; font-weight: 800; color: var(--accent); cursor: pointer; }
+        .logo-box img { width: 40px; height: 40px; border-radius: 50%; }
         nav ul { display: flex; list-style: none; gap: 5px; }
-        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.75rem; transition: 0.3s; padding: 10px 15px; border-radius: 12px; }
-        nav a:hover, nav a.active { background: rgba(16, 185, 129, 0.1); color: var(--accent); }
+        nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.7rem; padding: 8px 12px; border-radius: 8px; transition: 0.3s; }
+        nav a:hover, nav a.active { color: var(--accent); background: rgba(16, 185, 129, 0.1); }
 
         /* --- SECTIONS --- */
-        section { padding: 140px 2rem 80px; max-width: 1300px; margin: 0 auto; min-height: 100vh; display: none; }
-        section.active { display: block; animation: zoomIn 0.5s ease-out; }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        section { padding: 120px 1.5rem 60px; max-width: 1200px; margin: 0 auto; display: none; min-height: 100vh; }
+        section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .title { font-family: 'Orbitron'; font-size: 3rem; text-align: center; margin-bottom: 4rem; text-transform: uppercase; font-weight: 900; }
+        .title { font-family: 'Orbitron'; font-size: 2.2rem; text-align: center; margin-bottom: 3rem; text-transform: uppercase; }
         .title span { color: var(--accent); }
 
-        /* --- SAHA --- */
-        .pitch-box { display: flex; justify-content: center; perspective: 1000px; }
+        /* --- ANA SAYFA --- */
+        .quote-box { height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .quote-box p { font-size: 2rem; font-style: italic; font-weight: 300; line-height: 1.4; max-width: 800px; color: #cbd5e1; }
+
+        /* --- SAHA VE KADRO (Görsele Uygun) --- */
+        .pitch-container { display: flex; justify-content: center; padding: 20px; }
         .pitch {
-            width: 100%; max-width: 500px; height: 650px; background: #065f46;
-            border: 5px solid rgba(255,255,255,0.4); border-radius: 10px; position: relative;
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            width: 100%; max-width: 480px; height: 680px; background: #064e3b; 
+            border: 4px solid #ffffff44; border-radius: 12px; position: relative;
+            background-image: repeating-linear-gradient(0deg, #064e3b, #064e3b 60px, #065f46 60px, #065f46 120px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
-        .goal-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-bottom: none; }
-        .goal-bottom { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border: 3px solid white; border-top: none; }
+        .pitch-line { position: absolute; top: 50%; width: 100%; height: 2px; background: #ffffff22; }
+        .pitch-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border: 2px solid #ffffff22; border-radius: 50%; }
+        .goal-top { position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 100px; height: 15px; border: 3px solid white; border-bottom: none; }
+        .goal-bottom { position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 100px; height: 15px; border: 3px solid white; border-top: none; }
 
-        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; z-index: 5; }
-        .shirt { width: 45px; height: 45px; background: var(--accent); border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
-        .p-name { font-size: 0.7rem; background: var(--bg); padding: 2px 8px; border-radius: 10px; margin-top: 5px; border: 1px solid var(--accent); }
+        .player { position: absolute; transform: translate(-50%, -50%); text-align: center; }
+        .shirt { 
+            width: 55px; height: 55px; background: var(--accent); border: 3px solid white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; color: white;
+            box-shadow: 0 0 15px var(--accent);
+        }
+        .p-info { background: #020617; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; margin-top: 8px; border: 1px solid var(--accent); white-space: nowrap; font-weight: 600; }
 
-        /* --- HAKKIMIZDA KARTI --- */
-        .about-card { background: var(--card); border-radius: 30px; padding: 40px; border: 1px solid rgba(16,185,129,0.2); line-height: 1.8; font-size: 1.1rem; text-align: center; }
+        /* --- HAKKIMIZDA / EKİP --- */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .member-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #ffffff11; text-align: center; transition: 0.3s; }
+        .member-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .member-card h3 { color: var(--accent); margin-bottom: 10px; font-family: 'Orbitron'; }
+        .member-card p { font-size: 0.9rem; color: #94a3b8; }
 
-        /* --- ADMIN PANEL --- */
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .admin-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85rem; }
-        .admin-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* --- ADMIN --- */
+        .admin-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .admin-card { background: var(--card); padding: 20px; border-radius: 15px; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #1e293b; background: #020617; color: white; }
+        .btn { padding: 12px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; width: 100%; }
+        .btn-red { background: var(--danger); padding: 5px 10px; border-radius: 5px; color: white; border: none; font-size: 0.7rem; cursor: pointer; }
 
-        /* --- INPUTS --- */
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #1e293b; background: #020617; color: white; }
-        .btn { width: 100%; padding: 14px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .btn-red { background: var(--danger); padding: 6px 12px; font-size: 0.7rem; border-radius: 6px; cursor: pointer; border:none; color:white;}
+        @media (max-width: 768px) { .admin-box { grid-template-columns: 1fr; } .title { font-size: 1.6rem; } }
     </style>
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="auth-overlay">
         <div class="auth-card">
-            <img src="logo.png" alt="Logo">
-            <h2>İMAN POWER FC</h2>
-            <p class="auth-intro-text">
-                "Sahadaki inancın, dijitaldeki gücüyle birleştiği tek nokta. <br>
-                Zekiler Grubunun stratejisi, Beşiktaş ruhunun tutkusuyla harmanlandı. <br>
-                Şampiyonların yönetim merkezine hoş geldin Başkan."
-            </p>
-            <div id="auth-form">
-                <input type="text" id="user-name" placeholder="Adınız">
-                <input type="password" id="user-pass" placeholder="Şifreniz">
-                <button class="btn" onclick="processAuth()">SİSTEME GİRİŞ YAP</button>
-                <p style="margin-top:15px; font-size:0.8rem; cursor:pointer; color:var(--accent)" onclick="toggleAuthMode()">Hesabın yok mu? Kayıt Ol</p>
-            </div>
+            <img src="logo.png">
+            <h2 id="auth-display-title">HOŞ GELDİN</h2>
+            <p id="auth-sub" style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 20px;">Sisteme erişmek için kimliğini doğrula.</p>
+            <input type="text" id="user-name" placeholder="İsim">
+            <input type="password" id="user-pass" placeholder="Şifre">
+            <button class="btn" onclick="processAuth()">BAĞLAN</button>
+            <p style="margin-top:15px; font-size:0.75rem; cursor:pointer; color:var(--accent)" onclick="toggleAuthMode()">Hesabın yok mu? Kayıt Ol</p>
         </div>
     </div>
 
     <header>
         <div class="nav-container">
-            <div class="logo-box" onclick="switchPage('home')">
-                <img src="logo.png">
-                <span>IMAN POWER FC</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" onclick="switchPage('home')">ANA SAYFA</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('kadro')">KADRO</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('hakkimizda')">HAKKIMIZDA</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('duyurular')">DUYURULAR</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('sohbet')">SOHBET</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchPage('admin')">ADMIN</a></li>
-                </ul>
-            </nav>
+            <div class="logo-box" onclick="switchPage('home')"><img src="logo.png"><span>IMAN POWER FC</span></div>
+            <nav><ul>
+                <li><a href="#" class="nav-link active" onclick="switchPage('home')">ANA SAYFA</a></li>
+                <li><a href="#" class="nav-link" onclick="switchPage('kadro')">KADRO</a></li>
+                <li><a href="#" class="nav-link" onclick="switchPage('hakkimizda')">HAKKIMIZDA</a></li>
+                <li><a href="#" class="nav-link" onclick="switchPage('sohbet')">SOHBET</a></li>
+                <li><a href="#" class="nav-link" onclick="switchPage('admin')">ADMIN</a></li>
+            </ul></nav>
         </div>
     </header>
 
     <section id="home" class="active">
-        <h2 class="title">HOŞ GELDİN <span>BAŞKAN <span id="user-display"></span></span></h2>
-        <div class="about-card">
-            İman Power FC Yönetim Paneli üzerinden kulübün geleceğini şekillendirebilirsin.
+        <div class="quote-box">
+            <p>"Futbol sadece bir oyun değil, sahada yazılan bir inanç hikayesidir."</p>
         </div>
     </section>
 
     <section id="kadro">
         <h2 class="title">SAHA <span>DİZİLİMİ</span></h2>
-        <div class="pitch-box">
+        <div class="pitch-container">
             <div class="pitch" id="main-pitch">
                 <div class="goal-top"></div><div class="goal-bottom"></div>
+                <div class="pitch-line"></div><div class="pitch-circle"></div>
             </div>
         </div>
     </section>
 
     <section id="hakkimizda">
-        <h2 class="title">BİZ <span>KİMİZ?</span></h2>
-        <div id="about-content" class="about-card">Henüz bir bilgi girilmemiş.</div>
-    </section>
-
-    <section id="duyurular">
-        <h2 class="title">KULÜP <span>HABERLERİ</span></h2>
-        <div id="news-container" style="display:grid; gap:20px;"></div>
+        <h2 class="title">EKİBİMİZ <span>VE BİZ</span></h2>
+        <div id="team-container" class="team-grid"></div>
     </section>
 
     <section id="sohbet">
-        <h2 class="title">CANLI <span>MESAJLAR</span></h2>
-        <div style="background:var(--card); height:500px; display:flex; flex-direction:column; border-radius:20px;">
-            <div id="chatMsgs" style="flex:1; padding:20px; overflow-y:auto;"></div>
-            <div style="padding:20px; display:flex; gap:10px;">
-                <input type="text" id="chatMsg" placeholder="Bir mesaj yaz..." style="margin:0">
-                <button class="btn" style="width:80px" onclick="postChat()"><i class="fa-solid fa-paper-plane"></i></button>
+        <h2 class="title">CANLI <span>TRİBÜN</span></h2>
+        <div style="background:var(--card); height:500px; display:flex; flex-direction:column; border-radius:20px; overflow:hidden; border: 1px solid #ffffff11;">
+            <div id="chatMsgs" style="flex:1; padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;"></div>
+            <div style="padding:15px; background: #1e293b; display:flex; gap:10px;">
+                <input type="text" id="chatMsg" placeholder="Mesajını yaz..." style="margin:0">
+                <button class="btn" style="width:60px" onclick="postChat()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
     </section>
 
     <section id="admin">
-        <h2 class="title">SİSTEM <span>KONTROL</span></h2>
-        <div id="admin-login" class="auth-card" style="margin:0 auto;">
+        <h2 class="title">YÖNETİM <span>PANELİ</span></h2>
+        <div id="admin-login" class="auth-card" style="margin:0 auto; border-color: #334155;">
             <input type="password" id="admin-password" placeholder="Admin Şifresi">
-            <button class="btn" onclick="accessAdmin()">YÖNETİCİ GİRİŞİ</button>
+            <button class="btn" onclick="accessAdmin()">GİRİŞ</button>
         </div>
-
         <div id="admin-dashboard" style="display:none;">
-            <div class="admin-grid">
-                <!-- Oyuncu Ekle -->
+            <div class="admin-box">
                 <div class="admin-card">
-                    <h4>OYUNCU EKLE</h4>
-                    <input type="text" id="adm-p-name" placeholder="İsim">
-                    <input type="number" id="adm-p-num" placeholder="No">
+                    <h4>OYUNCU YÖNETİMİ</h4>
+                    <input type="text" id="adm-p-name" placeholder="İsim Soyisim">
+                    <input type="number" id="adm-p-num" placeholder="Numara">
                     <select id="adm-p-pos">
-                        <option value="GK">Kaleci</option><option value="ST">Santrafor</option>
-                        <option value="CM1">Orta Saha</option><option value="CB1">Stoper</option>
+                        <option value="GK">Kaleci (GK)</option><option value="CB">Stoper (CB)</option>
+                        <option value="CM">Orta Saha (CM)</option><option value="ST">Santrafor (ST)</option>
                     </select>
                     <button class="btn" onclick="admAddPlayer()">KADROYA EKLE</button>
                 </div>
-                <!-- Hakkımızda Düzenle -->
                 <div class="admin-card">
-                    <h4>HAKKIMIZDA METNİ</h4>
-                    <textarea id="adm-about-text" rows="5" placeholder="Kulüp tarihçesini yazın..."></textarea>
-                    <button class="btn" style="background:#3b82f6" onclick="admUpdateAbout()">GÜNCELLE</button>
-                </div>
-                <!-- Duyuru Ekle -->
-                <div class="admin-card">
-                    <h4>DUYURU YAYINLA</h4>
-                    <input type="text" id="adm-n-title" placeholder="Başlık">
-                    <textarea id="adm-n-body" placeholder="İçerik"></textarea>
-                    <button class="btn" style="background:#f59e0b" onclick="admAddNews()">YAYINLA</button>
+                    <h4>KİŞİ/HAKKIMIZDA EKLE</h4>
+                    <input type="text" id="adm-m-name" placeholder="Kişi Adı">
+                    <textarea id="adm-m-desc" rows="3" placeholder="Hakkında açıklaması..."></textarea>
+                    <button class="btn" style="background:#3b82f6" onclick="admAddMember()">EKİBE EKLE</button>
                 </div>
             </div>
-
-            <div class="admin-card" style="margin-top:30px;">
-                <h4>VERİ YÖNETİMİ</h4>
-                <table class="admin-table"><tbody id="admin-data-body"></tbody></table>
+            <div class="admin-card" style="margin-top:20px;">
+                <h4>SİSTEM VERİLERİ</h4>
+                <table style="width:100%; font-size:0.8rem;"><tbody id="admin-data-body"></tbody></table>
             </div>
         </div>
     </section>
@@ -210,7 +186,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
             authDomain: "imanpowerveri.firebaseapp.com",
@@ -226,91 +201,87 @@
         let activeUser = null;
         let isRegMode = false;
 
-        // AUTH
         window.toggleAuthMode = () => {
             isRegMode = !isRegMode;
-            document.querySelector('#auth-form h2').innerText = isRegMode ? "KAYIT OL" : "GİRİŞ YAP";
+            document.getElementById('auth-display-title').innerText = isRegMode ? "KAYIT OL" : "HOŞ GELDİN";
         };
 
         window.processAuth = () => {
             const name = document.getElementById('user-name').value.trim();
             const pass = document.getElementById('user-pass').value;
-            if(!name || !pass) return alert("Eksik alan!");
-
+            if(!name || !pass) return;
             if(isRegMode) {
-                set(ref(db, 'users/' + name), { pass }).then(() => { alert("Kayıt başarılı!"); location.reload(); });
+                set(ref(db, 'users/' + name), { pass }).then(() => { alert("Başarılı! Giriş yapabilirsin."); location.reload(); });
             } else {
                 onValue(ref(db, 'users/' + name), (s) => {
                     if(s.val() && s.val().pass === pass) {
                         activeUser = name;
-                        document.getElementById('user-display').innerText = name;
                         document.getElementById('auth-overlay').style.display = 'none';
-                    } else alert("Hatalı bilgiler!");
+                    } else alert("Hata!");
                 }, {onlyOnce: true});
             }
         };
 
-        // NAV
         window.switchPage = (id) => {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            event.target.classList.add('active');
+            if(event.target.classList.contains('nav-link')) event.target.classList.add('active');
         };
 
-        // ADMIN ACTIONS
-        window.accessAdmin = () => {
-            if(document.getElementById('admin-password').value === "imanpower2026") {
-                document.getElementById('admin-login').style.display = 'none';
-                document.getElementById('admin-dashboard').style.display = 'block';
-            }
-        };
+        window.accessAdmin = () => { if(document.getElementById('admin-password').value === "imanpower2026") { document.getElementById('admin-login').style.display = 'none'; document.getElementById('admin-dashboard').style.display = 'block'; } };
 
         window.admAddPlayer = () => {
             const p = { name: document.getElementById('adm-p-name').value, num: document.getElementById('adm-p-num').value, pos: document.getElementById('adm-p-pos').value };
             set(ref(db, 'kadro/' + p.pos), p);
         };
 
-        window.admUpdateAbout = () => {
-            const txt = document.getElementById('adm-about-text').value;
-            set(ref(db, 'hakkimizda'), txt).then(() => alert("Hakkımızda güncellendi!"));
-        };
-
-        window.admAddNews = () => {
-            push(ref(db, 'duyurular'), { title: document.getElementById('adm-n-title').value, body: document.getElementById('adm-n-body').value, date: new Date().toLocaleDateString() });
+        window.admAddMember = () => {
+            push(ref(db, 'team'), { name: document.getElementById('adm-m-name').value, desc: document.getElementById('adm-m-desc').value });
         };
 
         window.deleteData = (p) => { if(confirm("Silinsin mi?")) remove(ref(db, p)); };
 
         window.postChat = () => {
+            if(!document.getElementById('chatMsg').value) return;
             push(ref(db, 'sohbet'), { user: activeUser, text: document.getElementById('chatMsg').value });
             document.getElementById('chatMsg').value = "";
         };
 
-        // DATA SYNC
-        const posMap = { "GK": {t:"85%", l:"50%"}, "ST": {t:"15%", l:"50%"}, "CM1": {t:"50%", l:"50%"}, "CB1": {t:"70%", l:"50%"} };
+        const posMap = { "GK": {t:"88%", l:"50%"}, "CB": {t:"70%", l:"50%"}, "CM": {t:"45%", l:"50%"}, "ST": {t:"18%", l:"50%"} };
 
         onValue(ref(db, '/'), (snap) => {
             const d = snap.val() || {};
             
-            // Hakkımızda Görüntüleme
-            document.getElementById('about-content').innerText = d.hakkimizda || "Bilgi yok.";
-            
-            // Saha
+            // Kadro (Görsele Uygun Tasarım)
             const pitch = document.getElementById('main-pitch');
             pitch.querySelectorAll('.player').forEach(p => p.remove());
             if(d.kadro) Object.values(d.kadro).forEach(p => {
                 const n = document.createElement('div'); n.className = "player";
                 n.style.top = posMap[p.pos].t; n.style.left = posMap[p.pos].l;
-                n.innerHTML = `<div class="shirt">${p.num}</div><div class="p-name">${p.name}</div>`;
+                n.innerHTML = `<div class="shirt">${p.num}</div><div class="p-info">${p.name}</div>`;
                 pitch.appendChild(n);
             });
 
+            // Hakkımızda Kişiler
+            const teamBox = document.getElementById('team-container'); teamBox.innerHTML = "";
+            if(d.team) Object.entries(d.team).forEach(([id, m]) => {
+                teamBox.innerHTML += `<div class="member-card"><h3>${m.name}</h3><p>${m.desc}</p></div>`;
+            });
+
+            // Sohbet
+            const cBox = document.getElementById('chatMsgs'); cBox.innerHTML = "";
+            if(d.sohbet) Object.values(d.sohbet).forEach(c => {
+                const align = c.user === activeUser ? 'flex-end' : 'flex-start';
+                const bg = c.user === activeUser ? 'var(--accent)' : '#334155';
+                cBox.innerHTML += `<div style="align-self:${align}; background:${bg}; padding:8px 15px; border-radius:12px; max-width:80%; font-size:0.85rem;"><b style="display:block; font-size:0.6rem; opacity:0.7;">${c.user}</b>${c.text}</div>`;
+            });
+            cBox.scrollTop = cBox.scrollHeight;
+
             // Admin Tablo
             const table = document.getElementById('admin-data-body'); table.innerHTML = "";
+            if(d.team) Object.entries(d.team).forEach(([id, m]) => table.innerHTML += `<tr><td>Kişi: ${m.name}</td><td><button class="btn-red" onclick="deleteData('team/${id}')">SİL</button></td></tr>`);
             if(d.users) Object.keys(d.users).forEach(u => table.innerHTML += `<tr><td>Üye: ${u}</td><td><button class="btn-red" onclick="deleteData('users/${u}')">SİL</button></td></tr>`);
-            if(d.duyurular) Object.entries(d.duyurular).forEach(([id, n]) => table.innerHTML += `<tr><td>Haber: ${n.title}</td><td><button class="btn-red" onclick="deleteData('duyurular/${id}')">SİL</button></td></tr>`);
-            if(d.hakkimizda) table.innerHTML += `<tr><td>Hakkımızda Metni</td><td><button class="btn-red" onclick="deleteData('hakkimizda')">TEMİZLE</button></td></tr>`;
         });
     </script>
 </body>
