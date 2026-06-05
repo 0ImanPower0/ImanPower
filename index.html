@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Pro Arena Ultimate</title>
+    <title>İman Power FC | İMAN POWER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -73,10 +73,11 @@
     <div id="auth-screen">
         <div class="auth-card">
             <img src="logo.png" alt="Logo">
-            <h2 style="margin-bottom:20px; font-family:'Orbitron'; color:var(--accent); letter-spacing: 2px;">PORTAL ACCESS</h2>
+            <h2 id="auth-title" style="margin-bottom:20px; font-family:'Orbitron'; color:var(--accent); letter-spacing: 2px;">SİSTEME GİRİŞ</h2>
             <input type="text" id="u-in" placeholder="Kullanıcı Adı">
             <input type="password" id="p-in" placeholder="Şifre">
-            <button class="btn" onclick="login()">GİRİŞ YAP</button>
+            <button class="btn" id="auth-btn" onclick="handleAuth(false)">GİRİŞ YAP</button>
+            <p id="toggle-auth-text" style="margin-top:20px; font-size:0.85rem; cursor:pointer; color:var(--accent);" onclick="toggleAuthMode()">Hesabın yok mu? Kayıt Ol</p>
         </div>
     </div>
 
@@ -139,7 +140,7 @@
         <h2 class="title">YÖNETİM SİSTEMİ</h2>
         <div id="adm-lock" class="auth-card" style="margin: 0 auto; border-color: #1e293b;">
             <input type="password" id="adm-k" placeholder="Yönetici Şifresi">
-            <button class="btn" onclick="openAdm()">YETKİ AL</button>
+            <button class="btn" onclick="openAdm()">PANELİ AÇ</button>
         </div>
         <div id="adm-box" style="display:none;">
             <div class="admin-box-layout">
@@ -201,8 +202,41 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         let user = "";
+        let isRegisterMode = false;
 
-        // NAV & GİRİŞ
+        // AUTH GİRİŞ VE KAYIT MODU GEÇİŞLERİ (DÜZELTİLDİ)
+        window.toggleAuthMode = () => {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById('auth-title').innerText = isRegisterMode ? "SİSTEME KAYIT" : "SİSTEME GİRİŞ";
+            document.getElementById('auth-btn').innerText = isRegisterMode ? "KAYIT OL" : "GİRİŞ YAP";
+            document.getElementById('toggle-auth-text').innerText = isRegisterMode ? "Zaten hesabın var mı? Giriş Yap" : "Hesabın yok mu? Kayıt Ol";
+        };
+
+        window.handleAuth = (check) => {
+            const username = document.getElementById('u-in').value.trim().toLowerCase();
+            const password = document.getElementById('p-in').value;
+
+            if(!username || !password) return alert("Kullanıcı adı ve şifre boş bırakılamaz!");
+
+            if(isRegisterMode) {
+                // Kayıt Sistemi
+                set(ref(db, 'users/' + username), { password: password }).then(() => {
+                    alert("Kayıt başarılı! Şimdi aynı bilgilerle giriş yapabilirsiniz.");
+                    toggleAuthMode();
+                });
+            } else {
+                // Şifreyi Birebir Doğrulayan Giriş Sistemi
+                onValue(ref(db, 'users/' + username), (snap) => {
+                    if(snap.exists() && snap.val().password === password) {
+                        user = username;
+                        document.getElementById('auth-screen').style.display = 'none';
+                    } else {
+                        alert("Hatalı Kullanıcı Adı veya Şifre!");
+                    }
+                }, { onlyOnce: true });
+            }
+        };
+
         window.nav = (id) => {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.n-l').forEach(l => l.classList.remove('active'));
@@ -210,23 +244,17 @@
             if(event && event.target.classList.contains('n-l')) event.target.classList.add('active');
         };
 
-        window.login = () => {
-            const u = document.getElementById('u-in').value.trim();
-            const p = document.getElementById('u-in').value; // Pratik hızlı giriş
-            if(u) { user = u; document.getElementById('auth-screen').style.display='none'; }
-        };
+        window.openAdm = () => { if(document.getElementById('adm-k').value === "imanpower2026") { document.getElementById('adm-lock').style.display='none'; document.getElementById('adm-box').style.display='block'; } else { alert("Yanlış admin şifresi!"); } };
 
-        window.openAdm = () => { if(document.getElementById('adm-k').value === "imanpower2026") { document.getElementById('adm-lock').style.display='none'; document.getElementById('adm-box').style.display='block'; } };
-
-        // GELİŞMİŞ VERİ EKLEME FONKSİYONLARI
+        // VERİ İŞLEMLERİ
         window.savePlayer = () => {
             const name = document.getElementById('p-name-input').value.trim();
             const num = document.getElementById('p-num-input').value.trim();
             const pos = document.getElementById('p-pos-input').value;
-            if(!name || !num) return alert("Oyuncu adı ve forma numarası zorunludur!");
+            if(!name || !num) return alert("Oyuncu adı ve forma numarası girin!");
             
             set(ref(db, 'kadro/' + pos), { name, num, pos }).then(() => {
-                alert("Oyuncu pozisyonuna başarıyla yerleştirildi!");
+                alert("Oyuncu yerleştirildi!");
                 document.getElementById('p-name-input').value = "";
                 document.getElementById('p-num-input').value = "";
             });
@@ -236,42 +264,41 @@
             const type = document.getElementById('a-t').value;
             const name = document.getElementById('a-n').value.trim();
             const desc = document.getElementById('a-d').value.trim();
-            if(!name) return alert("Başlık veya İsim girilmeli!");
+            if(!name) return alert("İsim/Başlık girin!");
             
             push(ref(db, type), { name, desc, date: new Date().toLocaleDateString() }).then(() => {
-                alert("Veri başarıyla eklendi!");
+                alert("Başarıyla eklendi!");
                 document.getElementById('a-n').value = "";
                 document.getElementById('a-d').value = "";
             });
         };
 
-        window.delData = (path) => { if(confirm("Bu kaydı tamamen silmek istediğinize emin misiniz?")) remove(ref(db, path)); };
+        window.delData = (path) => { if(confirm("Silinsin mi?")) remove(ref(db, path)); };
 
         window.send = () => {
             const m = document.getElementById('m-in').value.trim();
             if(m) { push(ref(db, 'chat'), { u: user, m: m }); document.getElementById('m-in').value=''; }
         };
 
-        // ENNE KADAR HATASIZ COORD MAP (4-4-2 YAN YANA DİZİLİM)
         const pLoc = { 
             GK:  {t:'88%', l:'50%'},
             LB:  {t:'68%', l:'15%'},
-            CB1: {t:'68%', l:'38%'}, // Yan yana Stoper 1
-            CB2: {t:'68%', l:'62%'}, // Yan yana Stoper 2
+            CB1: {t:'68%', l:'38%'},
+            CB2: {t:'68%', l:'62%'},
             RB:  {t:'68%', l:'85%'},
             LM:  {t:'43%', l:'15%'},
-            CM1: {t:'43%', l:'38%'}, // Yan yana Orta Saha 1
-            CM2: {t:'43%', l:'62%'}, // Yan yana Orta Saha 2
+            CM1: {t:'43%', l:'38%'},
+            CM2: {t:'43%', l:'62%'},
             RM:  {t:'43%', l:'85%'},
-            ST1: {t:'16%', l:'35%'}, // Yan yana Forvet 1
-            ST2: {t:'16%', l:'65%'}  // Yan yana Forvet 2
+            ST1: {t:'16%', l:'35%'},
+            ST2: {t:'16%', l:'65%'} 
         };
 
-        // CANLI GERÇEK ZAMANLI VERİ AKIŞI (DÜZELTİLDİ)
+        // GERÇEK ZAMANLI VERİ AKIŞI
         onValue(ref(db, '/'), (snap) => {
             const data = snap.val() || {};
             
-            // Saha Raporu
+            // Saha Yenileme
             const saha = document.getElementById('saha'); saha.innerHTML = "";
             if(data.kadro) {
                 Object.values(data.kadro).forEach(p => {
@@ -284,14 +311,14 @@
                 });
             }
 
-            // Canlı Sohbet Akışı
+            // Canlı Sohbet
             const cBox = document.getElementById('chat-msgs'); cBox.innerHTML = "";
             if(data.chat) {
                 Object.values(data.chat).forEach(m => { cBox.innerHTML += `<div class="msg"><b>${m.u || 'Anonim'}:</b> ${m.m}</div>`; });
                 cBox.scrollTop = cBox.scrollHeight;
             }
 
-            // Kulüp Sayfaları Listeleri
+            // Listeler
             const renderGrid = (id, list, badgeText) => {
                 const el = document.getElementById(id); el.innerHTML = "";
                 if(list) {
@@ -304,7 +331,7 @@
             renderGrid('tr-list', data.transfer, 'TRANSFER');
             renderGrid('ekip-list', data.ekip, 'PERSONEL');
 
-            // Admin Detaylı Yönetim & Canlı Silme Listesi
+            // Admin Listesi
             const aM = document.getElementById('adm-manage'); aM.innerHTML = "";
             ['duyuru', 'transfer', 'ekip', 'kadro'].forEach(t => {
                 if(data[t]) {
