@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Pro İman</title>
+    <title>İman Power FC | Pro Arena Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -48,6 +48,17 @@
         .card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); transition: 0.3s; position: relative; }
         .card:hover { border-color: var(--accent); transform: scale(1.02); }
         .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
+
+        /* --- EKİP ÖZEL HİYERARŞİ STİLLERİ --- */
+        .ekip-container { display: flex; flex-direction: column; gap: 40px; }
+        .kurucu-row { display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; width: 100%; }
+        .yonetici-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(45%, 1fr)); gap: 25px; }
+        .uye-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+
+        .card.kurucu-style { padding: 45px; border: 3px solid #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3); text-align: center; }
+        .card.kurucu-style h3 { font-size: 2rem; font-family: 'Orbitron'; margin-bottom: 10px; }
+        .card.yonetici-style { padding: 35px; border: 2px solid #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); }
+        .card.yonetici-style h3 { font-size: 1.4rem; }
 
         /* --- FUTBOL SAHASI (4-4-2) --- */
         .pitch { width: 100%; max-width: 520px; height: 740px; background: #064e3b; margin: 0 auto; border: 4px solid #fff; border-radius: 15px; position: relative; background-image: repeating-linear-gradient(0deg, #064e3b, #064e3b 65px, #065f46 65px, #065f46 130px); box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
@@ -133,7 +144,11 @@
 
     <section id="ekip">
         <h2 class="title">TEKNİK EKİP & YÖNETİM</h2>
-        <div id="ekip-list" class="grid"></div>
+        <div class="ekip-container">
+            <div id="ekip-kurucu-row" class="kurucu-row"></div>
+            <div id="ekip-yonetici-row" class="yonetici-row"></div>
+            <div id="ekip-uye-row" class="uye-row"></div>
+        </div>
     </section>
 
     <section id="admin">
@@ -226,8 +241,7 @@
         window.handleAuth = () => {
             const username = document.getElementById('u-in').value.trim().toLowerCase();
             const password = document.getElementById('p-in').value;
-
-            if(!username || !password) return alert("Kullanıcı adı ve şifre boş bırakılamaz!");
+            if(!username || !password) return alert("Boş bırakılamaz!");
 
             if(isRegisterMode) {
                 set(ref(db, 'users/' + username), { password: password }).then(() => {
@@ -240,7 +254,7 @@
                         user = username;
                         document.getElementById('auth-screen').style.display = 'none';
                     } else {
-                        alert("Hatalı Kullanıcı Adı veya Şifre!");
+                        alert("Hatalı Giriş!");
                     }
                 }, { onlyOnce: true });
             }
@@ -253,22 +267,18 @@
             if(event && event.target.classList.contains('n-l')) event.target.classList.add('active');
         };
 
-        window.openAdm = () => { if(document.getElementById('adm-k').value === "imanpower2026") { document.getElementById('adm-lock').style.display='none'; document.getElementById('adm-box').style.display='block'; } else { alert("Yanlış admin şifresi!"); } };
+        window.openAdm = () => { if(document.getElementById('adm-k').value === "imanpower2026") { document.getElementById('adm-lock').style.display='none'; document.getElementById('adm-box').style.display='block'; } else { alert("Yanlış şifre!"); } };
 
-        window.checkType = (val) => {
-            document.getElementById('ekip-rol-box').style.display = (val === 'ekip') ? 'block' : 'none';
-        };
+        window.checkType = (val) => { document.getElementById('ekip-rol-box').style.display = (val === 'ekip') ? 'block' : 'none'; };
 
         window.savePlayer = () => {
             const name = document.getElementById('p-name-input').value.trim();
             const num = document.getElementById('p-num-input').value.trim();
             const pos = document.getElementById('p-pos-input').value;
-            if(!name || !num) return alert("Oyuncu adı ve forma numarası girin!");
-            
+            if(!name || !num) return alert("Eksik alanları doldurun!");
             set(ref(db, 'kadro/' + pos), { name, num, pos }).then(() => {
                 alert("Oyuncu yerleştirildi!");
-                document.getElementById('p-name-input').value = "";
-                document.getElementById('p-num-input').value = "";
+                document.getElementById('p-name-input').value = ""; document.getElementById('p-num-input').value = "";
             });
         };
 
@@ -277,15 +287,14 @@
             const name = document.getElementById('a-n').value.trim();
             const desc = document.getElementById('a-d').value.trim();
             const role = document.getElementById('a-role').value;
-            if(!name) return alert("İsim/Başlık girin!");
+            if(!name) return alert("İsim girin!");
             
             const payload = { name, desc, date: new Date().toLocaleDateString() };
-            if(type === 'ekip') payload.role = role; // Rol bilgisini ekle
+            if(type === 'ekip') payload.role = role;
             
             push(ref(db, type), payload).then(() => {
                 alert("Başarıyla eklendi!");
-                document.getElementById('a-n').value = "";
-                document.getElementById('a-d').value = "";
+                document.getElementById('a-n').value = ""; document.getElementById('a-d').value = "";
             });
         };
 
@@ -301,7 +310,7 @@
             LM:  {t:'43%', l:'15%'}, CM1: {t:'43%', l:'38%'}, CM2: {t:'43%', l:'62%'}, RM:  {t:'43%', l:'85%'}, ST1: {t:'16%', l:'35%'}, ST2: {t:'16%', l:'65%'} 
         };
 
-        // DATA SYNC
+        // REAL-TIME SYNC
         onValue(ref(db, '/'), (snap) => {
             const data = snap.val() || {};
             
@@ -334,11 +343,26 @@
             renderGrid('duyuru-list', data.duyuru, 'DUYURU');
             renderGrid('tr-list', data.transfer, 'TRANSFER');
 
-            // Ekip Özel Render (Rol bilgisini ismin yanına yazar)
-            const eEl = document.getElementById('ekip-list'); eEl.innerHTML = "";
+            // EKİP HİYERARŞİK RENDER (DÜZELTİLDİ VE BÜYÜTÜLDÜ)
+            const rowKurucu = document.getElementById('ekip-kurucu-row'); rowKurucu.innerHTML = "";
+            const rowYonetici = document.getElementById('ekip-yonetici-row'); rowYonetici.innerHTML = "";
+            const rowUye = document.getElementById('ekip-uye-row'); rowUye.innerHTML = "";
+
             if(data.ekip) {
                 Object.values(data.ekip).forEach(val => {
-                    eEl.innerHTML += `<div class="card"><span class="badge" style="background:#8b5cf6">EKİP</span><h3>${val.name} <span style="color:var(--accent); font-size:0.9rem;">[${val.role || 'Üye'}]</span></h3><p style="margin-top:8px; opacity:0.8;">${val.desc || ''}</p></div>`;
+                    const role = val.role || 'Üye';
+                    let cardHtml = "";
+
+                    if(role === 'Kurucu') {
+                        cardHtml = `<div class="card kurucu-style"><span class="badge" style="background:#fbbf24; color:#000;">${role.toUpperCase()}</span><h3>${val.name}</h3><p style="margin-top:12px; font-size:1.1rem; opacity:0.9;">${val.desc || ''}</p></div>`;
+                        rowKurucu.innerHTML += cardHtml;
+                    } else if(role === 'Başkan' || role === 'Yönetici') {
+                        cardHtml = `<div class="card yonetici-style"><span class="badge" style="background:#38bdf8; color:#000;">${role.toUpperCase()}</span><h3>${val.name}</h3><p style="margin-top:8px; opacity:0.85;">${val.desc || ''}</p></div>`;
+                        rowYonetici.innerHTML += cardHtml;
+                    } else {
+                        cardHtml = `<div class="card"><span class="badge" style="background:#a78bfa">${role.toUpperCase()}</span><h3>${val.name}</h3><p style="margin-top:8px; opacity:0.8;">${val.desc || ''}</p></div>`;
+                        rowUye.innerHTML += cardHtml;
+                    }
                 });
             }
 
