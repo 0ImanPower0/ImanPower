@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | İman Power</title>
+    <title>İman Power FC | Pro Arena Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -296,7 +296,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
+        // Birinci ekran görüntündeki eksiksiz konfigürasyon
         const firebaseConfig = {
             apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
             authDomain: "imanpowerveri.firebaseapp.com",
@@ -304,11 +306,14 @@
             projectId: "imanpowerveri",
             storageBucket: "imanpowerveri.firebasestorage.app",
             messagingSenderId: "891464029314",
-            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b"
+            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b",
+            measurementId: "G-4T6XSDBDL5"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const analytics = getAnalytics(app);
+
         let user = "";
         let isRegisterMode = false;
 
@@ -368,7 +373,6 @@
             });
         };
 
-        // VERİ KAYDETME (DÜZELTİLDİ)
         window.saveData = () => {
             const type = document.getElementById('a-t').value;
             const name = document.getElementById('a-n').value.trim();
@@ -384,10 +388,9 @@
             if(type === 'ekip') payload.role = role;
             if(type === 'transfer') payload.status = trstatus;
             
-            // Haber fotoğraf okuma hatası burada düzeltildi
             if(type === 'haber') {
                 payload.topic = hTopic || "Genel";
-                payload.img = hImg || "logo.png"; // Boşsa varsayılan logo çıksın
+                payload.img = hImg || "logo.png"; 
             }
             
             push(ref(db, type), payload).then(() => {
@@ -395,7 +398,7 @@
                 document.getElementById('a-n').value = ""; 
                 document.getElementById('a-d').value = "";
                 document.getElementById('a-h-topic').value = ""; 
-                document.getElementById('a-h-img').value = ""; // URL alanını temizle
+                document.getElementById('a-h-img').value = ""; 
             });
         };
 
@@ -488,7 +491,7 @@
                 cBox.scrollTop = cBox.scrollHeight;
             }
 
-            // Haberler Render (Hata buradaki payload.img okumasında giderildi)
+            // Haberler Render
             const hbEl = document.getElementById('haber-list'); hbEl.innerHTML = "";
             if(data.haber) {
                 Object.values(data.haber).forEach(val => {
@@ -526,9 +529,9 @@
             if(data.transfer) {
                 Object.values(data.transfer).forEach(val => {
                     const st = val.status || 'Yakından İlgileniliyor';
-                    let color = '#38bdf8'; // Mavi
-                    if(st === 'Görüşme Aşamasında') color = '#fbbf24'; // Sarı
-                    if(st === 'Alındı') color = '#10b981'; // Yeşil
+                    let color = '#38bdf8'; 
+                    if(st === 'Görüşme Aşamasında') color = '#fbbf24'; 
+                    if(st === 'Alındı') color = '#10b981'; 
 
                     trEl.innerHTML += `<div class="card transfer-card-style">
                         <span class="badge" style="background:#2563eb">TRANSFER</span>
