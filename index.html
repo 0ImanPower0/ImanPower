@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | İmanlı Takım</title>
+    <title>İman Power FC | Gücün Tek Adresi</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -50,6 +50,23 @@
         .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
         .status-badge { position: absolute; bottom: 15px; right: 15px; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; color: #000; }
 
+        /* --- HABERLER ÖZEL GENİŞ LİSTE (YENİ) --- */
+        .haber-list-container { display: flex; flex-direction: column; gap: 30px; }
+        .haber-card { background: var(--glass); border-radius: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; transition: 0.3s; }
+        @media (min-width: 768px) {
+            .haber-card { flex-direction: row; min-height: 280px; }
+        }
+        .haber-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .haber-img-box { width: 100%; position: relative; background: #0f172a; }
+        @media (min-width: 768px) {
+            .haber-img-box { width: 40%; max-width: 400px; min-width: 300px; }
+        }
+        .haber-img-box img { width: 100%; height: 100%; object-fit: cover; min-height: 200px; }
+        .haber-body { padding: 35px; flex: 1; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .haber-topic { background: #3b82f6; color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; align-self: flex-start; margin-bottom: 15px; }
+        .haber-body h3 { font-family: 'Orbitron'; font-size: 1.7rem; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+        .haber-body p { font-size: 0.98rem; opacity: 0.85; line-height: 1.6; color: #cbd5e1; margin-bottom: 15px; white-space: pre-line; }
+
         /* --- DUYURU ÖZEL BÜYÜTÜLMÜŞ GRID --- */
         .duyuru-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .card.duyuru-card-style { padding: 35px; border-left: 4px solid var(--accent); }
@@ -91,7 +108,7 @@
         textarea { height: 120px; resize: none; }
         .btn { padding: 14px; border: none; border-radius: 10px; color: white; font-weight: 800; cursor: pointer; background: var(--accent); width: 100%; transition: 0.3s; text-transform: uppercase; }
         .btn:hover { filter: brightness(1.2); box-shadow: 0 0 15px var(--accent-glow); }
-        .admin-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .admin-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .del-btn { background: #ef4444; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; border: none; color: white; }
         
         /* --- DESTEK SAYFASI STİLLERİ --- */
@@ -117,6 +134,7 @@
             <div class="logo-box" onclick="nav('home')"><img src="logo.png"><span>İMAN POWER</span></div>
             <nav><ul>
                 <li><a href="#" onclick="nav('home')" class="n-l active">ANA SAYFA</a></li>
+                <li><a href="#" onclick="nav('haber')" class="n-l">HABERLER</a></li>
                 <li><a href="#" onclick="nav('kadro')" class="n-l">KADRO</a></li>
                 <li><a href="#" onclick="nav('sohbet')" class="n-l">SOHBET</a></li>
                 <li><a href="#" onclick="nav('duyuru')" class="n-l">DUYURULAR</a></li>
@@ -135,6 +153,11 @@
             <p style="color:var(--accent); font-weight:900; letter-spacing:4px; font-size: 1.3rem;">KURUCU VE BAŞKAN</p>
             <p style="font-style:italic; margin-top:25px; font-size: 1.5rem; color: #94a3b8; font-weight:600;">"Sahada İman, Kalpte Güç, Hedef Şampiyonluk!"</p>
         </div>
+    </section>
+
+    <section id="haber">
+        <h2 class="title">KULÜPTEN HABERLER</h2>
+        <div id="haber-list" class="haber-list-container"></div>
     </section>
 
     <section id="kadro">
@@ -223,9 +246,16 @@
                         <option value="duyuru">Duyuru Yayınla</option>
                         <option value="transfer">Transfer Ekle</option>
                         <option value="ekip">Ekibe Personel Ekle</option>
+                        <option value="haber">Haber Ekle (Yeni)</option>
                     </select>
+                    
                     <input type="text" id="a-n" placeholder="Başlık / İsim">
                     
+                    <div id="haber-ekstra-box" style="display:none;">
+                        <input type="text" id="a-h-topic" placeholder="Haber Konusu / Kategorisi (örn: Maç Raporu)">
+                        <input type="text" id="a-h-img" placeholder="Haber Fotoğrafı URL Linki">
+                    </div>
+
                     <div id="ekip-rol-box" style="display:none;">
                         <label style="font-size:0.8rem; color:#94a3b8;">Ekip Rolü / Görevi Seç:</label>
                         <select id="a-role">
@@ -246,7 +276,7 @@
                         </select>
                     </div>
 
-                    <input type="text" id="a-d" placeholder="Detay / Açıklama / Biyografi">
+                    <textarea id="a-d" placeholder="Detay / Açıklama / Geniş Haber İçeriği"></textarea>
                     <button class="btn" onclick="saveData()">SİSTEME KAYDET</button>
                 </div>
 
@@ -324,6 +354,7 @@
         window.checkType = (val) => { 
             document.getElementById('ekip-rol-box').style.display = (val === 'ekip') ? 'block' : 'none'; 
             document.getElementById('transfer-durum-box').style.display = (val === 'transfer') ? 'block' : 'none'; 
+            document.getElementById('haber-ekstra-box').style.display = (val === 'haber') ? 'block' : 'none'; 
         };
 
         window.savePlayer = () => {
@@ -343,15 +374,23 @@
             const desc = document.getElementById('a-d').value.trim();
             const role = document.getElementById('a-role').value;
             const trstatus = document.getElementById('a-trstatus').value;
-            if(!name) return alert("İsim girin!");
+            const hTopic = document.getElementById('a-h-topic').value.trim();
+            const hImg = document.getElementById('a-h-img').value.trim();
+            
+            if(!name) return alert("Başlık / İsim boş bırakılamaz!");
             
             const payload = { name, desc, date: new Date().toLocaleDateString() };
             if(type === 'ekip') payload.role = role;
             if(type === 'transfer') payload.status = trstatus;
+            if(type === 'haber') {
+                payload.topic = hTopic || "Genel";
+                payload.img = hImg || "logo.png"; // Boşsa varsayılan logo çıksın
+            }
             
             push(ref(db, type), payload).then(() => {
                 alert("Başarıyla eklendi!");
                 document.getElementById('a-n').value = ""; document.getElementById('a-d').value = "";
+                document.getElementById('a-h-topic').value = ""; document.getElementById('a-h-img').value = "";
             });
         };
 
@@ -362,14 +401,12 @@
             if(m) { push(ref(db, 'chat'), { u: user, m: m }); document.getElementById('m-in').value=''; }
         };
 
-        // --- DESTEK SİSTEMİ SCRIPTLERİ (YENİ EKLEME) ---
         window.submitSupport = () => {
             const email = document.getElementById('sup-email').value.trim();
             const msg = document.getElementById('sup-msg').value.trim();
             if(!email || !msg) return alert("Lütfen tüm alanları doldurun!");
             if(!email.includes('@')) return alert("Geçerli bir Gmail adresi girin!");
 
-            // 1 Saatlik koruma kontrolü
             const lastSubmit = localStorage.getItem('lastSupportTime');
             const now = Date.now();
             if(lastSubmit && (now - lastSubmit < 3600000)) {
@@ -400,7 +437,7 @@
                 const lastSubmit = localStorage.getItem('lastSupportTime');
                 if(!lastSubmit) {
                     timerBanner.style.display = "none";
-                    formBox.style.style = "block";
+                    formBox.style.display = "block";
                     return;
                 }
                 const diff = Date.now() - parseInt(lastSubmit);
@@ -446,7 +483,27 @@
                 cBox.scrollTop = cBox.scrollHeight;
             }
 
-            // Duyuru Özel Render (Büyütülmüş ve Sol Şeritli Stil)
+            // Haberler Özel Render (YENİ EKLEME)
+            const hbEl = document.getElementById('haber-list'); hbEl.innerHTML = "";
+            if(data.haber) {
+                Object.values(data.haber).forEach(val => {
+                    hbEl.innerHTML += `<div class="haber-card">
+                        <div class="haber-img-box">
+                            <img src="${val.img}" alt="Haber Görseli" onerror="this.src='logo.png'">
+                        </div>
+                        <div class="haber-body">
+                            <span class="haber-topic">${val.topic}</span>
+                            <h3>${val.name}</h3>
+                            <p>${val.desc || ''}</p>
+                            <small style="color:var(--accent); font-weight:600; font-size:0.75rem;">Yayınlanma Tarihi: ${val.date || ''}</small>
+                        </div>
+                    </div>`;
+                });
+            } else {
+                hbEl.innerHTML = `<p style="text-align:center; opacity:0.5; padding-top:30px;">Henüz eklenmiş bir haber bulunmuyor.</p>`;
+            }
+
+            // Duyuru Özel Render
             const dyEl = document.getElementById('duyuru-list'); dyEl.innerHTML = "";
             if(data.duyuru) {
                 Object.values(data.duyuru).forEach(val => {
@@ -459,7 +516,7 @@
                 });
             }
 
-            // Transfer Özel Render (Satırda 3 Tane ve Büyük Kartlar)
+            // Transfer Özel Render
             const trEl = document.getElementById('tr-list'); trEl.innerHTML = "";
             if(data.transfer) {
                 Object.values(data.transfer).forEach(val => {
@@ -503,13 +560,14 @@
 
             // Admin Listeleri Kayıt Silme Paneli
             const aM = document.getElementById('adm-manage'); aM.innerHTML = "";
-            ['duyuru', 'transfer', 'ekip', 'kadro'].forEach(t => {
+            ['duyuru', 'transfer', 'ekip', 'kadro', 'haber'].forEach(t => {
                 if(data[t]) {
                     Object.entries(data[t]).forEach(([k, v]) => {
                         let displayName = v.name;
                         if(t === 'kadro') displayName = `${v.name} (${v.pos})`;
                         if(t === 'ekip') displayName = `${v.name} [${v.role || 'Üye'}]`;
                         if(t === 'transfer') displayName = `${v.name} [${v.status || 'İlgileniliyor'}]`;
+                        if(t === 'haber') displayName = `${v.name} [${v.topic || 'Genel'}]`;
                         
                         aM.innerHTML += `<div class="admin-list-item" style="display:flex; justify-content:space-between; margin-bottom:8px; background:rgba(255,255,255,0.02); padding:8px; border-radius:6px; font-size:0.75rem;">
                             <span><b>[${t.toUpperCase()}]</b> ${displayName}</span>
@@ -519,7 +577,7 @@
                 }
             });
 
-            // Gelen Destek Talepleri Admin Yönetim Paneli (YENİ EKLEME)
+            // Gelen Destek Talepleri Admin Yönetim Paneli
             const admSupBox = document.getElementById('adm-support-manage'); admSupBox.innerHTML = "";
             if(data.destek) {
                 Object.entries(data.destek).forEach(([k, v]) => {
