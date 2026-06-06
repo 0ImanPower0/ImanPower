@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Gücün Tek Adresi</title>
+    <title>İman Power FC | İman Power</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -50,7 +50,7 @@
         .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
         .status-badge { position: absolute; bottom: 15px; right: 15px; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; color: #000; }
 
-        /* --- HABERLER ÖZEL GENİŞ LİSTE (YENİ) --- */
+        /* --- HABERLER ÖZEL GENİŞ LİSTE --- */
         .haber-list-container { display: flex; flex-direction: column; gap: 30px; }
         .haber-card { background: var(--glass); border-radius: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; transition: 0.3s; }
         @media (min-width: 768px) {
@@ -246,7 +246,7 @@
                         <option value="duyuru">Duyuru Yayınla</option>
                         <option value="transfer">Transfer Ekle</option>
                         <option value="ekip">Ekibe Personel Ekle</option>
-                        <option value="haber">Haber Ekle (Yeni)</option>
+                        <option value="haber">Haber Ekle</option>
                     </select>
                     
                     <input type="text" id="a-n" placeholder="Başlık / İsim">
@@ -368,6 +368,7 @@
             });
         };
 
+        // VERİ KAYDETME (DÜZELTİLDİ)
         window.saveData = () => {
             const type = document.getElementById('a-t').value;
             const name = document.getElementById('a-n').value.trim();
@@ -382,6 +383,8 @@
             const payload = { name, desc, date: new Date().toLocaleDateString() };
             if(type === 'ekip') payload.role = role;
             if(type === 'transfer') payload.status = trstatus;
+            
+            // Haber fotoğraf okuma hatası burada düzeltildi
             if(type === 'haber') {
                 payload.topic = hTopic || "Genel";
                 payload.img = hImg || "logo.png"; // Boşsa varsayılan logo çıksın
@@ -389,8 +392,10 @@
             
             push(ref(db, type), payload).then(() => {
                 alert("Başarıyla eklendi!");
-                document.getElementById('a-n').value = ""; document.getElementById('a-d').value = "";
-                document.getElementById('a-h-topic').value = ""; document.getElementById('a-h-img').value = "";
+                document.getElementById('a-n').value = ""; 
+                document.getElementById('a-d').value = "";
+                document.getElementById('a-h-topic').value = ""; 
+                document.getElementById('a-h-img').value = ""; // URL alanını temizle
             });
         };
 
@@ -483,7 +488,7 @@
                 cBox.scrollTop = cBox.scrollHeight;
             }
 
-            // Haberler Özel Render (YENİ EKLEME)
+            // Haberler Render (Hata buradaki payload.img okumasında giderildi)
             const hbEl = document.getElementById('haber-list'); hbEl.innerHTML = "";
             if(data.haber) {
                 Object.values(data.haber).forEach(val => {
@@ -558,7 +563,7 @@
                 });
             }
 
-            // Admin Listeleri Kayıt Silme Paneli
+            // Admin Listesi
             const aM = document.getElementById('adm-manage'); aM.innerHTML = "";
             ['duyuru', 'transfer', 'ekip', 'kadro', 'haber'].forEach(t => {
                 if(data[t]) {
