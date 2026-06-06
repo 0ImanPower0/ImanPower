@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Gücün Adresi</title>
+    <title>İman Power FC | İmanlı Takım</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -50,7 +50,7 @@
         .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
         .status-badge { position: absolute; bottom: 15px; right: 15px; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; color: #000; }
 
-        /* --- DUYURU ÖZEL BÜYÜTÜLMÜŞ GRID (YENİ) --- */
+        /* --- DUYURU ÖZEL BÜYÜTÜLMÜŞ GRID --- */
         .duyuru-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .card.duyuru-card-style { padding: 35px; border-left: 4px solid var(--accent); }
         .card.duyuru-card-style h3 { font-size: 1.5rem; font-family: 'Orbitron'; letter-spacing: 1px; color: var(--text); }
@@ -87,11 +87,16 @@
         .msg { background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 15px; border-left: 3px solid var(--accent); }
 
         /* --- ADMİN PANELİ VE FORMLAR --- */
-        input, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #1e293b; background: #0f172a; color: white; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #1e293b; background: #0f172a; color: white; }
+        textarea { height: 120px; resize: none; }
         .btn { padding: 14px; border: none; border-radius: 10px; color: white; font-weight: 800; cursor: pointer; background: var(--accent); width: 100%; transition: 0.3s; text-transform: uppercase; }
         .btn:hover { filter: brightness(1.2); box-shadow: 0 0 15px var(--accent-glow); }
-        .admin-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .admin-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .del-btn { background: #ef4444; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; border: none; color: white; }
+        
+        /* --- DESTEK SAYFASI STİLLERİ --- */
+        .support-box { background: var(--glass); max-width: 600px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .timer-banner { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 15px; border-radius: 12px; text-align: center; font-weight: 600; margin-bottom: 20px; display: none; }
     </style>
 </head>
 <body>
@@ -117,6 +122,7 @@
                 <li><a href="#" onclick="nav('duyuru')" class="n-l">DUYURULAR</a></li>
                 <li><a href="#" onclick="nav('transfer')" class="n-l">TRANSFER</a></li>
                 <li><a href="#" onclick="nav('ekip')" class="n-l">EKİP</a></li>
+                <li><a href="#" onclick="nav('destek')" class="n-l">DESTEK</a></li>
                 <li><a href="#" onclick="nav('admin')" class="n-l">ADMİN</a></li>
             </ul></nav>
         </div>
@@ -163,6 +169,22 @@
             <div id="ekip-kurucu-row" class="kurucu-row"></div>
             <div id="ekip-yonetici-row" class="yonetici-row"></div>
             <div id="ekip-uye-row" class="uye-row"></div>
+        </div>
+    </section>
+
+    <section id="destek">
+        <h2 class="title">DESTEK TALEP MERKEZİ</h2>
+        <div class="support-box">
+            <div id="support-timer" class="timer-banner"></div>
+            <div id="support-form">
+                <label style="font-size:0.85rem; color:#94a3b8; display:block; margin-bottom:5px;">Gmail Adresiniz:</label>
+                <input type="email" id="sup-email" placeholder="ornek@gmail.com">
+                
+                <label style="font-size:0.85rem; color:#94a3b8; display:block; margin-bottom:5px; margin-top:10px;">Talep Detayı / Ne Hakkında?:</label>
+                <textarea id="sup-msg" placeholder="Lütfen destek almak istediğiniz konuyu detaylıca açıklayın..."></textarea>
+                
+                <button class="btn" style="margin-top:15px;" onclick="submitSupport()">TALEBİ GÖNDER</button>
+            </div>
         </div>
     </section>
 
@@ -232,6 +254,11 @@
                     <h3 style="color:#ef4444; margin-bottom:15px;">SİSTEM KAYITLARI (SİLME)</h3>
                     <div id="adm-manage"></div>
                 </div>
+
+                <div class="card" style="max-height: 420px; overflow-y: auto; border-color: #3b82f6;">
+                    <h3 style="color:#3b82f6; margin-bottom:15px;">GELEN DESTEK TALEPLERİ</h3>
+                    <div id="adm-support-manage"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -277,6 +304,7 @@
                     if(snap.exists() && snap.val().password === password) {
                         user = username;
                         document.getElementById('auth-screen').style.display = 'none';
+                        updateSupportTimer();
                     } else {
                         alert("Hatalı Giriş!");
                     }
@@ -333,6 +361,64 @@
             const m = document.getElementById('m-in').value.trim();
             if(m) { push(ref(db, 'chat'), { u: user, m: m }); document.getElementById('m-in').value=''; }
         };
+
+        // --- DESTEK SİSTEMİ SCRIPTLERİ (YENİ EKLEME) ---
+        window.submitSupport = () => {
+            const email = document.getElementById('sup-email').value.trim();
+            const msg = document.getElementById('sup-msg').value.trim();
+            if(!email || !msg) return alert("Lütfen tüm alanları doldurun!");
+            if(!email.includes('@')) return alert("Geçerli bir Gmail adresi girin!");
+
+            // 1 Saatlik koruma kontrolü
+            const lastSubmit = localStorage.getItem('lastSupportTime');
+            const now = Date.now();
+            if(lastSubmit && (now - lastSubmit < 3600000)) {
+                return alert("Saatte sadece 1 destek talebi açabilirsiniz!");
+            }
+
+            const payload = {
+                email: email,
+                message: msg,
+                username: user,
+                date: new Date().toLocaleDateString() + ' - ' + new Date().toLocaleTimeString()
+            };
+
+            push(ref(db, 'destek'), payload).then(() => {
+                alert("Destek talebiniz başarıyla kurucu ekibine iletildi!");
+                localStorage.setItem('lastSupportTime', Date.now());
+                document.getElementById('sup-email').value = "";
+                document.getElementById('sup-msg').value = "";
+                updateSupportTimer();
+            });
+        };
+
+        function updateSupportTimer() {
+            const timerBanner = document.getElementById('support-timer');
+            const formBox = document.getElementById('support-form');
+            
+            setInterval(() => {
+                const lastSubmit = localStorage.getItem('lastSupportTime');
+                if(!lastSubmit) {
+                    timerBanner.style.display = "none";
+                    formBox.style.style = "block";
+                    return;
+                }
+                const diff = Date.now() - parseInt(lastSubmit);
+                if(diff < 3600000) {
+                    const remaining = 3600000 - diff;
+                    const mins = Math.floor(remaining / 60000);
+                    const secs = Math.floor((remaining % 60000) / 1000);
+                    timerBanner.style.display = "block";
+                    timerBanner.innerText = `Yeni destek talebi açabilmek için beklemelisiniz: ${mins} dakika ${secs} saniye`;
+                    formBox.style.opacity = "0.4";
+                    formBox.style.pointerEvents = "none";
+                } else {
+                    timerBanner.style.display = "none";
+                    formBox.style.opacity = "1";
+                    formBox.style.pointerEvents = "auto";
+                }
+            }, 1000);
+        }
 
         const pLoc = { 
             GK:  {t:'88%', l:'50%'}, LB:  {t:'68%', l:'15%'}, CB1: {t:'68%', l:'38%'}, CB2: {t:'68%', l:'62%'}, RB:  {t:'68%', l:'85%'},
@@ -415,7 +501,7 @@
                 });
             }
 
-            // Admin Listesi
+            // Admin Listeleri Kayıt Silme Paneli
             const aM = document.getElementById('adm-manage'); aM.innerHTML = "";
             ['duyuru', 'transfer', 'ekip', 'kadro'].forEach(t => {
                 if(data[t]) {
@@ -432,6 +518,23 @@
                     });
                 }
             });
+
+            // Gelen Destek Talepleri Admin Yönetim Paneli (YENİ EKLEME)
+            const admSupBox = document.getElementById('adm-support-manage'); admSupBox.innerHTML = "";
+            if(data.destek) {
+                Object.entries(data.destek).forEach(([k, v]) => {
+                    admSupBox.innerHTML += `<div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; margin-bottom:10px; border-left:3px solid #3b82f6; font-size:0.8rem;">
+                        <div style="display:flex; justify-content:between; align-items:center; margin-bottom:5px;">
+                            <span style="color:#3b82f6; font-weight:bold;">Kimden: ${v.email}</span>
+                            <button class="del-btn" style="margin-left:auto;" onclick="delData('destek/${k}')">OKUNDU / SİL</button>
+                        </div>
+                        <p style="opacity:0.9; margin-top:5px; word-break:break-word; color:#e2e8f0;"><b>Mesaj:</b> ${v.message}</p>
+                        <small style="display:block; margin-top:8px; color:#64748b; font-size:0.65rem;">Kullanıcı: ${v.username || 'Bilinmiyor'} | ${v.date}</small>
+                    </div>`;
+                });
+            } else {
+                admSupBox.innerHTML = `<p style="font-size:0.8rem; opacity:0.5; text-align:center; padding-top:20px;">Gelen aktif bir destek talebi yok.</p>`;
+            }
         });
     </script>
 </body>
