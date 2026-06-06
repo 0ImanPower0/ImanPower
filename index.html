@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İman Power FC | Pro İman Power</title>
+    <title>İman Power FC | Pro Arena Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -48,6 +48,7 @@
         .card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); transition: 0.3s; position: relative; }
         .card:hover { border-color: var(--accent); transform: scale(1.02); }
         .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
+        .status-badge { position: absolute; bottom: 15px; right: 15px; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; color: #000; }
 
         /* --- EKİP ÖZEL HİYERARŞİ STİLLERİ --- */
         .ekip-container { display: flex; flex-direction: column; gap: 40px; }
@@ -200,6 +201,15 @@
                         </select>
                     </div>
 
+                    <div id="transfer-durum-box" style="display:none;">
+                        <label style="font-size:0.8rem; color:#94a3b8;">Transfer Durumu Seç:</label>
+                        <select id="a-trstatus">
+                            <option value="Yakından İlgileniliyor">Yakından İlgileniliyor</option>
+                            <option value="Görüşme Aşamasında">Görüşme Aşamasında</option>
+                            <option value="Alındı">Alındı (Kadroda)</option>
+                        </select>
+                    </div>
+
                     <input type="text" id="a-d" placeholder="Detay / Açıklama / Biyografi">
                     <button class="btn" onclick="saveData()">SİSTEME KAYDET</button>
                 </div>
@@ -269,7 +279,10 @@
 
         window.openAdm = () => { if(document.getElementById('adm-k').value === "imanpower2026") { document.getElementById('adm-lock').style.display='none'; document.getElementById('adm-box').style.display='block'; } else { alert("Yanlış şifre!"); } };
 
-        window.checkType = (val) => { document.getElementById('ekip-rol-box').style.display = (val === 'ekip') ? 'block' : 'none'; };
+        window.checkType = (val) => { 
+            document.getElementById('ekip-rol-box').style.display = (val === 'ekip') ? 'block' : 'none'; 
+            document.getElementById('transfer-durum-box').style.display = (val === 'transfer') ? 'block' : 'none'; 
+        };
 
         window.savePlayer = () => {
             const name = document.getElementById('p-name-input').value.trim();
@@ -287,10 +300,12 @@
             const name = document.getElementById('a-n').value.trim();
             const desc = document.getElementById('a-d').value.trim();
             const role = document.getElementById('a-role').value;
+            const trstatus = document.getElementById('a-trstatus').value;
             if(!name) return alert("İsim girin!");
             
             const payload = { name, desc, date: new Date().toLocaleDateString() };
             if(type === 'ekip') payload.role = role;
+            if(type === 'transfer') payload.status = trstatus;
             
             push(ref(db, type), payload).then(() => {
                 alert("Başarıyla eklendi!");
@@ -331,7 +346,7 @@
                 cBox.scrollTop = cBox.scrollHeight;
             }
 
-            // Duyuru & Transfer Render
+            // Duyuru Render
             const renderGrid = (id, list, badgeText) => {
                 const el = document.getElementById(id); el.innerHTML = "";
                 if(list) {
@@ -341,9 +356,27 @@
                 }
             };
             renderGrid('duyuru-list', data.duyuru, 'DUYURU');
-            renderGrid('tr-list', data.transfer, 'TRANSFER');
 
-            // EKİP HİYERARŞİK RENDER (DÜZELTİLDİ VE BÜYÜTÜLDÜ)
+            // Transfer Özel Render (Duruma Göre Renkli Etiketli)
+            const trEl = document.getElementById('tr-list'); trEl.innerHTML = "";
+            if(data.transfer) {
+                Object.values(data.transfer).forEach(val => {
+                    const st = val.status || 'Yakından İlgileniliyor';
+                    let color = '#38bdf8'; // Mavi
+                    if(st === 'Görüşme Aşamasında') color = '#fbbf24'; // Sarı
+                    if(st === 'Alındı') color = '#10b981'; // Yeşil
+
+                    trEl.innerHTML += `<div class="card">
+                        <span class="badge" style="background:#2563eb">TRANSFER</span>
+                        <h3>${val.name}</h3>
+                        <p style="margin-top:8px; opacity:0.8; margin-bottom: 25px;">${val.desc || ''}</p>
+                        <span class="status-badge" style="background:${color}">${st.toUpperCase()}</span>
+                        <small style="display:block; margin-top:10px; color:var(--accent); font-size:0.7rem;">${val.date || ''}</small>
+                    </div>`;
+                });
+            }
+
+            // Ekip Hiyerarşik Render
             const rowKurucu = document.getElementById('ekip-kurucu-row'); rowKurucu.innerHTML = "";
             const rowYonetici = document.getElementById('ekip-yonetici-row'); rowYonetici.innerHTML = "";
             const rowUye = document.getElementById('ekip-uye-row'); rowUye.innerHTML = "";
@@ -354,7 +387,7 @@
                     let cardHtml = "";
 
                     if(role === 'Kurucu') {
-                        cardHtml = `<div class="card kurucu-style"><span class="badge" style="background:#fbbf24; color:#000;">${role.toUpperCase()}</span><h3>${val.name}</h3><p style="margin-top:12px; font-size:1.1rem; opacity:0.9;">${val.desc || ''}</p></div>`;
+                        cardHtml = `<div class="card kurucu-style"><span class="badge" style="background:#fbbf24; color:#000;">${role.toUpperCase()}</span>  <h3>${val.name}</h3><p style="margin-top:12px; font-size:1.1rem; opacity:0.9;">${val.desc || ''}</p></div>`;
                         rowKurucu.innerHTML += cardHtml;
                     } else if(role === 'Başkan' || role === 'Yönetici') {
                         cardHtml = `<div class="card yonetici-style"><span class="badge" style="background:#38bdf8; color:#000;">${role.toUpperCase()}</span><h3>${val.name}</h3><p style="margin-top:8px; opacity:0.85;">${val.desc || ''}</p></div>`;
@@ -374,6 +407,7 @@
                         let displayName = v.name;
                         if(t === 'kadro') displayName = `${v.name} (${v.pos})`;
                         if(t === 'ekip') displayName = `${v.name} [${v.role || 'Üye'}]`;
+                        if(t === 'transfer') displayName = `${v.name} [${v.status || 'İlgileniliyor'}]`;
                         
                         aM.innerHTML += `<div class="admin-list-item" style="display:flex; justify-content:space-between; margin-bottom:8px; background:rgba(255,255,255,0.02); padding:8px; border-radius:6px; font-size:0.75rem;">
                             <span><b>[${t.toUpperCase()}]</b> ${displayName}</span>
