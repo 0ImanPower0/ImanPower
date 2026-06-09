@@ -271,6 +271,9 @@
                             <option value="Alındı">Alındı</option>
                             <option value="Sözleşme Feshedildi">Sözleşme Feshedildi</option>
                             <option value="Satıldı">Satıldı</option>
+                            <option value="Yalanlandı">Yalanlandı</option>
+                            <option value="Reddedildi">Reddedildi</option>
+                            <option value="Vazgeçildi">Vazgeçildi</option>
                         </select>
                     </div>
                     <textarea id="a-d" placeholder="Detaylar..."></textarea>
@@ -367,14 +370,11 @@
             if(m) { push(ref(db, 'chat'), { u: user, m: m }); document.getElementById('m-in').value=''; }
         };
 
-        /* --- 1 KİŞİ 1 TEPKİ SİSTEMİ (GÜNCELLENDİ) --- */
         window.reactToHaber = (haberKey, reactionType) => {
-            // LocalStorage kullanarak kullanıcının bu haber için daha önce ne seçtiğini buluyoruz
             const storageKey = `react_${haberKey}`;
             const oldReaction = localStorage.getItem(storageKey);
 
             if (oldReaction === reactionType) {
-                // Eğer zaten aynı emojiye tıkladıysa, emojisini geri çekiyor (1 azalt)
                 const refOld = ref(db, `haber/${haberKey}/reactions/${reactionType}`);
                 onValue(refOld, (snap) => {
                     let count = snap.exists() ? snap.val() : 0;
@@ -384,7 +384,6 @@
                 return;
             }
 
-            // Eğer daha önce başka bir emoji seçtiyse, önce eskisini 1 azaltıyoruz
             if (oldReaction) {
                 const refOld = ref(db, `haber/${haberKey}/reactions/${oldReaction}`);
                 onValue(refOld, (snap) => {
@@ -393,14 +392,12 @@
                 }, { onlyOnce: true });
             }
 
-            // Yeni seçtiği emojiyi 1 arttırıyoruz
             const refNew = ref(db, `haber/${haberKey}/reactions/${reactionType}`);
             onValue(refNew, (snap) => {
                 let count = snap.exists() ? snap.val() : 0;
                 set(refNew, count + 1);
             }, { onlyOnce: true });
 
-            // Tarayıcı hafızasına yeni seçimi kaydediyoruz
             localStorage.setItem(storageKey, reactionType);
         };
 
@@ -418,7 +415,6 @@
             if(data.haber) {
                 Object.entries(data.haber).forEach(([key, val]) => {
                     const rx = val.reactions || { wow: 0, ok: 0, cool: 0 };
-                    // Kullanıcının seçtiği emojiyi görsel olarak belirginleştirmek için sınıf ekliyoruz
                     const userChoice = localStorage.getItem(`react_${key}`);
 
                     hbEl.innerHTML += `
@@ -430,7 +426,7 @@
                                 <p>${val.desc}</p>
                                 <div class="emoji-reactions">
                                     <button class="emoji-btn ${userChoice === 'wow' ? 'selected' : ''}" onclick="reactToHaber('${key}', 'wow')">😮 <span>${rx.wow || 0}</span></button>
-                                    <button class="emoji-btn ${userChoice === 'ok' ? 'selected' : ''}" onclick="reactToHaber('${key}', 'ok') font-weight:bold" onclick="reactToHaber('${key}', 'ok')">👍 <span>${rx.ok || 0}</span></button>
+                                    <button class="emoji-btn ${userChoice === 'ok' ? 'selected' : ''}" onclick="reactToHaber('${key}', 'ok')">👍 <span>${rx.ok || 0}</span></button>
                                     <button class="emoji-btn ${userChoice === 'cool' ? 'selected' : ''}" onclick="reactToHaber('${key}', 'cool')">😎 <span>${rx.cool || 0}</span></button>
                                 </div>
                                 <small style="margin-top:15px; display:block;">${val.date}</small>
@@ -448,7 +444,8 @@
                 let c = '#38bdf8';
                 if(st === 'Alındı') c = '#10b981';
                 else if(st === 'Görüşme Aşamasında') c = '#fbbf24';
-                else if(st === 'Sözleşme Feshedildi' || st === 'Satıldı') c = '#ef4444';
+                else if(st === 'Sözleşme Feshedildi' || st === 'Satıldı' || st === 'Reddedildi' || st === 'Yalanlandı') c = '#ef4444';
+                else if(st === 'Vazgeçildi') c = '#64748b'; // Vazgeçildi için gri tonu atandı
                 trEl.innerHTML += `<div class="card transfer-card-style"><span class="badge" style="background:#2563eb">TRANSFER</span><h3>${v.name}</h3><p>${v.desc}</p><span class="status-badge" style="background:${c}">${st.toUpperCase()}</span><small>${v.date}</small></div>`; 
             });
 
