@@ -75,7 +75,7 @@
         .card.transfer-card-style { padding: 35px 30px; min-height: 200px; }
         .card.transfer-card-style h3 { font-size: 1.4rem; font-family: 'Orbitron'; color: #f8fafc; }
 
-        /* --- EKİP ÖZEL HİYERARŞİ STİLLERİ (GÜNCELLENDİ) --- */
+        /* --- EKİP ÖZEL HİYERARŞİ STİLLERİ --- */
         .ekip-container { display: flex; flex-direction: column; gap: 40px; }
         .kurucu-row { display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; width: 100%; }
         .yonetici-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(45%, 1fr)); gap: 25px; }
@@ -107,9 +107,8 @@
         .admin-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .del-btn { background: #ef4444; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; border: none; color: white; }
         
-        /* --- DESTEK SAYFASI --- */
-        .support-box { background: var(--glass); max-width: 600px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .timer-banner { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 15px; border-radius: 12px; text-align: center; font-weight: 600; margin-bottom: 20px; display: none; }
+        /* --- CANLI DESTEK YÖNLENDİRME ALANI --- */
+        .live-support-box { background: var(--glass); max-width: 650px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 2px solid #3b82f6; text-align: center; box-shadow: 0 10px 35px rgba(59, 130, 246, 0.2); }
     </style>
 </head>
 <body>
@@ -136,7 +135,7 @@
                 <li><a href="#" onclick="nav('duyuru')" class="n-l">DUYURULAR</a></li>
                 <li><a href="#" onclick="nav('transfer')" class="n-l">TRANSFER</a></li>
                 <li><a href="#" onclick="nav('ekip')" class="n-l">EKİP</a></li>
-                <li><a href="#" onclick="nav('destek')" class="n-l">DESTEK</a></li>
+                <li><a href="#" onclick="nav('live-support')" class="n-l">CANLI DESTEK</a></li>
                 <li><a href="#" onclick="nav('admin')" class="n-l">ADMİN</a></li>
             </ul></nav>
         </div>
@@ -191,17 +190,19 @@
         </div>
     </section>
 
-    <section id="destek">
-        <h2 class="title">DESTEK TALEP MERKEZİ</h2>
-        <div class="support-box">
-            <div id="support-timer" class="timer-banner"></div>
-            <div id="support-form">
-                <label style="font-size:0.85rem; color:#94a3b8; display:block; margin-bottom:5px;">Gmail Adresiniz:</label>
-                <input type="email" id="sup-email" placeholder="ornek@gmail.com">
-                <label style="font-size:0.85rem; color:#94a3b8; display:block; margin-bottom:5px; margin-top:10px;">Talep Detayı:</label>
-                <textarea id="sup-msg" placeholder="Konuyu detaylıca açıklayın..."></textarea>
-                <button class="btn" style="margin-top:15px;" onclick="submitSupport()">TALEBİ GÖNDER</button>
-            </div>
+    <section id="live-support">
+        <h2 class="title">7/24 CANLI DESTEK SİSTEMİ</h2>
+        <div class="live-support-box">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🎧</div>
+            <h3 style="font-family:'Orbitron'; color:#f8fafc; margin-bottom:15px; font-size:1.6rem;">İman Power Destek Hattı</h3>
+            <p style="font-size: 1.05rem; line-height: 1.6; color:#cbd5e1; margin-bottom:30px; padding: 0 10px;">
+                Buraya tıklayarak canlı desteğe gidebilirsiniz. Giriş yaptıktan sonra yeni bir destek odası açabilir, yetkililerle anlık mesajlaşabilir ya eleme odalarına katılabilirsiniz.
+            </p>
+            <a href="https://0imanpower0.github.io/ImanPower1/" target="_blank" style="text-decoration: none;">
+                <button class="btn" style="background: #3b82f6; font-size: 1rem; letter-spacing: 1px; padding: 16px;">
+                    🚀 CANLI DESTEK PLATFORMUNA GİT
+                </button>
+            </a>
         </div>
     </section>
 
@@ -232,12 +233,19 @@
                     <input type="text" id="a-n" placeholder="Başlık / İsim">
                     <div id="haber-ekstra-box" style="display:none;"><input type="text" id="a-h-topic" placeholder="Haber Konusu"><input type="text" id="a-h-img" placeholder="Resim URL"></div>
                     <div id="ekip-rol-box" style="display:none;"><select id="a-role"><option value="Kurucu">Kurucu</option><option value="Başkan">Başkan</option><option value="Yönetici">Yönetici</option><option value="Personel">Personel</option><option value="Üye">Üye</option></select></div>
-                    <div id="transfer-durum-box" style="display:none;"><select id="a-trstatus"><option value="Yakından İlgileniliyor">Yakından İlgileniliyor</option><option value="Görüşme Aşamasında">Görüşme Aşamasında</option><option value="Alındı">Alındı</option></select></div>
+                    <div id="transfer-durum-box" style="display:none;">
+                        <select id="a-trstatus">
+                            <option value="Yakından İlgileniliyor">Yakından İlgileniliyor</option>
+                            <option value="Görüşme Aşamasında">Görüşme Aşamasında</option>
+                            <option value="Alındı">Alındı</option>
+                            <option value="Sözleşme Feshedildi">Sözleşme Feshedildi</option>
+                            <option value="Satıldı">Satıldı</option>
+                        </select>
+                    </div>
                     <textarea id="a-d" placeholder="Detaylar..."></textarea>
                     <button class="btn" onclick="saveData()">KAYDET</button>
                 </div>
                 <div class="card" style="max-height: 400px; overflow-y: auto;"><h3>SİSTEM KAYITLARI</h3><div id="adm-manage"></div></div>
-                <div class="card" style="max-height: 400px; overflow-y: auto; border-color: #3b82f6;"><h3>DESTEK TALEPLERİ</h3><div id="adm-support-manage"></div></div>
             </div>
         </div>
     </section>
@@ -245,7 +253,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDy4ZUv_wZsntWSIDbcOlvpqDTBvWuSdrk",
@@ -254,13 +261,11 @@
             projectId: "imanpowerveri",
             storageBucket: "imanpowerveri.firebasestorage.app",
             messagingSenderId: "891464029314",
-            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b",
-            measurementId: "G-4T6XSDBDL5"
+            appId: "1:891464029314:web:581bd3b2ed3d7c6af2d09b"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const analytics = getAnalytics(app);
 
         let user = ""; let isRegisterMode = false;
 
@@ -279,7 +284,7 @@
                 set(ref(db, 'users/' + username), { password: password }).then(() => { alert("Kayıt başarılı!"); toggleAuthMode(); });
             } else {
                 onValue(ref(db, 'users/' + username), (snap) => {
-                    if(snap.exists() && snap.val().password === password) { user = username; document.getElementById('auth-screen').style.display = 'none'; updateSupportTimer(); }
+                    if(snap.exists() && snap.val().password === password) { user = username; document.getElementById('auth-screen').style.display = 'none'; }
                     else alert("Hatalı Giriş!");
                 }, { onlyOnce: true });
             }
@@ -327,34 +332,6 @@
             if(m) { push(ref(db, 'chat'), { u: user, m: m }); document.getElementById('m-in').value=''; }
         };
 
-        window.submitSupport = () => {
-            const email = document.getElementById('sup-email').value.trim();
-            const msg = document.getElementById('sup-msg').value.trim();
-            if(!email || !msg) return alert("Eksik!");
-            const lastSubmit = localStorage.getItem('lastSupportTime');
-            if(lastSubmit && (Date.now() - lastSubmit < 3600000)) return alert("Saatte 1 talep!");
-            push(ref(db, 'destek'), { email, message: msg, username: user, date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString() }).then(() => {
-                alert("İletildi!"); localStorage.setItem('lastSupportTime', Date.now()); updateSupportTimer();
-            });
-        };
-
-        function updateSupportTimer() {
-            setInterval(() => {
-                const last = localStorage.getItem('lastSupportTime');
-                if(!last) return;
-                const diff = Date.now() - parseInt(last);
-                if(diff < 3600000) {
-                    const rem = 3600000 - diff;
-                    document.getElementById('support-timer').style.display = "block";
-                    document.getElementById('support-timer').innerText = `Kalan Bekleme: ${Math.floor(rem / 60000)} dk ${Math.floor((rem % 60000) / 1000)} sn`;
-                    document.getElementById('support-form').style.opacity = "0.4";
-                } else {
-                    document.getElementById('support-timer').style.display = "none";
-                    document.getElementById('support-form').style.opacity = "1";
-                }
-            }, 1000);
-        }
-
         const pLoc = { GK: {t:'88%',l:'50%'}, LB: {t:'68%',l:'15%'}, CB1: {t:'68%',l:'38%'}, CB2: {t:'68%',l:'62%'}, RB: {t:'68%',l:'85%'}, LM: {t:'43%',l:'15%'}, CM1: {t:'43%',l:'38%'}, CM2: {t:'43%',l:'62%'}, RM: {t:'43%',l:'85%'}, ST1: {t:'16%',l:'35%'}, ST2: {t:'16%',l:'65%'} };
 
         onValue(ref(db, '/'), (snap) => {
@@ -365,11 +342,20 @@
             if(data.chat) Object.values(data.chat).forEach(m => { cBox.innerHTML += `<div class="msg"><b>${m.u || 'Anonim'}:</b> ${m.m}</div>`; });
             cBox.scrollTop = cBox.scrollHeight;
             const hbEl = document.getElementById('haber-list'); hbEl.innerHTML = "";
-            if(data.haber) Object.values(data.haber).forEach(val => { hbEl.innerHTML += `<div class="haber-card"><div class="haber-img-box"><img src="${val.img}" onerror="this.src='logo.png'"></div><div class="haber-body"><span class="haber-topic">${val.topic}</span><h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div></div>`; });
+            if(data.haber) Object.values(data.haber).forEach(val => { hbEl.innerHTML += `<div class="haber-card"><div class="haber-img-box"><img src="${val.img}" onerror="this.src='logo.png'"></div><div class="haber-body"><span class="haber-topic">${val.topic}</span>---<h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div></div>`; });
             const dyEl = document.getElementById('duyuru-list'); dyEl.innerHTML = "";
             if(data.duyuru) Object.values(data.duyuru).forEach(val => { dyEl.innerHTML += `<div class="card duyuru-card-style"><span class="badge">DUYURU</span><h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div>`; });
+            
             const trEl = document.getElementById('tr-list'); trEl.innerHTML = "";
-            if(data.transfer) Object.values(data.transfer).forEach(v => { const st = v.status || 'İlgileniliyor'; const c = st === 'Alındı' ? '#10b981' : (st === 'Görüşme Aşamasında' ? '#fbbf24' : '#38bdf8'); trEl.innerHTML += `<div class="card transfer-card-style"><span class="badge" style="background:#2563eb">TRANSFER</span><h3>${v.name}</h3><p>${v.desc}</p><span class="status-badge" style="background:${c}">${st.toUpperCase()}</span><small>${v.date}</small></div>`; });
+            if(data.transfer) Object.values(data.transfer).forEach(v => { 
+                const st = v.status || 'İlgileniliyor'; 
+                let c = '#38bdf8';
+                if(st === 'Alındı') c = '#10b981';
+                else if(st === 'Görüşme Aşamasında') c = '#fbbf24';
+                else if(st === 'Sözleşme Feshedildi' || st === 'Satıldı') c = '#ef4444';
+                trEl.innerHTML += `<div class="card transfer-card-style"><span class="badge" style="background:#2563eb">TRANSFER</span><h3>${v.name}</h3><p>${v.desc}</p><span class="status-badge" style="background:${c}">${st.toUpperCase()}</span><small>${v.date}</small></div>`; 
+            });
+
             const rK = document.getElementById('ekip-kurucu-row'); rK.innerHTML = "";
             const rY = document.getElementById('ekip-yonetici-row'); rY.innerHTML = "";
             const rU = document.getElementById('ekip-uye-row'); rU.innerHTML = "";
@@ -380,9 +366,7 @@
                 else rU.innerHTML += `<div class="card personel-style"><span class="badge" style="background:#a78bfa">${role.toUpperCase()}</span><h3>${v.name}</h3><p>${v.desc}</p></div>`;
             });
             const aM = document.getElementById('adm-manage'); aM.innerHTML = "";
-            ['duyuru', 'transfer', 'ekip', 'kadro', 'haber'].forEach(t => { if(data[t]) Object.entries(data[t]).forEach(([k, v]) => aM.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.7rem;"><span>[${t}] ${v.name}</span><button class="del-btn" onclick="delData('${t}/${k}')">SİL</button></div>`); });
-            const aS = document.getElementById('adm-support-manage'); aS.innerHTML = "";
-            if(data.destek) Object.entries(data.destek).forEach(([k, v]) => aS.innerHTML += `<div style="background:rgba(255,255,255,0.03); padding:8px; margin-bottom:5px; border-radius:8px; font-size:0.7rem;"><p><b>${v.email}</b>: ${v.message}</p><small>${v.date}</small><button class="del-btn" onclick="delData('destek/${k}')">SİL</button></div>`);
+            ['duyuru', 'transfer', 'ekip', 'kadro', 'haber'].forEach(t => { if(data[t]) Object.entries(data[t]).forEach(([k, v]) => aM.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.7rem;"><span>[${t.toUpperCase()}] ${v.name}</span><button class="del-btn" onclick="delData('${t}/${k}')">SİL</button></div>`); });
         });
     </script>
 </body>
