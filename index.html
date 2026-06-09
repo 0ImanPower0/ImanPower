@@ -109,6 +109,42 @@
         
         /* --- CANLI DESTEK YÖNLENDİRME ALANI --- */
         .live-support-box { background: var(--glass); max-width: 650px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 2px solid #3b82f6; text-align: center; box-shadow: 0 10px 35px rgba(59, 130, 246, 0.2); }
+
+        /* ==========================================================
+           📱 %100 GERÇEK MOBİL UYUMLULUK KATMANI (SADECE TELEFONLAR İÇİN)
+           ========================================================== */
+        @media (max-width: 850px) {
+            /* Üst Menüyü Telefona Göre Esnetme */
+            .nav-container { flex-direction: column; padding: 10px; gap: 12px; }
+            nav ul { justify-content: center; gap: 6px; }
+            nav a { font-size: 0.58rem; padding: 8px 6px; border-radius: 6px; }
+            
+            /* Sayfa Boşluklarını Telefon İçin Küçültme */
+            section { padding: 160px 1rem 40px; }
+            .title { font-size: 1.6rem; margin-bottom: 1.5rem; }
+            #home-content h1 { font-size: 2.2rem; }
+            #home-content img { width: 120px; height: 120px; }
+            
+            /* Taktik Futbol Sahasını Ekrana Sığdırma (Taşmayı Engeller) */
+            .pitch { max-width: 100%; height: 580px; transform: scale(1); }
+            .shirt { width: 40px; height: 40px; font-size: 0.9rem; }
+            .p-name { font-size: 0.62rem; padding: 2px 4px; }
+            .player { width: 70px; }
+
+            /* Ekip / Yönetim Bölümü Telefon Görünümü */
+            .yonetici-row, .uye-row { grid-template-columns: 1fr !important; gap: 15px; }
+            .card.kurucu-style { padding: 25px; }
+            .card.kurucu-style h3 { font-size: 1.5rem; }
+
+            /* Haber Kartları Telefonda Alt Alta Düzen */
+            .haber-card { flex-direction: column !important; }
+            .haber-img-box { width: 100% !important; }
+            .haber-body { padding: 20px; }
+            .haber-body h3 { font-size: 1.3rem; }
+
+            /* Admin Paneli Telefon Düzeni */
+            .admin-box-layout { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
