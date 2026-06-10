@@ -429,8 +429,8 @@
                     const reacts = val.reactions || {};
                     
                     // Emoji sayılarını hesapla ve kullanıcının basıp basmadığını kontrol et
-                    const emoCounts = { '🕶️': 0, '✅': 0, '😲': 0, '😡': 0, '😂': 0 };
-                    const emoActive = { '🕶️': '', '✅': '', '😲': '', '😡': '', '😂': '' };
+                    const emoCounts = { '😎': 0, '✅': 0, '😲': 0, '😡': 0, '😂': 0 };
+                    const emoActive = { '😎': '', '✅': '', '😲': '', '😡': '', '😂': '' };
                     
                     Object.entries(reacts).forEach(([emo, users]) => {
                         if(users) {
@@ -453,7 +453,7 @@
                                 <div class="haber-footer">
                                     <small>${val.date}</small>
                                     <div class="reaction-container">
-                                        <button class="reaction-btn ${emoActive['🕶️']}" onclick="reactToHaber('${id}', '🕶️')">🕶️ <span>${emoCounts['🕶️']}</span></button>
+                                        <button class="reaction-btn ${emoActive['😎']}" onclick="reactToHaber('${id}', '😎')">😎 <span>${emoCounts['😎']}</span></button>
                                         <button class="reaction-btn ${emoActive['✅']}" onclick="reactToHaber('${id}', '✅')">✅ <span>${emoCounts['✅']}</span></button>
                                         <button class="reaction-btn ${emoActive['😲']}" onclick="reactToHaber('${id}', '😲')">😲 <span>${emoCounts['😲']}</span></button>
                                         <button class="reaction-btn ${emoActive['😡']}" onclick="reactToHaber('${id}', '😡')">😡 <span>${emoCounts['😡']}</span></button>
