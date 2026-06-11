@@ -432,7 +432,7 @@
         };
 
         window.stopLiveMusic = () => {
-            set(ref(db, 'liveMusic/status'), "stopped").then(() => alert("Müzik tüm sitede durduruldu!"));
+            set(ref(db, 'liveMusic/status'), "stopped").then(() => alert("Müzik tüm sidede durduruldu!"));
         };
 
         window.updateLiveVolume = (vol) => {
@@ -441,17 +441,16 @@
 
         // PLAYLIST OTOMATİK SONRAKİ ŞARKIYA GEÇİŞ TETİKLEYİCİSİ
         function handleTrackEnd() {
-            // Sadece admin sonraki şarkı geçişini veritabanına yazar, böylece senkronizasyon bozulmaz
-            if (document.getElementById('adm-box').style.display === 'block') {
-                let nextIndex = currentTrackIndex + 1;
-                if (nextIndex >= activePlaylistTracks.length) {
-                    nextIndex = 0; // Başa dön
-                }
-                if (activePlaylistTracks[nextIndex]) {
-                    set(ref(db, 'liveMusic/currentIndex'), nextIndex);
-                    set(ref(db, 'liveMusic/currentTrack'), activePlaylistTracks[nextIndex]);
-                    set(ref(db, 'liveMusic/timestamp'), Date.now());
-                }
+            // Şarkı bitince sıradaki şarkı indeksini hesapla, eğer listenin sonuysa 0'a çekerek sonsuz döngü sağla!
+            let nextIndex = currentTrackIndex + 1;
+            if (nextIndex >= activePlaylistTracks.length) {
+                nextIndex = 0; // Başa sar (Sürekli tekrarlanacak döngü)
+            }
+            
+            if (activePlaylistTracks[nextIndex]) {
+                set(ref(db, 'liveMusic/currentIndex'), nextIndex);
+                set(ref(db, 'liveMusic/currentTrack'), activePlaylistTracks[nextIndex]);
+                set(ref(db, 'liveMusic/timestamp'), Date.now());
             }
         }
 
@@ -496,7 +495,7 @@
                             event.target.playVideo();
                         },
                         'onStateChange': (event) => {
-                            // YT.PlayerState.ENDED = 0
+                            // YT.PlayerState.ENDED = 0 (Yani YouTube videosu tamamen bittiğinde tetiklenir)
                             if (event.data === 0) {
                                 handleTrackEnd();
                             }
@@ -611,7 +610,7 @@
             }
 
             const dyEl = document.getElementById('duyuru-list'); dyEl.innerHTML = "";
-            if(data.duyuru) Object.values(data.duyuru).forEach(val => { dyEl.innerHTML += `<div class="card duyuru-card-style"><span class="badge">DUYURU</span><h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div>`; });
+            if(data.duyuru) Object.values(data.duyuru).forEach(val => { dyEl.innerHTML += `<div class="card duyuru-card-style"><span class="badge">DUYURU</span> disinvestment<h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div>`; });
             
             const trEl = document.getElementById('tr-list'); trEl.innerHTML = "";
             if(data.transfer) Object.values(data.transfer).forEach(v => { 
