@@ -152,7 +152,7 @@
         .admin-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .del-btn { background: #ef4444; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; border: none; color: white; }
         
-        /* --- CANLI DESTEK YÖNLENDİRME ALANI --- */
+        /* --- CANLI DESTEK & EĞLENCE ODASI YÖNLENDİRME ALANLARI --- */
         .live-support-box { background: var(--glass); max-width: 650px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 2px solid #3b82f6; text-align: center; box-shadow: 0 10px 35px rgba(59, 130, 246, 0.2); }
         @media (max-width: 768px) { .live-support-box { padding: 20px; } }
     </style>
@@ -184,6 +184,7 @@
                 <li><a href="#" onclick="nav('transfer')" class="n-l">TRANSFER</a></li>
                 <li><a href="#" onclick="nav('ekip')" class="n-l">EKİP</a></li>
                 <li><a href="#" onclick="nav('live-support')" class="n-l">CANLI DESTEK</a></li>
+                <li><a href="#" onclick="nav('eglence-odasi')" class="n-l">EĞLENCE ODASI</a></li>
                 <li><a href="#" onclick="nav('admin')" class="n-l">ADMİN</a></li>
             </ul></nav>
         </div>
@@ -251,6 +252,22 @@
             <a href="https://0imanpower0.github.io/ImanPower1/" target="_blank" style="text-decoration: none;">
                 <button class="btn" style="background: #3b82f6; font-size: 1rem; letter-spacing: 1px; padding: 16px;">
                     🚀 CANLI DESTEK PLATFORMUNA GİT
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <section id="eglence-odasi">
+        <h2 class="title">İMAN POWER EĞLENCE ODASI</h2>
+        <div class="live-support-box" style="border-color: #10b981; box-shadow: 0 10px 35px rgba(16, 185, 129, 0.2);">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🎮</div>
+            <h3 style="font-family:'Orbitron'; color:#f8fafc; margin-bottom:15px; font-size:1.6rem;">Eğlence ve Oyun Odası</h3>
+            <p style="font-size: 1.05rem; line-height: 1.6; color:#cbd5e1; margin-bottom:30px; padding: 0 10px;">
+                Buraya tıklayarak İman Power resmi eğlence platformuna ve oyun odasına giriş yapabilirsiniz. Keyifli vakit geçirmeniz dileğiyle!
+            </p>
+            <a href="https://0imanpower0.github.io/ImanPowerGame/" target="_blank" style="text-decoration: none;">
+                <button class="btn" style="background: #10b981; font-size: 1rem; letter-spacing: 1px; padding: 16px;">
+                    🕹️ EĞLENCE ODASINA GİRİŞ YAP
                 </button>
             </a>
         </div>
@@ -441,10 +458,9 @@
 
         // PLAYLIST OTOMATİK SONRAKİ ŞARKIYA GEÇİŞ TETİKLEYİCİSİ
         function handleTrackEnd() {
-            // Şarkı bitince sıradaki şarkı indeksini hesapla, eğer listenin sonuysa 0'a çekerek sonsuz döngü sağla!
             let nextIndex = currentTrackIndex + 1;
             if (nextIndex >= activePlaylistTracks.length) {
-                nextIndex = 0; // Başa sar (Sürekli tekrarlanacak döngü)
+                nextIndex = 0; 
             }
             
             if (activePlaylistTracks[nextIndex]) {
@@ -495,7 +511,6 @@
                             event.target.playVideo();
                         },
                         'onStateChange': (event) => {
-                            // YT.PlayerState.ENDED = 0 (Yani YouTube videosu tamamen bittiğinde tetiklenir)
                             if (event.data === 0) {
                                 handleTrackEnd();
                             }
@@ -529,7 +544,6 @@
         onValue(ref(db, '/'), (snap) => {
             const data = snap.val() || {};
             
-            // CANLI PLAYLIST VERİ KONTROLLERİ
             if (data.liveMusic) {
                 const track = data.liveMusic.currentTrack || "";
                 const vol = data.liveMusic.volume !== undefined ? data.liveMusic.volume : 50;
@@ -539,7 +553,6 @@
                 currentTrackIndex = data.liveMusic.currentIndex !== undefined ? data.liveMusic.currentIndex : 0;
                 currentVolume = vol;
 
-                // Admin input alanlarını senkronize tut
                 const volInput = document.getElementById('adm-music-vol');
                 if (volInput) volInput.value = vol;
 
@@ -557,7 +570,6 @@
                     }
                 }
 
-                // Admin panelindeki listeyi metin kutusunda güncel tut
                 const txtArea = document.getElementById('adm-playlist-urls');
                 if (txtArea && document.activeElement !== txtArea && activePlaylistTracks.length > 0) {
                     txtArea.value = activePlaylistTracks.join('\n');
@@ -610,7 +622,7 @@
             }
 
             const dyEl = document.getElementById('duyuru-list'); dyEl.innerHTML = "";
-            if(data.duyuru) Object.values(data.duyuru).forEach(val => { dyEl.innerHTML += `<div class="card duyuru-card-style"><span class="badge">DUYURU</span> disinvestment<h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div>`; });
+            if(data.duyuru) Object.values(data.duyuru).forEach(val => { dyEl.innerHTML += `<div class="card duyuru-card-style"><span class="badge">DUYURU</span><h3>${val.name}</h3><p>${val.desc}</p><small>${val.date}</small></div>`; });
             
             const trEl = document.getElementById('tr-list'); trEl.innerHTML = "";
             if(data.transfer) Object.values(data.transfer).forEach(v => { 
