@@ -422,15 +422,18 @@
             if(data.chat) Object.values(data.chat).forEach(m => { cBox.innerHTML += `<div class="msg"><b>${m.u || 'Anonim'}:</b> ${m.m}</div>`; });
             cBox.scrollTop = cBox.scrollHeight;
             
-            // REAKSİYON DESTEKLİ HABER LİSTELEME
+            // REAKSİYON DESTEKLİ VE EN YENİ ÜSTTE SIRALAMALI HABER LİSTELEME
             const hbEl = document.getElementById('haber-list'); hbEl.innerHTML = "";
             if(data.haber) {
-                Object.entries(data.haber).forEach(([id, val]) => {
+                // Haberleri diziye dönüştürüp ters çeviriyoruz (Yeni haber en üstte)
+                const haberArray = Object.entries(data.haber).reverse();
+                
+                haberArray.forEach(([id, val]) => {
                     const reacts = val.reactions || {};
                     
                     // Emoji sayılarını hesapla ve kullanıcının basıp basmadığını kontrol et
-                    const emoCounts = { '😎': 0, '✅': 0, '😲': 0, '😡': 0, '😂': 0 };
-                    const emoActive = { '😎': '', '✅': '', '😲': '', '😡': '', '😂': '' };
+                    const emoCounts = { '🕶️': 0, '✅': 0, '😲': 0, '😡': 0, '😂': 0 };
+                    const emoActive = { '🕶️': '', '✅': '', '😲': '', '😡': '', '😂': '' };
                     
                     Object.entries(reacts).forEach(([emo, users]) => {
                         if(users) {
@@ -453,7 +456,7 @@
                                 <div class="haber-footer">
                                     <small>${val.date}</small>
                                     <div class="reaction-container">
-                                        <button class="reaction-btn ${emoActive['😎']}" onclick="reactToHaber('${id}', '😎')">😎 <span>${emoCounts['😎']}</span></button>
+                                        <button class="reaction-btn ${emoActive['🕶️']}" onclick="reactToHaber('${id}', '🕶️')">🕶️ <span>${emoCounts['🕶️']}</span></button>
                                         <button class="reaction-btn ${emoActive['✅']}" onclick="reactToHaber('${id}', '✅')">✅ <span>${emoCounts['✅']}</span></button>
                                         <button class="reaction-btn ${emoActive['😲']}" onclick="reactToHaber('${id}', '😲')">😲 <span>${emoCounts['😲']}</span></button>
                                         <button class="reaction-btn ${emoActive['😡']}" onclick="reactToHaber('${id}', '😡')">😡 <span>${emoCounts['😡']}</span></button>
