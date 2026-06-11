@@ -265,10 +265,12 @@
         <div id="adm-box" style="display:none;">
             <div class="admin-box-layout">
                 <div class="card" style="border: 2px solid #ef4444;">
-                    <h3>🎵 CANLI MÜZİK SİSTEMİ</h3>
-                    <p style="font-size:0.75rem; color:#94a3b8; margin-bottom:10px;">YouTube Video ID veya MP3 Linki girin:</p>
-                    <input type="text" id="adm-music-url" placeholder="Örn: 5S_aN8R2v0U Veya .mp3 linki">
-                    <button class="btn" style="background:#ef4444; margin-bottom:15px;" onclick="updateLiveMusic()">ŞARKIYI DEĞİŞTİR / ÇAL</button>
+                    <h3>🎵 CANLI PLAYLIST SİSTEMİ</h3>
+                    <p style="font-size:0.75rem; color:#94a3b8; margin-bottom:5px;">Çalma Listesi ID'leri (Her satıra bir tane):</p>
+                    <textarea id="adm-playlist-urls" placeholder="Örn:&#10;EY07kVGs_Jk&#10;n07B5y_Cg9w" style="height:90px;"></textarea>
+                    
+                    <button class="btn" style="background:#10b981; margin-bottom:10px;" onclick="updateLivePlaylist()">LİSTEYİ BAŞLAT / GÜNCELLE</button>
+                    <button class="btn" style="background:#ef4444; margin-bottom:15px;" onclick="stopLiveMusic()">MÜZİĞİ DURDUR / KAPAT</button>
                     
                     <p style="font-size:0.75rem; color:#94a3b8; margin-bottom:5px;">Sitedeki Herkes İçin Ses Seviyesi:</p>
                     <input type="range" id="adm-music-vol" min="0" max="100" value="50" oninput="updateLiveVolume(this.value)">
@@ -337,8 +339,9 @@
         let audioPlayer = null;
         let currentMusicId = "";
         let currentVolume = 50;
+        let activePlaylistTracks = [];
+        let currentTrackIndex = 0;
 
-        // TARAYICI OYNATMA KISITLAMASINI GEÇMEK İÇİN TETİKLEYİCİ
         function startMusicEngine() {
             if (currentMusicId) {
                 playMusic(currentMusicId, currentVolume);
@@ -363,7 +366,6 @@
                     if(snap.exists() && snap.val().password === password) { 
                         user = username; 
                         document.getElementById('auth-screen').style.display = 'none'; 
-                        // Kullanıcı etkileşimi alındığı için müziği başlat
                         setTimeout(startMusicEngine, 500);
                     }
                     else alert("Hatalı Giriş!");
@@ -413,57 +415,91 @@
             if(m) { push(ref(db, 'chat'), { u: user, m: m }); document.getElementById('m-in').value=''; }
         };
 
-        // ADMİN MÜZİK AYARLARI KONTROLLERİ
-        window.updateLiveMusic = () => {
-            const url = document.getElementById('adm-music-url').value.trim();
-            if(!url) return alert("Lütfen bir ID veya link girin!");
-            set(ref(db, 'liveMusic/currentTrack'), url).then(() => alert("Şarkı tüm sitede güncellendi!"));
+        // PLAYLIST KONTROLLERİ
+        window.updateLivePlaylist = () => {
+            const rawText = document.getElementById('adm-playlist-urls').value.trim();
+            if(!rawText) return alert("Lütfen en az bir ID girin!");
+            const tracks = rawText.split('\n').map(t => t.trim()).filter(t => t.length > 0);
+            
+            set(ref(db, 'liveMusic'), {
+                playlist: tracks,
+                currentIndex: 0,
+                currentTrack: tracks[0],
+                volume: currentVolume,
+                status: "playing",
+                timestamp: Date.now()
+            }).then(() => alert("Çalma listesi tüm sitede başlatıldı!"));
+        };
+
+        window.stopLiveMusic = () => {
+            set(ref(db, 'liveMusic/status'), "stopped").then(() => alert("Müzik tüm sitede durduruldu!"));
         };
 
         window.updateLiveVolume = (vol) => {
             set(ref(db, 'liveMusic/volume'), parseInt(vol));
         };
 
-        // CANLI MÜZİK ÇALMA MOTORU
+        // PLAYLIST OTOMATİK SONRAKİ ŞARKIYA GEÇİŞ TETİKLEYİCİSİ
+        function handleTrackEnd() {
+            // Sadece admin sonraki şarkı geçişini veritabanına yazar, böylece senkronizasyon bozulmaz
+            if (document.getElementById('adm-box').style.display === 'block') {
+                let nextIndex = currentTrackIndex + 1;
+                if (nextIndex >= activePlaylistTracks.length) {
+                    nextIndex = 0; // Başa dön
+                }
+                if (activePlaylistTracks[nextIndex]) {
+                    set(ref(db, 'liveMusic/currentIndex'), nextIndex);
+                    set(ref(db, 'liveMusic/currentTrack'), activePlaylistTracks[nextIndex]);
+                    set(ref(db, 'liveMusic/timestamp'), Date.now());
+                }
+            }
+        }
+
+        // CANLI MÜZİK MOTORU
         function playMusic(trackId, volume) {
-            if (!user) return; // Kullanıcı giriş yapmadıysa çalma
-            
+            if (!user) return;
             const container = document.getElementById('music-player-container');
             
-            // Eğer MP3 linkiyse direkt Audio element ile çal
+            if (!trackId || trackId === "") {
+                if (ytPlayer) { try { ytPlayer.destroy(); ytPlayer = null; } catch(e){} }
+                if (audioPlayer) { audioPlayer.pause(); audioPlayer = null; }
+                return;
+            }
+
             if (trackId.includes('.mp3') || trackId.includes('http')) {
                 if (ytPlayer) { try { ytPlayer.destroy(); ytPlayer = null; } catch(e){} }
-                
                 if (!audioPlayer) {
                     audioPlayer = new Audio(trackId);
-                    audioPlayer.loop = true;
+                    audioPlayer.addEventListener('ended', handleTrackEnd);
                 } else if (audioPlayer.src !== trackId) {
                     audioPlayer.src = trackId;
                 }
                 audioPlayer.volume = volume / 100;
-                audioPlayer.play().catch(e => console.log("Ses çalma tetiklenemedi, tıklama bekleniyor."));
+                audioPlayer.play().catch(e => console.log("Engellendi"));
             } 
-            // Yoksa YouTube videosu olarak kabul et ve arka planda çal
             else {
                 if (audioPlayer) { audioPlayer.pause(); audioPlayer = null; }
-                
                 container.innerHTML = `<div id="yt-player-frame"></div>`;
                 
-                // YouTube Iframe API kullanarak player'ı başlatıyoruz
                 ytPlayer = new YT.Player('yt-player-frame', {
                     height: '0',
                     width: '0',
                     videoId: trackId,
                     playerVars: {
                         'autoplay': 1,
-                        'loop': 1,
-                        'playlist': trackId,
-                        'controls': 0
+                        'controls': 0,
+                        'rel': 0
                     },
                     events: {
                         'onReady': (event) => {
                             event.target.setVolume(volume);
                             event.target.playVideo();
+                        },
+                        'onStateChange': (event) => {
+                            // YT.PlayerState.ENDED = 0
+                            if (event.data === 0) {
+                                handleTrackEnd();
+                            }
                         }
                     }
                 });
@@ -491,33 +527,41 @@
 
         const pLoc = { GK: {t:'88%',l:'50%'}, LB: {t:'68%',l:'15%'}, CB1: {t:'68%',l:'38%'}, CB2: {t:'68%',l:'62%'}, RB: {t:'68%',l:'85%'}, LM: {t:'43%',l:'15%'}, CM1: {t:'43%',l:'38%'}, CM2: {t:'43%',l:'62%'}, RM: {t:'43%',l:'85%'}, ST1: {t:'16%',l:'35%'}, ST2: {t:'16%',l:'65%'} };
 
-        // TEK ONVALUE İÇİNDE SİSTEM DİNLEMESİ
         onValue(ref(db, '/'), (snap) => {
             const data = snap.val() || {};
             
-            // CANLI MÜZİK VERİSİNİ ANLIK DİNLEME VE UYGULAMA
+            // CANLI PLAYLIST VERİ KONTROLLERİ
             if (data.liveMusic) {
                 const track = data.liveMusic.currentTrack || "";
                 const vol = data.liveMusic.volume !== undefined ? data.liveMusic.volume : 50;
+                const status = data.liveMusic.status || "playing";
                 
+                activePlaylistTracks = data.liveMusic.playlist || [];
+                currentTrackIndex = data.liveMusic.currentIndex !== undefined ? data.liveMusic.currentIndex : 0;
                 currentVolume = vol;
 
-                // Admin barını senkronize tut
+                // Admin input alanlarını senkronize tut
                 const volInput = document.getElementById('adm-music-vol');
                 if (volInput) volInput.value = vol;
 
-                // Şarkı değiştiyse veya yeni başladıysa tetikle
-                if (track !== currentMusicId) {
-                    currentMusicId = track;
-                    if (user) playMusic(track, vol);
+                if (status === "stopped") {
+                    if (ytPlayer) { try { ytPlayer.stopVideo(); } catch(e){} }
+                    if (audioPlayer) { audioPlayer.pause(); }
+                    currentMusicId = "";
                 } else {
-                    // Sadece ses seviyesi değiştiyse uygula
-                    if (ytPlayer && typeof ytPlayer.setVolume === 'function') {
-                        ytPlayer.setVolume(vol);
+                    if (track !== currentMusicId) {
+                        currentMusicId = track;
+                        if (user) playMusic(track, vol);
+                    } else {
+                        if (ytPlayer && typeof ytPlayer.setVolume === 'function') { ytPlayer.setVolume(vol); }
+                        if (audioPlayer) { audioPlayer.volume = vol / 100; }
                     }
-                    if (audioPlayer) {
-                        audioPlayer.volume = vol / 100;
-                    }
+                }
+
+                // Admin panelindeki listeyi metin kutusunda güncel tut
+                const txtArea = document.getElementById('adm-playlist-urls');
+                if (txtArea && document.activeElement !== txtArea && activePlaylistTracks.length > 0) {
+                    txtArea.value = activePlaylistTracks.join('\n');
                 }
             }
 
@@ -532,8 +576,8 @@
                 const haberArray = Object.entries(data.haber).reverse();
                 haberArray.forEach(([id, val]) => {
                     const reacts = val.reactions || {};
-                    const emoCounts = { '😎': 0, '✅': 0, '😲': 0, '😡': 0, '😂': 0 };
-                    const emoActive = { '😎': '', '✅': '', '😲': '', '😡': '', '😂': '' };
+                    const emoCounts = { '🕶️': 0, '✅': 0, '😲': 0, '😡': 0, '😂': 0 };
+                    const emoActive = { '🕶️': '', '✅': '', '😲': '', '😡': '', '😂': '' };
                     
                     Object.entries(reacts).forEach(([emo, users]) => {
                         if(users) {
@@ -554,7 +598,7 @@
                                 <div class="haber-footer">
                                     <small>${val.date}</small>
                                     <div class="reaction-container">
-                                        <button class="reaction-btn ${emoActive['😎']}" onclick="reactToHaber('${id}', '😎')">😎 <span>${emoCounts['😎']}</span></button>
+                                        <button class="reaction-btn ${emoActive['🕶️']}" onclick="reactToHaber('${id}', '🕶️')">🕶️ <span>${emoCounts['🕶️']}</span></button>
                                         <button class="reaction-btn ${emoActive['✅']}" onclick="reactToHaber('${id}', '✅')">✅ <span>${emoCounts['✅']}</span></button>
                                         <button class="reaction-btn ${emoActive['😲']}" onclick="reactToHaber('${id}', '😲')">😲 <span>${emoCounts['😲']}</span></button>
                                         <button class="reaction-btn ${emoActive['😡']}" onclick="reactToHaber('${id}', '😡')">😡 <span>${emoCounts['😡']}</span></button>
@@ -593,7 +637,6 @@
             ['duyuru', 'transfer', 'ekip', 'kadro', 'haber'].forEach(t => { if(data[t]) Object.entries(data[t]).forEach(([k, v]) => aM.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.7rem;"><span>[${t.toUpperCase()}] ${v.name}</span><button class="del-btn" onclick="delData('${t}/${k}')">SİL</button></div>`); });
         });
 
-        // Tıklama durumunda çalma garantisi için event listener
         document.body.addEventListener('click', startMusicEngine, { once: true });
     </script>
 </body>
